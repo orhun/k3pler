@@ -19,7 +19,7 @@ import io.netty.handler.codec.http.HttpResponse;
 
 public class MainActivity extends AppCompatActivity {
     private HttpProxyServer httpProxyServer;
-    private static final int PORT_NUMBER = 8080;
+    private static final int PORT_NUMBER = 8090;
     private static final int MAX_BUFFER = 10 * 1024 * 1024;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
