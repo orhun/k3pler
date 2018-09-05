@@ -6,9 +6,24 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
+import org.littleshoot.proxy.HttpFilters;
+import org.littleshoot.proxy.HttpFiltersSource;
+import org.littleshoot.proxy.HttpProxyServer;
+import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
+
+import java.net.ServerSocket;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.HttpRequest;
+
 public class ProxyService extends Service {
+
+    private HttpProxyServer httpProxyServer;
+    private static final int PORT_NUMBER = 8090;
+    private static final int MAX_BUFFER = 10 * 1024 * 1024;
 
     private Callbacks callBacks;
     private final IBinder mBinder = new LocalBinder();
@@ -21,21 +36,42 @@ public class ProxyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        onStart();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        onStart();
         return START_NOT_STICKY;
     }
 
     public void onStart(){
-        for (int i = 0; i < 10; i++) {
-            callBacks.updateUi(String.valueOf(i));
-            try {
-                Thread.sleep(100);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+        startLocalProxy();
+    }
+
+    public void startLocalProxy(){
+        try {
+            httpProxyServer = DefaultHttpProxyServer.bootstrap()
+                    .withPort(PORT_NUMBER)
+                    .withFiltersSource(new HttpFiltersSource() {
+                        @Override
+                        public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
+                            Log.d("REQUEST:", originalRequest.getUri());
+                            return new FilteredResponse(originalRequest);
+                        }
+
+                        @Override
+                        public int getMaximumRequestBufferSizeInBytes() {
+                            return MAX_BUFFER;
+                        }
+
+                        @Override
+                        public int getMaximumResponseBufferSizeInBytes() {
+                            return MAX_BUFFER;
+                        }
+                    }).start();
+        }catch (RuntimeException e){
+            e.printStackTrace();
         }
     }
 
