@@ -40,11 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
                         Log.d("REQUEST:", originalRequest.getUri());
-                        if(originalRequest.getUri().contains("google") || originalRequest.getUri().contains("gstatic")){
-                            return new BlockedResponse(originalRequest);
-                        }
-                        return null;
-                        // /return new AnswerRequestFilter(originalRequest, "");
+                        return new FilteredResponse(originalRequest);
                     }
 
                     @Override
@@ -56,42 +52,31 @@ public class MainActivity extends AppCompatActivity {
                     public int getMaximumResponseBufferSizeInBytes() {
                         return MAX_BUFFER;
                     }
-                })
-                .start();
+                }).start();
     }
-    public class AnswerRequestFilter extends HttpFiltersAdapter{
-        private final String answer;
-        private ByteBuf buffer;
-        private HttpResponse response;
-
-        public AnswerRequestFilter(HttpRequest originalRequest, String answer) {
-            super(originalRequest, null);
-            this.answer = answer;
-        }
-        @Override
-        public HttpResponse clientToProxyRequest(HttpObject httpObject) {
-            try {
-                buffer = Unpooled.wrappedBuffer(answer.getBytes("UTF-8"));
-                response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
-                //HttpHeaders.setContentLength(response, buffer.readableBytes());
-                //HttpHeaders.setHeader(response, HttpHeaders.Names.CONTENT_TYPE, "text/html");
-            }catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
-    }
-
-    private class BlockedResponse extends HttpFiltersAdapter{
+    private static class FilteredResponse extends HttpFiltersAdapter{
         private HttpResponse httpResponse;
-        private HttpResponseStatus blockedRequestStatus = HttpResponseStatus.BAD_REQUEST;
-        private String blockMsg = "Blocked by K3pler.";
+        private static String blockMsg = "Blocked by K3pler.";
+        private static HttpResponseStatus blockedRequestStatus = HttpResponseStatus.OK;
         private ByteBuf byteBuf;
-        public BlockedResponse(HttpRequest originalRequest){
+        private static String blockedList[] = new String[]{"twitter"};
+        public FilteredResponse(HttpRequest originalRequest){
             super(originalRequest, null);
         }
         @Override
         public HttpResponse clientToProxyRequest(HttpObject httpObject) {
+            Boolean block = false;
+            for(String item : blockedList){
+                if(originalRequest.getUri().contains(item)){
+                    block = true;
+                    break;
+                }
+            }
+            if(block)
+                return getBlockedResponse();
+            return super.clientToProxyRequest(httpObject);
+        }
+        private HttpResponse getBlockedResponse(){
             try{
                 byteBuf = Unpooled.wrappedBuffer(blockMsg.getBytes("UTF-8"));
             }catch (UnsupportedEncodingException e){
@@ -100,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             httpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, blockedRequestStatus, byteBuf);
             HttpHeaders.setContentLength(httpResponse, byteBuf.readableBytes());
             HttpHeaders.setHeader(httpResponse, HttpHeaders.Names.CONTENT_TYPE, "text/html");
-            return httpResponse; //super.clientToProxyRequest(httpObject);
+            return httpResponse;
         }
     }
 
