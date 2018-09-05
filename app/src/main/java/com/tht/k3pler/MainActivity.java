@@ -10,15 +10,31 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements ProxyService.Callbacks {
-    private Intent serviceIntent;
     private ProxyService proxyService;
+    private ServiceController serviceController;
+
+    private void init(){
+        serviceController = new ServiceController(MainActivity.this, ProxyService.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        serviceIntent = new Intent(MainActivity.this, ProxyService.class);
-        startProxyServiceWithBind();
+        init();
+        startProxy();
+    }
+    private void startProxy(){
+        try{
+            serviceController.startServiceWithBind(serviceConnection);
+        }catch (Exception e1){
+            e1.printStackTrace();
+            try {
+                serviceController.stopService(serviceConnection);
+            }catch (Exception e2){
+                e2.printStackTrace();
+            }
+        }
     }
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -31,31 +47,7 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         @Override
         public void onServiceDisconnected(ComponentName componentName) {}
     };
-    private void startProxyServiceWithBind(){
-        try {
-            startService(serviceIntent);
-            bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-        }catch (Exception e){
-            e.printStackTrace();
-            stopProxyService();
-        }
-    }
-    private void stopProxyService(){
-        try {
-            unbindService(serviceConnection);
-            stopService(serviceIntent);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    private void startProxy(){
-        try {
-            stopService(serviceIntent);
-            startService(serviceIntent);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
     @Override
     public void updateUi(String data) {
         Toast.makeText(proxyService, data, Toast.LENGTH_SHORT).show();
@@ -64,7 +56,11 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopProxyService();
+        try {
+            serviceController.stopService(serviceConnection);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 

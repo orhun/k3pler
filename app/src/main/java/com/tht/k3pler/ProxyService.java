@@ -36,12 +36,12 @@ public class ProxyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        onStart();
+        //onStart();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        onStart();
+        //onStart();
         return START_NOT_STICKY;
     }
 
@@ -50,6 +50,7 @@ public class ProxyService extends Service {
     }
 
     public void startLocalProxy(){
+        callBacks.updateUi("Proxy started.");
         try {
             httpProxyServer = DefaultHttpProxyServer.bootstrap()
                     .withPort(PORT_NUMBER)
