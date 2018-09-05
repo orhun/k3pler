@@ -1,8 +1,15 @@
 package com.tht.k3pler;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersAdapter;
@@ -10,10 +17,6 @@ import org.littleshoot.proxy.HttpFiltersSource;
 import org.littleshoot.proxy.HttpProxyServer;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
-import java.io.UnsupportedEncodingException;
-
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -23,16 +26,64 @@ import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity implements ProxyService.Callbacks {
     private HttpProxyServer httpProxyServer;
     private static final int PORT_NUMBER = 8090;
     private static final int MAX_BUFFER = 10 * 1024 * 1024;
+
+    private Intent serviceIntent;
+    private ProxyService proxyService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startLocalProxy();
+        //startLocalProxy();
+        startProxyService();
     }
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Toast.makeText(MainActivity.this, "onServiceConnected called", Toast.LENGTH_SHORT).show();
+            ProxyService.LocalBinder binder = (ProxyService.LocalBinder) iBinder;
+            proxyService = binder.getServiceInstance();
+            proxyService.registerClient(MainActivity.this);
+            proxyService.onStart();
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            Toast.makeText(MainActivity.this, "onServiceDisconnected called", Toast.LENGTH_SHORT).show();
+        }
+    };
+    private void startProxyService(){
+        try {
+            serviceIntent = new Intent(MainActivity.this, ProxyService.class);
+            startService(serviceIntent);
+            bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+        }catch (Exception e){
+            e.printStackTrace();
+            stopProxyService();
+        }
+    }
+    private void stopProxyService(){
+        try {
+            unbindService(serviceConnection);
+            stopService(serviceIntent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void updateUi(String data) {
+        Toast.makeText(proxyService, data, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopProxyService();
+    }
+
     private void startLocalProxy(){
         httpProxyServer = DefaultHttpProxyServer.bootstrap()
                 .withPort(PORT_NUMBER)
@@ -56,10 +107,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private static class FilteredResponse extends HttpFiltersAdapter{
         private HttpResponse httpResponse;
-        private static String blockMsg = "Blocked by K3pler.";
-        private static HttpResponseStatus blockedRequestStatus = HttpResponseStatus.OK;
-        private ByteBuf byteBuf;
-        private static String blockedList[] = new String[]{"twitter"};
+        private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.FORBIDDEN;
+        private static String blockedList[] = new String[]{"twitter", "google"};
         public FilteredResponse(HttpRequest originalRequest){
             super(originalRequest, null);
         }
@@ -77,14 +126,8 @@ public class MainActivity extends AppCompatActivity {
             return super.clientToProxyRequest(httpObject);
         }
         private HttpResponse getBlockedResponse(){
-            try{
-                byteBuf = Unpooled.wrappedBuffer(blockMsg.getBytes("UTF-8"));
-            }catch (UnsupportedEncodingException e){
-                e.printStackTrace();
-            }
-            httpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, blockedRequestStatus, byteBuf);
-            HttpHeaders.setContentLength(httpResponse, byteBuf.readableBytes());
-            HttpHeaders.setHeader(httpResponse, HttpHeaders.Names.CONTENT_TYPE, "text/html");
+            httpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, httpResponseStatus);
+            HttpHeaders.setHeader(httpResponse, HttpHeaders.Names.CONNECTION, HttpHeaders.Values.CLOSE);
             return httpResponse;
         }
     }
