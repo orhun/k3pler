@@ -18,11 +18,17 @@ public class ServiceController {
     }
     public void startServiceWithBind(ServiceConnection serviceConnection) throws Exception {
         activity.startService(getIntent());
-        activity.bindService(getIntent(), serviceConnection, Context.BIND_AUTO_CREATE);
+        bindService(serviceConnection);
     }
     public void stopService(ServiceConnection serviceConnection) throws Exception {
-        activity.unbindService(serviceConnection);
+        unbindService(serviceConnection);
         activity.stopService(getIntent());
+    }
+    public void bindService(ServiceConnection serviceConnection){
+        activity.bindService(getIntent(), serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+    public void unbindService(ServiceConnection serviceConnection){
+        activity.unbindService(serviceConnection);
     }
     public void startProxy() throws Exception{
         activity.stopService(getIntent());

@@ -55,7 +55,8 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         }
     }
     private void stopProxyService(){
-        // TODO: 9/6/2018 Leaked 
+        // TODO: 9/6/2018 Leaked
+
         stopProxy();
         try{
             proxyService.cancelNotifications();
@@ -81,7 +82,6 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         @Override
         public void onServiceDisconnected(ComponentName componentName) {}
     };
-
     @Override
     public void onRequest(HttpRequest httpRequest) {
         Log.d("REQUEST:", httpRequest.getUri());
