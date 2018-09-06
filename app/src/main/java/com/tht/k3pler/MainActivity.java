@@ -26,14 +26,15 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         setContentView(R.layout.activity_main);
         init();
         NotificationHandler notificationHandler = new NotificationHandler(1, this, MainActivity.class);
-        notificationHandler.notify("TestTitle", "TestMsg");
+        notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
+                " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
         checkExtras();
         //startProxy();
     }
     private void checkExtras(){
         Intent currentIntent = getIntent();
         if (currentIntent != null){
-            if(currentIntent.getBooleanExtra(Constants.NOTIFICATION_CONSTANT, false)){
+            if(currentIntent.getBooleanExtra(getString(R.string.is_notification), false)){
                 Toast.makeText(getApplicationContext(), "Clicked on notification", Toast.LENGTH_SHORT).show();
             }
         }

@@ -22,7 +22,7 @@ import io.netty.handler.codec.http.HttpRequest;
 public class ProxyService extends Service {
 
     private HttpProxyServer httpProxyServer;
-    private static final int PORT_NUMBER = 8090;
+    public static final int PORT_NUMBER = 8090;
     private static final int MAX_BUFFER = 10 * 1024 * 1024;
 
     private Callbacks callBacks;
