@@ -25,17 +25,20 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        NotificationHandler notificationHandler = new NotificationHandler(1, this, MainActivity.class);
-        notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
-                " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
         checkExtras();
-        //startProxy();
+        startProxy();
     }
     private void checkExtras(){
         Intent currentIntent = getIntent();
         if (currentIntent != null){
-            if(currentIntent.getBooleanExtra(getString(R.string.is_notification), false)){
-                Toast.makeText(getApplicationContext(), "Clicked on notification", Toast.LENGTH_SHORT).show();
+            try {
+                if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
+                    Toast.makeText(getApplicationContext(), "Show command received", Toast.LENGTH_SHORT).show();
+                } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
+                    stopProxyService();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     }
@@ -49,6 +52,22 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
             }catch (Exception e2){
                 e2.printStackTrace();
             }
+        }
+    }
+    private void stopProxyService(){
+        // TODO: 9/6/2018 Leaked 
+        stopProxy();
+        try{
+            proxyService.cancelNotifications();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void stopProxy(){
+        try {
+            serviceController.stopService(serviceConnection);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -70,11 +89,7 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
-            serviceController.stopService(serviceConnection);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        //stopProxy();
     }
 }
 

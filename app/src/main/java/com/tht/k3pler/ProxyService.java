@@ -24,6 +24,7 @@ public class ProxyService extends Service {
     private HttpProxyServer httpProxyServer;
     public static final int PORT_NUMBER = 8090;
     private static final int MAX_BUFFER = 10 * 1024 * 1024;
+    private NotificationHandler notificationHandler;
 
     private Callbacks callBacks;
     private final IBinder mBinder = new LocalBinder();
@@ -48,8 +49,7 @@ public class ProxyService extends Service {
     }
 
     public void startLocalProxy(){
-
-        try {
+        /*try {
             httpProxyServer = DefaultHttpProxyServer.bootstrap()
                     .withPort(PORT_NUMBER)
                     .withFiltersSource(new HttpFiltersSource() {
@@ -70,7 +70,13 @@ public class ProxyService extends Service {
                     }).start();
         }catch (RuntimeException e){
             e.printStackTrace();
-        }
+        }*/
+        notificationHandler = new NotificationHandler(1, getApplicationContext(), MainActivity.class);
+        notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
+                " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
+    }
+    public void cancelNotifications(){
+        notificationHandler.getNotificationManager().cancelAll();
     }
 
     public class LocalBinder extends Binder {

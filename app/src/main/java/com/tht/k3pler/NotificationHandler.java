@@ -1,7 +1,6 @@
 package com.tht.k3pler;
 
 
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,66 +10,64 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 public class NotificationHandler {
-    private Activity activity;
+    private Context context;
     private Class mClass;
     private int ID;
     private NotificationManager notificationManager;
 
-    public NotificationHandler(int ID, Activity activity, Class mClass){
+    public NotificationHandler(int ID, Context context, Class mClass){
         this.ID = ID;
-        this.activity = activity;
+        this.context = context;
         this.mClass = mClass;
     }
     public Intent getIntent(){
-        Intent intent = new Intent(activity, mClass);
+        Intent intent = new Intent(context, mClass);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
     public PendingIntent getPendingIntent(Intent intent){
-        return PendingIntent.getActivity(activity, 0, intent,
+        return PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
     }
     private NotificationManager createNotificationManager(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(String.valueOf(ID),
-                    activity.getString(R.string.app_name) + String.valueOf(ID),
+                    context.getString(R.string.app_name) + String.valueOf(ID),
                     NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription(activity.getString(R.string.app_name) + String.valueOf(ID));
-            NotificationManager notificationManager = (NotificationManager) activity
+            channel.setDescription(context.getString(R.string.app_name) + String.valueOf(ID));
+            NotificationManager notificationManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(channel);
             return notificationManager;
         }else{
-            return (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+            return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
     }
     public NotificationManager getNotificationManager(){
         return notificationManager;
     }
     private PendingIntent getStopPendingIntent(){
-        Intent intent = new Intent();
-        intent.putExtra(activity.getString(R.string.proxy_stop), true);
-        return PendingIntent.getActivity(activity, 0, intent,
+        Intent intent = getIntent();
+        intent.putExtra(context.getString(R.string.proxy_stop), true);
+        return PendingIntent.getActivity(context, 1, intent,
                 PendingIntent.FLAG_ONE_SHOT);
     }
     private PendingIntent getShowPendingIntent(){
-        Intent intent = new Intent();
-        intent.putExtra(activity.getString(R.string.show_gui), true);
-        return PendingIntent.getActivity(activity, 0, intent,
+        Intent intent = getIntent();
+        intent.putExtra(context.getString(R.string.show_gui), true);
+        return PendingIntent.getActivity(context, 2, intent,
                 PendingIntent.FLAG_ONE_SHOT);
     }
     public void notify(String messageTitle, String messageBody, Boolean isOnGoing) {
-        Intent intent = getIntent();
-        intent.putExtra(activity.getString(R.string.is_notification), true);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(activity, String.valueOf(ID))
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, String.valueOf(ID))
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .addAction(0, activity.getString(R.string.show_gui), getShowPendingIntent())
-                .addAction(0, activity.getString(R.string.proxy_stop), getStopPendingIntent())
+                .addAction(0, context.getString(R.string.show_gui), getShowPendingIntent())
+                .addAction(0, context.getString(R.string.proxy_stop), getStopPendingIntent())
                 .setContentTitle(messageTitle)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setOngoing(isOnGoing)
-                .setContentIntent(getPendingIntent(intent));
+                .setContentIntent(getPendingIntent(getIntent()));
         notificationManager = createNotificationManager();
         notificationManager.notify(ID, notificationBuilder.build());
     }
