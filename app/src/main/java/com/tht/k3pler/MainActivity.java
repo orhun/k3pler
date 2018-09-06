@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
+
+import io.netty.handler.codec.http.HttpRequest;
 
 public class MainActivity extends Activity implements ProxyService.Callbacks {
     private ProxyService proxyService;
@@ -49,10 +52,9 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     };
 
     @Override
-    public void updateUi(String data) {
-        Toast.makeText(proxyService, data, Toast.LENGTH_SHORT).show();
+    public void onRequest(HttpRequest httpRequest) {
+        Log.d("REQUEST:", httpRequest.getUri());
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -62,9 +64,6 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
             e.printStackTrace();
         }
     }
-
-
-
 }
 
 

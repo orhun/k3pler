@@ -36,12 +36,10 @@ public class ProxyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //onStart();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //onStart();
         return START_NOT_STICKY;
     }
 
@@ -50,17 +48,16 @@ public class ProxyService extends Service {
     }
 
     public void startLocalProxy(){
-        callBacks.updateUi("Proxy started.");
+
         try {
             httpProxyServer = DefaultHttpProxyServer.bootstrap()
                     .withPort(PORT_NUMBER)
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
                         public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
-                            Log.d("REQUEST:", originalRequest.getUri());
+                            callBacks.onRequest(originalRequest);
                             return new FilteredResponse(originalRequest);
                         }
-
                         @Override
                         public int getMaximumRequestBufferSizeInBytes() {
                             return MAX_BUFFER;
@@ -85,7 +82,7 @@ public class ProxyService extends Service {
         this.callBacks = (Callbacks)activity;
     }
     public interface Callbacks{
-        public void updateUi(String data);
+        public void onRequest(HttpRequest httpRequest);
     }
 
 }

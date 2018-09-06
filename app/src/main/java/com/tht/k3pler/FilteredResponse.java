@@ -14,7 +14,7 @@ import io.netty.handler.codec.http.HttpVersion;
 class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
     private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.FORBIDDEN;
-    private static String blockedList[] = new String[]{"twitter", "google"};
+    private static String blockedList[] = new String[]{"twitter"};
     public FilteredResponse(HttpRequest originalRequest){
         super(originalRequest, null);
     }
