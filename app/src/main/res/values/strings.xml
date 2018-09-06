@@ -2,5 +2,6 @@
     <string name="app_name">k3pler</string>
     <string name="proxy_running">Proxy running</string>
     <string name="proxy_stop">Stop Proxy</string>
+    <string name="show_gui">Show</string>
     <string name="is_notification">IS_NOTIFICATION</string>
 </resources>

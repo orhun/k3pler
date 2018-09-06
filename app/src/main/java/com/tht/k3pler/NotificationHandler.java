@@ -48,8 +48,14 @@ public class NotificationHandler {
         return notificationManager;
     }
     private PendingIntent getStopPendingIntent(){
-        Intent intent = getIntent();
+        Intent intent = new Intent();
         intent.putExtra(activity.getString(R.string.proxy_stop), true);
+        return PendingIntent.getActivity(activity, 0, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+    }
+    private PendingIntent getShowPendingIntent(){
+        Intent intent = new Intent();
+        intent.putExtra(activity.getString(R.string.show_gui), true);
         return PendingIntent.getActivity(activity, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
     }
@@ -58,6 +64,7 @@ public class NotificationHandler {
         intent.putExtra(activity.getString(R.string.is_notification), true);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(activity, String.valueOf(ID))
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .addAction(0, activity.getString(R.string.show_gui), getShowPendingIntent())
                 .addAction(0, activity.getString(R.string.proxy_stop), getStopPendingIntent())
                 .setContentTitle(messageTitle)
                 .setContentText(messageBody)
