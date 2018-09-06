@@ -25,7 +25,18 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        startProxy();
+        NotificationHandler notificationHandler = new NotificationHandler(1, this, MainActivity.class);
+        notificationHandler.notify("TestTitle", "TestMsg");
+        checkExtras();
+        //startProxy();
+    }
+    private void checkExtras(){
+        Intent currentIntent = getIntent();
+        if (currentIntent != null){
+            if(currentIntent.getBooleanExtra(Constants.NOTIFICATION_CONSTANT, false)){
+                Toast.makeText(getApplicationContext(), "Clicked on notification", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     private void startProxy(){
         try{
