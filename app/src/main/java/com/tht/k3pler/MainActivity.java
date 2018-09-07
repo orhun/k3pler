@@ -5,11 +5,17 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import io.netty.handler.codec.http.HttpRequest;
@@ -19,13 +25,19 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     private ServiceController serviceController;
 
     private void init(){
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE );
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
         serviceController = new ServiceController(this, ProxyService.class);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         init();
         startProxy();
     }
@@ -105,6 +117,11 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     }
     @Override
     public void onBackPressed() {}
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return false;
+    }
+
 }
 
 
