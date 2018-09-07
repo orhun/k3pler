@@ -14,7 +14,7 @@ public class NotificationHandler {
     private Class mClass;
     private int ID, btnID1 = 1, btnID2 = 2;
     private NotificationManager notificationManager;
-    private int pendingFlag = PendingIntent.FLAG_UPDATE_CURRENT;
+    private int pendingFlag = PendingIntent.FLAG_ONE_SHOT;
 
     public NotificationHandler(int ID, Context context, Class mClass){
         this.ID = ID;

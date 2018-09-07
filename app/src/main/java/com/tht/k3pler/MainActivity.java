@@ -24,7 +24,6 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         init();
         startProxy();
     }
@@ -33,9 +32,9 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         if (currentIntent != null) {
             try {
                 if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
-                    Toast.makeText(getApplicationContext(), "Show command received", Toast.LENGTH_SHORT).show();
+                    Log.d(getString(R.string.app_name), "Show command received");
                 } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
-                    Toast.makeText(getApplicationContext(), "Stop command received", Toast.LENGTH_SHORT).show();
+                    Log.d(getString(R.string.app_name), "Stop command received");
                     stopProxyService();
                 }
             } catch (Exception e) {
@@ -58,15 +57,23 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     private void stopProxyService(){
         try{
             proxyService.cancelNotifications();
-            serviceController.stopService(serviceConnection);
         }catch (Exception e){
             e.printStackTrace();
+        }
+        try{
+            proxyService.httpProxyServer.stop();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            serviceController.stopService(serviceConnection);
+        }catch (Exception e){
+           e.printStackTrace();
         }
     }
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            Toast.makeText(getApplicationContext(), "Service connected.", Toast.LENGTH_SHORT).show();
             ProxyService.LocalBinder binder = (ProxyService.LocalBinder) iBinder;
             proxyService = binder.getServiceInstance();
             proxyService.registerClient(MainActivity.this);
@@ -80,6 +87,7 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
                     Log.d(getString(R.string.app_name), e.getMessage());
                 }
             });
+
         }
         @Override
         public void onServiceDisconnected(ComponentName componentName) {}

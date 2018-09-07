@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
+import org.littleshoot.proxy.HttpFilters;
+import org.littleshoot.proxy.HttpFiltersSource;
 import org.littleshoot.proxy.HttpProxyServer;
+import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 
 public class ProxyService extends Service {
 
-    private HttpProxyServer httpProxyServer;
+    public HttpProxyServer httpProxyServer;
     public static final int PORT_NUMBER = 8090;
     private static final int MAX_BUFFER = 10 * 1024 * 1024;
     private NotificationHandler notificationHandler;
@@ -41,7 +45,7 @@ public class ProxyService extends Service {
 
     public void startLocalProxy(IProxyStatus proxyStarted){
         try {
-            /*httpProxyServer = DefaultHttpProxyServer.bootstrap()
+            httpProxyServer = DefaultHttpProxyServer.bootstrap()
                     .withPort(PORT_NUMBER)
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
@@ -59,7 +63,6 @@ public class ProxyService extends Service {
                             return MAX_BUFFER;
                         }
                     }).start();
-        */
             notificationHandler = new NotificationHandler(1, getApplicationContext(), MainActivity.class);
             notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
                     " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
