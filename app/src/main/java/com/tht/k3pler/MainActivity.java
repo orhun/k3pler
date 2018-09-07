@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import io.netty.handler.codec.http.HttpRequest;
@@ -19,6 +20,7 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
 
     private void init(){
         serviceController = new ServiceController(this, ProxyService.class);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override
