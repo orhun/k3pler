@@ -9,9 +9,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        android:excludeFromRecents="true">
-        <activity android:name=".MainActivity">
+        android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:excludeFromRecents="true"
+            android:taskAffinity=".k3">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

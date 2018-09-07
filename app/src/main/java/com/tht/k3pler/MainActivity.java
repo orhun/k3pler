@@ -103,6 +103,8 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         super.onDestroy();
         stopProxyService();
     }
+    @Override
+    public void onBackPressed() {}
 }
 
 
