@@ -4,19 +4,10 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
-import android.widget.Toast;
 
-import org.littleshoot.proxy.HttpFilters;
-import org.littleshoot.proxy.HttpFiltersSource;
 import org.littleshoot.proxy.HttpProxyServer;
-import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
-import java.net.ServerSocket;
-
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 
 public class ProxyService extends Service {
@@ -45,12 +36,12 @@ public class ProxyService extends Service {
     }
 
     public void onStart(){
-        startLocalProxy();
+        startLocalProxy(null);
     }
 
-    public void startLocalProxy(){
-        /*try {
-            httpProxyServer = DefaultHttpProxyServer.bootstrap()
+    public void startLocalProxy(IProxyStatus proxyStarted){
+        try {
+            /*httpProxyServer = DefaultHttpProxyServer.bootstrap()
                     .withPort(PORT_NUMBER)
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
@@ -68,12 +59,19 @@ public class ProxyService extends Service {
                             return MAX_BUFFER;
                         }
                     }).start();
-        }catch (RuntimeException e){
+        */
+            notificationHandler = new NotificationHandler(1, getApplicationContext(), MainActivity.class);
+            notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
+                    " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
+            if(proxyStarted!=null){
+                proxyStarted.onNotified(notificationHandler);
+            }
+        }catch (Exception e){
+            if(proxyStarted!=null){
+                proxyStarted.onError(e);
+            }
             e.printStackTrace();
-        }*/
-        notificationHandler = new NotificationHandler(1, getApplicationContext(), MainActivity.class);
-        notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
-                " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
+        }
     }
     public void cancelNotifications(){
         notificationHandler.getNotificationManager().cancelAll();
@@ -87,8 +85,12 @@ public class ProxyService extends Service {
     public void registerClient(Activity activity){
         this.callBacks = (Callbacks)activity;
     }
-    public interface Callbacks{
-        public void onRequest(HttpRequest httpRequest);
+    public interface Callbacks {
+        void onRequest(HttpRequest httpRequest);
+    }
+    public interface IProxyStatus {
+        void onNotified(NotificationHandler notificationHandler);
+        void onError(Exception e);
     }
 
 }

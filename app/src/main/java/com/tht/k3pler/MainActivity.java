@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,7 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     private ServiceController serviceController;
 
     private void init(){
-        serviceController = new ServiceController(MainActivity.this, ProxyService.class);
+        serviceController = new ServiceController(this, ProxyService.class);
     }
 
     @Override
@@ -25,19 +26,19 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        checkExtras();
         startProxy();
     }
-    private void checkExtras(){
+    private void checkExtras() {
         Intent currentIntent = getIntent();
-        if (currentIntent != null){
+        if (currentIntent != null) {
             try {
                 if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
                     Toast.makeText(getApplicationContext(), "Show command received", Toast.LENGTH_SHORT).show();
                 } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
+                    Toast.makeText(getApplicationContext(), "Stop command received", Toast.LENGTH_SHORT).show();
                     stopProxyService();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -55,17 +56,8 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         }
     }
     private void stopProxyService(){
-        // TODO: 9/6/2018 Leaked
-
-        stopProxy();
         try{
             proxyService.cancelNotifications();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    private void stopProxy(){
-        try {
             serviceController.stopService(serviceConnection);
         }catch (Exception e){
             e.printStackTrace();
@@ -74,10 +66,20 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Toast.makeText(getApplicationContext(), "Service connected.", Toast.LENGTH_SHORT).show();
             ProxyService.LocalBinder binder = (ProxyService.LocalBinder) iBinder;
             proxyService = binder.getServiceInstance();
             proxyService.registerClient(MainActivity.this);
-            proxyService.startLocalProxy();
+            proxyService.startLocalProxy(new ProxyService.IProxyStatus() {
+                @Override
+                public void onNotified(NotificationHandler notificationHandler) {
+                    checkExtras();
+                }
+                @Override
+                public void onError(Exception e) {
+                    Log.d(getString(R.string.app_name), e.getMessage());
+                }
+            });
         }
         @Override
         public void onServiceDisconnected(ComponentName componentName) {}
@@ -89,7 +91,7 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //stopProxy();
+        stopProxyService();
     }
 }
 

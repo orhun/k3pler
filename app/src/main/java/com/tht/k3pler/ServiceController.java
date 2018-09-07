@@ -17,7 +17,7 @@ public class ServiceController {
         return new Intent(activity, service);
     }
     public void startServiceWithBind(ServiceConnection serviceConnection) throws Exception {
-        activity.startService(getIntent());
+        startService();
         bindService(serviceConnection);
     }
     public void stopService(ServiceConnection serviceConnection) throws Exception {
@@ -30,8 +30,7 @@ public class ServiceController {
     public void unbindService(ServiceConnection serviceConnection){
         activity.unbindService(serviceConnection);
     }
-    public void startProxy() throws Exception{
-        activity.stopService(getIntent());
+    public void startService() throws Exception{
         activity.startService(getIntent());
     }
 

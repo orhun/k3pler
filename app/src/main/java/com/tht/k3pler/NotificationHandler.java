@@ -12,8 +12,9 @@ import android.support.v4.app.NotificationCompat;
 public class NotificationHandler {
     private Context context;
     private Class mClass;
-    private int ID;
+    private int ID, btnID1 = 1, btnID2 = 2;
     private NotificationManager notificationManager;
+    private int pendingFlag = PendingIntent.FLAG_UPDATE_CURRENT;
 
     public NotificationHandler(int ID, Context context, Class mClass){
         this.ID = ID;
@@ -27,7 +28,7 @@ public class NotificationHandler {
     }
     public PendingIntent getPendingIntent(Intent intent){
         return PendingIntent.getActivity(context, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+                pendingFlag);
     }
     private NotificationManager createNotificationManager(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -49,14 +50,14 @@ public class NotificationHandler {
     private PendingIntent getStopPendingIntent(){
         Intent intent = getIntent();
         intent.putExtra(context.getString(R.string.proxy_stop), true);
-        return PendingIntent.getActivity(context, 1, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        return PendingIntent.getActivity(context, btnID1, intent,
+                pendingFlag);
     }
     private PendingIntent getShowPendingIntent(){
         Intent intent = getIntent();
         intent.putExtra(context.getString(R.string.show_gui), true);
-        return PendingIntent.getActivity(context, 2, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        return PendingIntent.getActivity(context, btnID2, intent,
+                pendingFlag);
     }
     public void notify(String messageTitle, String messageBody, Boolean isOnGoing) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, String.valueOf(ID))
