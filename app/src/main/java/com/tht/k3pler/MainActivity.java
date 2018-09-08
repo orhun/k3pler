@@ -84,6 +84,7 @@ public class MainActivity extends Activity implements ProxyService.Callbacks {
         }catch (Exception e){
            e.printStackTrace();
         }
+        finish();
     }
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
