@@ -13,7 +13,7 @@ import io.netty.handler.codec.http.HttpVersion;
 
 class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
-    private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.FORBIDDEN;
+    private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY;
     private static String blockedList[] = new String[]{"twitter"};
     public FilteredResponse(HttpRequest originalRequest){
         super(originalRequest, null);

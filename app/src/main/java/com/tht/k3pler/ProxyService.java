@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSource;
@@ -21,6 +22,12 @@ public class ProxyService extends Service {
     private static final int MAX_BUFFER = 10 * 1024 * 1024;
     private NotificationHandler notificationHandler;
     private final IBinder mBinder = new Binder();
+    private Intent currentIntent;
+
+    public interface IProxyStatus {
+        void onNotified(NotificationHandler notificationHandler);
+        void onError(Exception e);
+    }
 
     public ProxyService() {}
 
@@ -35,15 +42,17 @@ public class ProxyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        currentIntent = intent;
         onStart();
         return START_NOT_STICKY;
     }
 
-    public void onStart(){
+    private void onStart(){
+        checkExtras();
         startLocalProxy(null);
     }
 
-    public void startLocalProxy(IProxyStatus proxyStarted){
+    private void startLocalProxy(IProxyStatus proxyStarted){
         try {
             httpProxyServer = DefaultHttpProxyServer.bootstrap()
                     .withPort(PORT_NUMBER)
@@ -62,7 +71,7 @@ public class ProxyService extends Service {
                             return MAX_BUFFER;
                         }
                     }).start();
-            notificationHandler = new NotificationHandler(1, getApplicationContext(), MainActivity.class);
+            notificationHandler = new NotificationHandler(1, getApplicationContext(), ProxyService.class);
             notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
                     " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
             if(proxyStarted!=null){
@@ -75,24 +84,37 @@ public class ProxyService extends Service {
             e.printStackTrace();
         }
     }
-    public void cancelNotifications(){
-        notificationHandler.getNotificationManager().cancelAll();
-    }
-
-    /*public class LocalBinder extends Binder {
-        public ProxyService getServiceInstance(){
-            return ProxyService.this;
+    private void checkExtras() {
+        if (currentIntent != null) {
+            try {
+                if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
+                    Log.d(getString(R.string.app_name), "Show command received");
+                } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
+                    stopSelf();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-    public void registerClient(Activity activity){
-        this.callBacks = (Callbacks)activity;
+    private void cancelNotifications(){
+        try {
+            notificationHandler.getNotificationManager().cancelAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-    public interface Callbacks {
-        void onRequest(HttpRequest httpRequest);
-    }*/
-    public interface IProxyStatus {
-        void onNotified(NotificationHandler notificationHandler);
-        void onError(Exception e);
+    private void stopProxy(){
+        try{
+            httpProxyServer.stop();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        cancelNotifications();
+        stopProxy();
+    }
 }

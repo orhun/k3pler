@@ -27,7 +27,7 @@ public class NotificationHandler {
         return intent;
     }
     public PendingIntent getPendingIntent(Intent intent){
-        return PendingIntent.getActivity(context, 0, intent,
+        return PendingIntent.getService(context, 0, intent,
                 pendingFlag);
     }
     private NotificationManager createNotificationManager(){
@@ -50,13 +50,13 @@ public class NotificationHandler {
     private PendingIntent getStopPendingIntent(){
         Intent intent = getIntent();
         intent.putExtra(context.getString(R.string.proxy_stop), true);
-        return PendingIntent.getActivity(context, btnID1, intent,
+        return PendingIntent.getService(context, btnID1, intent,
                 pendingFlag);
     }
     private PendingIntent getShowPendingIntent(){
         Intent intent = getIntent();
         intent.putExtra(context.getString(R.string.show_gui), true);
-        return PendingIntent.getActivity(context, btnID2, intent,
+        return PendingIntent.getService(context, btnID2, intent,
                 pendingFlag);
     }
     public void notify(String messageTitle, String messageBody, Boolean isOnGoing) {

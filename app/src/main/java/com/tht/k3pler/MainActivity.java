@@ -23,22 +23,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         init();
         startProxy();
-        checkExtras();
-    }
-    private void checkExtras() {
-        Intent currentIntent = getIntent();
-        if (currentIntent != null) {
-            try {
-                if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
-                    Log.d(getString(R.string.app_name), "Show command received");
-                } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
-                    Log.d(getString(R.string.app_name), "Stop command received");
-                    stopProxyService();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
     private void startProxy(){
         stopProxyService();
@@ -46,11 +30,7 @@ public class MainActivity extends Activity {
             serviceController.startService();
         }catch (Exception e1){
             e1.printStackTrace();
-            try {
-                serviceController.stopService();
-            }catch (Exception e2){
-                e2.printStackTrace();
-            }
+            stopProxyService();
         }
         finish();
     }
