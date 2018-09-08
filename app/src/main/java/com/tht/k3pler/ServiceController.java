@@ -20,10 +20,6 @@ public class ServiceController {
         startService();
         bindService(serviceConnection);
     }
-    public void stopService(ServiceConnection serviceConnection) throws Exception {
-        unbindService(serviceConnection);
-        activity.stopService(getIntent());
-    }
     public void bindService(ServiceConnection serviceConnection){
         activity.bindService(getIntent(), serviceConnection, Context.BIND_AUTO_CREATE);
     }
@@ -32,6 +28,9 @@ public class ServiceController {
     }
     public void startService() throws Exception{
         activity.startService(getIntent());
+    }
+    public void stopService() throws Exception {
+        activity.stopService(getIntent());
     }
 
 }

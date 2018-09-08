@@ -20,9 +20,7 @@ public class ProxyService extends Service {
     public static final int PORT_NUMBER = 8090;
     private static final int MAX_BUFFER = 10 * 1024 * 1024;
     private NotificationHandler notificationHandler;
-
-    private Callbacks callBacks;
-    private final IBinder mBinder = new LocalBinder();
+    private final IBinder mBinder = new Binder();
 
     public ProxyService() {}
 
@@ -31,11 +29,13 @@ public class ProxyService extends Service {
 
     @Override
     public void onCreate() {
+        onStart();
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        onStart();
         return START_NOT_STICKY;
     }
 
@@ -50,7 +50,6 @@ public class ProxyService extends Service {
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
                         public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
-                            callBacks.onRequest(originalRequest);
                             return new FilteredResponse(originalRequest);
                         }
                         @Override
@@ -80,7 +79,7 @@ public class ProxyService extends Service {
         notificationHandler.getNotificationManager().cancelAll();
     }
 
-    public class LocalBinder extends Binder {
+    /*public class LocalBinder extends Binder {
         public ProxyService getServiceInstance(){
             return ProxyService.this;
         }
@@ -90,7 +89,7 @@ public class ProxyService extends Service {
     }
     public interface Callbacks {
         void onRequest(HttpRequest httpRequest);
-    }
+    }*/
     public interface IProxyStatus {
         void onNotified(NotificationHandler notificationHandler);
         void onError(Exception e);
