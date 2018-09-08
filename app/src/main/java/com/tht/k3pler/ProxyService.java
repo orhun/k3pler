@@ -1,11 +1,16 @@
 package com.tht.k3pler;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Window;
+import android.view.WindowManager;
 
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSource;
@@ -49,7 +54,8 @@ public class ProxyService extends Service {
 
     private void onStart(){
         checkExtras();
-        startLocalProxy(null);
+        showGUI();
+        //startLocalProxy(null);
     }
 
     private void startLocalProxy(IProxyStatus proxyStarted){
@@ -96,6 +102,14 @@ public class ProxyService extends Service {
                 e.printStackTrace();
             }
         }
+    }
+    private void showGUI(){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final Dialog guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
+        guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
+        guiDialog.show();
     }
     private void cancelNotifications(){
         try {
