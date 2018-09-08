@@ -104,12 +104,18 @@ public class ProxyService extends Service {
         }
     }
     private void showGUI(){
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final Dialog guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
-        guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
-        guiDialog.show();
+        try {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final Dialog guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
+            guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
+            guiDialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d(getString(R.string.app_name), "GUI start error.");
+            stopSelf();
+        }
     }
     private void cancelNotifications(){
         try {
