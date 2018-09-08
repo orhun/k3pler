@@ -60,7 +60,7 @@ public class NotificationHandler {
                 pendingFlag);
     }
     public void notify(String messageTitle, String messageBody, Boolean isOnGoing) {
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, String.valueOf(ID))
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .addAction(0, context.getString(R.string.show_gui), getShowPendingIntent())
                 .addAction(0, context.getString(R.string.proxy_stop), getStopPendingIntent())

@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Window;
@@ -28,6 +31,8 @@ public class ProxyService extends Service {
     private NotificationHandler notificationHandler;
     private final IBinder mBinder = new Binder();
     private Intent currentIntent;
+    // ** //
+    private RecyclerView recyclerView;
 
     public interface IProxyStatus {
         void onNotified(NotificationHandler notificationHandler);
@@ -103,6 +108,18 @@ public class ProxyService extends Service {
             }
         }
     }
+    private void initGUI(Dialog dialog){
+        recyclerView = dialog.findViewById(R.id.recycler_view);
+        initRV(recyclerView);
+    }
+    private void initRV(RecyclerView pRecyclerView){
+        try {
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            pRecyclerView.setLayoutManager(mLayoutManager);
+            pRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        }catch (Exception e){e.printStackTrace();}
+    }
     private void showGUI(){
         try {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -110,6 +127,9 @@ public class ProxyService extends Service {
             guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
             guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
+            initGUI(guiDialog);
+
+
             guiDialog.show();
         }catch (Exception e){
             e.printStackTrace();
