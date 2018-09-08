@@ -9,8 +9,12 @@
     <color name="keplerBlue">#1C3F39</color>
 
     <color name="lightGreen">#00656A</color>
-    <color name="darkBlue">#142035</color>
+    <color name="darkBlue">#020814</color>
+    <color name="lightBlue">#C5CEE1</color>
     <color name="keplerPurple">#3F52B5</color>
 
-    <color name="lime">#00FF00</color>
+    <color name="keplerColor1">#142035</color>
+    <color name="keplerColor2">#1C1637</color>
+    <color name="keplerColor3">#10322D</color>
+
 </resources>
