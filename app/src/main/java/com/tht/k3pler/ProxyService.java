@@ -140,12 +140,12 @@ public class ProxyService extends Service {
             initGUI(guiDialog);
 
 
-           /* guiDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+           guiDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {
                     showGUI();
                 }
-            });*/
+            });
 
             startLocalProxy(new IProxyStatus() {
                 @Override
