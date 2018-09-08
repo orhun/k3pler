@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -14,11 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSource;
 import org.littleshoot.proxy.HttpProxyServer;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
+
+import java.util.ArrayList;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
@@ -31,11 +35,14 @@ public class ProxyService extends Service {
     private NotificationHandler notificationHandler;
     private final IBinder mBinder = new Binder();
     private Intent currentIntent;
+    private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
+    private Dialog guiDialog;
     // ** //
     private RecyclerView recyclerView;
 
     public interface IProxyStatus {
-        void onNotified(NotificationHandler notificationHandler);
+        void onReceive(HttpRequest httpRequest);
+        void onNotify(NotificationHandler notificationHandler);
         void onError(Exception e);
     }
 
@@ -59,17 +66,20 @@ public class ProxyService extends Service {
 
     private void onStart(){
         checkExtras();
-        showGUI();
-        //startLocalProxy(null);
     }
-
-    private void startLocalProxy(IProxyStatus proxyStarted){
+    private void showProxyNotification(){
+        notificationHandler = new NotificationHandler(1, getApplicationContext(), ProxyService.class);
+        notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
+                " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
+    }
+    private void startLocalProxy(final IProxyStatus proxyStatus){
         try {
             httpProxyServer = DefaultHttpProxyServer.bootstrap()
                     .withPort(PORT_NUMBER)
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
                         public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
+                            proxyStatus.onReceive(originalRequest);
                             return new FilteredResponse(originalRequest);
                         }
                         @Override
@@ -82,15 +92,13 @@ public class ProxyService extends Service {
                             return MAX_BUFFER;
                         }
                     }).start();
-            notificationHandler = new NotificationHandler(1, getApplicationContext(), ProxyService.class);
-            notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
-                    " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
-            if(proxyStarted!=null){
-                proxyStarted.onNotified(notificationHandler);
+            showProxyNotification();
+            if(proxyStatus!=null){
+                proxyStatus.onNotify(notificationHandler);
             }
         }catch (Exception e){
-            if(proxyStarted!=null){
-                proxyStarted.onError(e);
+            if(proxyStatus!=null){
+                proxyStatus.onError(e);
             }
             e.printStackTrace();
         }
@@ -99,9 +107,12 @@ public class ProxyService extends Service {
         if (currentIntent != null) {
             try {
                 if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
-                    Log.d(getString(R.string.app_name), "Show command received");
+                    showGuiDialog();
+                    showProxyNotification();
                 } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
                     stopSelf();
+                } else{
+                    showGUI();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -117,24 +128,61 @@ public class ProxyService extends Service {
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             pRecyclerView.setLayoutManager(mLayoutManager);
             pRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
         }catch (Exception e){e.printStackTrace();}
     }
     private void showGUI(){
         try {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final Dialog guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
+            guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
             guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
             guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
             initGUI(guiDialog);
 
 
-            guiDialog.show();
+           /* guiDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    showGUI();
+                }
+            });*/
+
+            startLocalProxy(new IProxyStatus() {
+                @Override
+                public void onReceive(HttpRequest httpRequest) {
+                    httpReqs.add(new HTTPReq(httpRequest.getUri(), httpRequest.getMethod().name()));
+                    recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), httpReqs, new RequestAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(HTTPReq item, int i) {
+                            Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
+                        }
+                    }));
+                }
+
+                @Override
+                public void onNotify(NotificationHandler notificationHandler) {}
+
+                @Override
+                public void onError(Exception e) {
+                    Log.d(getString(R.string.app_name), e.getMessage());
+                }
+            });
+            
         }catch (Exception e){
             e.printStackTrace();
             Log.d(getString(R.string.app_name), "GUI start error.");
             stopSelf();
+        }
+    }
+    private void showGuiDialog(){
+        try{
+            if(guiDialog != null && !guiDialog.isShowing()){
+                guiDialog.show();
+            }else{
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     private void cancelNotifications(){
@@ -147,6 +195,11 @@ public class ProxyService extends Service {
     private void stopProxy(){
         try{
             httpProxyServer.stop();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            httpProxyServer.abort();
         }catch (Exception e){
             e.printStackTrace();
         }
