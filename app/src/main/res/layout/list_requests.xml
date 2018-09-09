@@ -2,13 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:background="@android:color/black">
     <TextView
         android:id="@+id/txvRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/white"
         android:textStyle="bold"/>
 </LinearLayout>

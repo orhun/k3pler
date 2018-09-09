@@ -1,13 +1,19 @@
 package com.tht.k3pler;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
@@ -46,14 +52,32 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         return new ViewHolder(itemView);
     }
     @Override
+    @SuppressWarnings("deprecation")
     public void onBindViewHolder(ViewHolder holder, int position) {
         String uri = requests.get(position).getUri();
-        holder.txvRequest.setText(uri);
+        String method = requests.get(position).getMethod();
+        String htmlEntry = "<b>"+
+                "<font color=\"" +
+                ContextCompat.getColor(context, android.R.color.white) + "\">"
+                + uri + "</font>"+"<font color=\""+
+                ContextCompat.getColor(context, R.color.color3lighter) +  "\">"
+                +" ~ </font>"+"<font color=\""+
+                ContextCompat.getColor(context, R.color.color2) + "\">"
+                + method +"</font>"+"<font color=\""+
+                ContextCompat.getColor(context, R.color.color1) +  "\">"
+                + " " + getTime() +"</font>"
+                + "</b>";
+        holder.txvRequest.setText(Html.fromHtml(htmlEntry));
         holder.bind(requests.get(position), position, onItemClickListener);
     }
     @Override
     public int getItemCount() {
         return requests.size();
+    }
+
+    private String getTime(){
+        DateFormat df = new SimpleDateFormat("[HH:mm:ss]", Locale.getDefault());
+        return df.format(Calendar.getInstance().getTime());
     }
 
 }
