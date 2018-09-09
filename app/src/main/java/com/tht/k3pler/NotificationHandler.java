@@ -14,7 +14,7 @@ public class NotificationHandler {
     private Class mClass;
     private int ID, btnID1 = 1, btnID2 = 2;
     private NotificationManager notificationManager;
-    private int pendingFlag = PendingIntent.FLAG_ONE_SHOT;
+    private int pendingFlag = PendingIntent.FLAG_NO_CREATE;
 
     public NotificationHandler(int ID, Context context, Class mClass){
         this.ID = ID;
@@ -63,10 +63,10 @@ public class NotificationHandler {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
                  //.addAction(0, context.getString(R.string.show_gui), getShowPendingIntent())
-                .addAction(0, context.getString(R.string.proxy_stop), getStopPendingIntent())
+                .addAction(0, context.getString(R.string.proxy_stop), getStopPendingIntent()).setAutoCancel(true)
                 .setContentTitle(messageTitle)
                 .setContentText(messageBody)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setOngoing(isOnGoing)
                 .setContentIntent(getShowPendingIntent());
         notificationManager = createNotificationManager();

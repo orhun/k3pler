@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -53,24 +54,34 @@ public class ProxyService extends Service {
 
     @Override
     public void onCreate() {
-        onStart();
         super.onCreate();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        currentIntent = intent;
-        onStart();
+    public int onStartCommand(Intent currentIntent, int flags, int startId) {
+        this.currentIntent = currentIntent;
+        this.checkExtras();
         return START_NOT_STICKY;
     }
+    private class showProxyNotification extends AsyncTask<Void, String, String>{
+        private HttpProxyServer httpProxyServer;
 
-    private void onStart(){
-        checkExtras();
-    }
-    private void showProxyNotification(){
-        notificationHandler = new NotificationHandler(1, getApplicationContext(), ProxyService.class);
-        notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
-                " [" + String.valueOf(ProxyService.PORT_NUMBER) + "]", true);
+        private showProxyNotification(HttpProxyServer httpProxyServer){
+            this.httpProxyServer = httpProxyServer;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return httpProxyServer.getListenAddress().getHostName() + ":" +
+                    String.valueOf(httpProxyServer.getListenAddress().getPort());
+        }
+        @Override
+        protected void onPostExecute(String str) {
+            super.onPostExecute(str);
+            notificationHandler = new NotificationHandler(1,getApplicationContext(), ProxyService.class);
+            notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
+                    " [" + str + "]", true);
+        }
     }
     private void startLocalProxy(final IProxyStatus proxyStatus){
         try {
@@ -92,7 +103,11 @@ public class ProxyService extends Service {
                             return MAX_BUFFER;
                         }
                     }).start();
-            showProxyNotification();
+            if(httpProxyServer != null){
+                new showProxyNotification(httpProxyServer).execute();
+            }else{
+                throw new Exception("Failed to start proxy.");
+            }
             if(proxyStatus!=null){
                 proxyStatus.onNotify(notificationHandler);
             }
@@ -108,7 +123,6 @@ public class ProxyService extends Service {
             try {
                 if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
                     showGuiDialog();
-                    showProxyNotification();
                 } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
                     stopSelf();
                 } else{
@@ -117,6 +131,8 @@ public class ProxyService extends Service {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else{
+            showGUI();
         }
     }
     private void initGUI(Dialog dialog){
@@ -138,15 +154,8 @@ public class ProxyService extends Service {
             guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
             initGUI(guiDialog);
-
-
-           guiDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialogInterface) {
-                    showGUI();
-                }
-            });
-
+            guiDialog.show();
+            
             startLocalProxy(new IProxyStatus() {
                 @Override
                 public void onReceive(HttpRequest httpRequest) {
@@ -164,7 +173,7 @@ public class ProxyService extends Service {
 
                 @Override
                 public void onError(Exception e) {
-                    Log.d(getString(R.string.app_name), e.getMessage());
+                    Log.d(getString(R.string.app_name), e.toString());
                 }
             });
             
@@ -178,8 +187,6 @@ public class ProxyService extends Service {
         try{
             if(guiDialog != null && !guiDialog.isShowing()){
                 guiDialog.show();
-            }else{
-
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -193,6 +200,10 @@ public class ProxyService extends Service {
         }
     }
     private void stopProxy(){
+        if(guiDialog != null && guiDialog.isShowing()) {
+            guiDialog.cancel();
+            guiDialog = null;
+        }
         try{
             httpProxyServer.stop();
         }catch (Exception e){
