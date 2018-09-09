@@ -25,6 +25,7 @@ import org.littleshoot.proxy.HttpProxyServer;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
@@ -39,6 +40,7 @@ public class ProxyService extends Service {
     private Intent currentIntent;
     private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private Dialog guiDialog;
+    private String decoderResult = "";
     // ** //
     private RecyclerView recyclerView;
     private ViewPager viewPager;
@@ -109,8 +111,17 @@ public class ProxyService extends Service {
             startLocalProxy(new IProxyStatus() {
                 @Override
                 public void onReceive(HttpRequest httpRequest) {
-                    httpReqs.add(new HTTPReq(httpRequest.getUri(), httpRequest.getMethod().name()));
-                    recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), httpReqs, new RequestAdapter.OnItemClickListener() {
+                    if(httpRequest.getDecoderResult().isSuccess())
+                        decoderResult = "S";
+                    else if(httpRequest.getDecoderResult().isFinished())
+                        decoderResult = "F";
+                    else if(httpRequest.getDecoderResult().isFailure())
+                        decoderResult = "X";
+                    httpReqs.add(new HTTPReq(httpRequest.getUri(), httpRequest.getMethod().name(),
+                            httpRequest.getProtocolVersion().text(), decoderResult));
+                    ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
+                    Collections.reverse(tmpHttpReqs);
+                    recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(HTTPReq item, int i) {
                             Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();

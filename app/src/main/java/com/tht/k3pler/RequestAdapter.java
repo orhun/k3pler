@@ -1,6 +1,7 @@
 package com.tht.k3pler;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -46,16 +47,18 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         this.onItemClickListener = onItemClickListener;
     }
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_requests, parent, false);
         return new ViewHolder(itemView);
     }
     @Override
     @SuppressWarnings("deprecation")
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String uri = requests.get(position).getUri();
         String method = requests.get(position).getMethod();
+        String protocol = requests.get(position).getProtocol();
+        String result = requests.get(position).getResult();
         String htmlEntry = "<b>"+
                 "<font color=\"" +
                 ContextCompat.getColor(context, android.R.color.white) + "\">"
@@ -65,7 +68,11 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 ContextCompat.getColor(context, R.color.color2) + "\">"
                 + method +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color1) +  "\">"
-                + " " + getTime() +"</font>"
+                + " [" + protocol + "] " +"</font>"+"<font color=\""+
+                ContextCompat.getColor(context, R.color.orange) +  "\">"
+                + "_" + result + "_ " +"</font>"+"<font color=\""+
+                ContextCompat.getColor(context, R.color.lightYellow) +  "\">"
+                + " " + getTime()  +"</font>"
                 + "</b>";
         holder.txvRequest.setText(Html.fromHtml(htmlEntry));
         holder.bind(requests.get(position), position, onItemClickListener);
@@ -76,7 +83,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     }
 
     private String getTime(){
-        DateFormat df = new SimpleDateFormat("[HH:mm:ss]", Locale.getDefault());
+        DateFormat df = new SimpleDateFormat("{HH:mm:ss}", Locale.getDefault());
         return df.format(Calendar.getInstance().getTime());
     }
 

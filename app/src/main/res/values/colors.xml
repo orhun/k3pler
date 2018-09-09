@@ -3,6 +3,9 @@
     <color name="lightBlue">#C5CEE1</color>
     <color name="green">#0FC41B</color>
     <color name="lightGreen">#0DAC64</color>
+    <color name="yellow">#FFE641</color>
+    <color name="lightYellow">#F9DB13</color>
+    <color name="orange">#C08A05</color>
 
     <color name="color1">#3F52B5</color>
     <color name="color1dark">#2137AA</color>
