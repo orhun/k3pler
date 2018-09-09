@@ -63,26 +63,7 @@ public class ProxyService extends Service {
         this.checkExtras();
         return START_NOT_STICKY;
     }
-    private class showProxyNotification extends AsyncTask<Void, String, String>{
-        private HttpProxyServer httpProxyServer;
 
-        private showProxyNotification(HttpProxyServer httpProxyServer){
-            this.httpProxyServer = httpProxyServer;
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            return httpProxyServer.getListenAddress().getHostName() + ":" +
-                    String.valueOf(httpProxyServer.getListenAddress().getPort());
-        }
-        @Override
-        protected void onPostExecute(String str) {
-            super.onPostExecute(str);
-            notificationHandler = new NotificationHandler(1,getApplicationContext(), ProxyService.class);
-            notificationHandler.notify(getString(R.string.app_name), getString(R.string.proxy_running) +
-                    " [" + str + "]", true);
-        }
-    }
     private void startLocalProxy(final IProxyStatus proxyStatus){
         try {
             httpProxyServer = DefaultHttpProxyServer.bootstrap()
@@ -103,8 +84,9 @@ public class ProxyService extends Service {
                             return MAX_BUFFER;
                         }
                     }).start();
+            notificationHandler = new NotificationHandler(1, getApplicationContext(), ProxyService.class);
             if(httpProxyServer != null){
-                new showProxyNotification(httpProxyServer).execute();
+                new ProxyNotifier(getApplicationContext(), httpProxyServer, notificationHandler).execute();
             }else{
                 throw new Exception("Failed to start proxy.");
             }
