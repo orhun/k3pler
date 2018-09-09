@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 public class LayoutPagerAdapter extends android.support.v4.view.PagerAdapter {
-    private enum PagerEnum {
-        MainPage(R.string.app_name, R.layout.layout_pager_main),
-        SettingsPage(R.string.app_name, R.layout.layout_pager_main);
+    public enum PagerEnum {
+        MainPage(R.string.main_page, R.layout.layout_pager_main),
+        SettingsPage(R.string.settings_page, R.layout.layout_pager_main);
         private int mTitleResId;
         private int mLayoutResId;
         PagerEnum(int titleResId, int layoutResId) {

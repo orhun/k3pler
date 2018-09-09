@@ -47,7 +47,9 @@ public class ProxyService extends Service {
     private Dialog guiDialog;
     private String decoderResult = "";
     private Handler mainHandler;
+    private LayoutPagerAdapter layoutPagerAdapter;
     // ** //
+    private TextView txvPage;
     private RecyclerView recyclerView;
     private ViewPager viewPager;
 
@@ -91,8 +93,9 @@ public class ProxyService extends Service {
         }
     }
     private void initGUI(Dialog dialog){
+        txvPage = dialog.findViewById(R.id.txvPage);
         viewPager = dialog.findViewById(R.id.viewPager);
-        viewPager.setAdapter(new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
+        layoutPagerAdapter = new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
             @Override
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
                 recyclerView = layouts.get(0).findViewById(R.id.recycler_view);
@@ -102,7 +105,20 @@ public class ProxyService extends Service {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 }catch (Exception e){e.printStackTrace();}
             }
-        }));
+        });
+        viewPager.setAdapter(layoutPagerAdapter);
+        txvPage.setText(" > " + getString(LayoutPagerAdapter.PagerEnum.MainPage.getTitleResId()));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+            @Override
+            public void onPageSelected(int position) {
+                txvPage.setText(" > " + getString(LayoutPagerAdapter.PagerEnum.values()[position].getTitleResId()));
+            }
+        });
+
     }
     private void showGUI(){
         try {
