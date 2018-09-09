@@ -55,24 +55,20 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     @Override
     @SuppressWarnings("deprecation")
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String uri = requests.get(position).getUri();
-        String method = requests.get(position).getMethod();
-        String protocol = requests.get(position).getProtocol();
-        String result = requests.get(position).getResult();
         String htmlEntry = "<b>"+
                 "<font color=\"" +
                 ContextCompat.getColor(context, android.R.color.white) + "\">"
-                + uri + "</font>"+"<font color=\""+
+                + requests.get(position).getUri() + "</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color3lighter) +  "\">"
                 +" ~ </font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color2) + "\">"
-                + method +"</font>"+"<font color=\""+
+                + requests.get(position).getMethod() +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color1) +  "\">"
-                + " [" + protocol + "] " +"</font>"+"<font color=\""+
+                + " [" + requests.get(position).getProtocol() + "] " +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.orange) +  "\">"
-                + "_" + result + "_ " +"</font>"+"<font color=\""+
+                + "_" + requests.get(position).getResult() + "_ " +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.lightYellow) +  "\">"
-                + " " + getTime()  +"</font>"
+                + " " + requests.get(position).getTime()  +"</font>"
                 + "</b>";
         holder.txvRequest.setText(Html.fromHtml(htmlEntry));
         holder.bind(requests.get(position), position, onItemClickListener);
@@ -80,11 +76,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     @Override
     public int getItemCount() {
         return requests.size();
-    }
-
-    private String getTime(){
-        DateFormat df = new SimpleDateFormat("{HH:mm:ss}", Locale.getDefault());
-        return df.format(Calendar.getInstance().getTime());
     }
 
 }

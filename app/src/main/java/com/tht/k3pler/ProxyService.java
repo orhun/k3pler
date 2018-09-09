@@ -24,8 +24,12 @@ import org.littleshoot.proxy.HttpFiltersSource;
 import org.littleshoot.proxy.HttpProxyServer;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Locale;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
@@ -118,7 +122,7 @@ public class ProxyService extends Service {
                     else if(httpRequest.getDecoderResult().isFailure())
                         decoderResult = "X";
                     httpReqs.add(new HTTPReq(httpRequest.getUri(), httpRequest.getMethod().name(),
-                            httpRequest.getProtocolVersion().text(), decoderResult));
+                            httpRequest.getProtocolVersion().text(), decoderResult, getTime()));
                     ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
                     Collections.reverse(tmpHttpReqs);
                     recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
@@ -135,6 +139,10 @@ public class ProxyService extends Service {
                 @Override
                 public void onError(Exception e) {
                     Log.d(getString(R.string.app_name), e.toString());
+                }
+                private String getTime() {
+                    DateFormat df = new SimpleDateFormat("{HH:mm:ss}", Locale.getDefault());
+                    return df.format(Calendar.getInstance().getTime());
                 }
             });
 
