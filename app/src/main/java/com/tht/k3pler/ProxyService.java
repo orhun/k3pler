@@ -45,6 +45,7 @@ public class ProxyService extends Service {
     private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private Dialog guiDialog;
     private String decoderResult = "";
+    private RequestAdapter requestAdapter;
     // ** //
     private RecyclerView recyclerView;
     private ViewPager viewPager;
@@ -121,16 +122,26 @@ public class ProxyService extends Service {
                         decoderResult = "F";
                     else if(httpRequest.getDecoderResult().isFailure())
                         decoderResult = "X";
-                    httpReqs.add(new HTTPReq(httpRequest.getUri(), httpRequest.getMethod().name(),
-                            httpRequest.getProtocolVersion().text(), decoderResult, getTime()));
+                    httpReqs.add(new HTTPReq(httpRequest.getUri(),
+                            String.valueOf(httpRequest.getMethod().name().charAt(0)),
+                            httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
+                            decoderResult,
+                            getTime()));
                     ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
                     Collections.reverse(tmpHttpReqs);
-                    recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
+                    requestAdapter = new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(HTTPReq item, int i) {
                             Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
                         }
-                    }));
+                    });
+                    requestAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                        @Override
+                        public void onChanged() {
+                            super.onChanged();
+                        }
+                    });
+                    recyclerView.setAdapter(requestAdapter);
                 }
 
                 @Override
