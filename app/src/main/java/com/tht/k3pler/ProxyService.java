@@ -140,7 +140,9 @@ public class ProxyService extends Service {
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
                         public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
-                            proxyStatus.onReceive(originalRequest);
+                            try {
+                                proxyStatus.onReceive(originalRequest);
+                            }catch (Exception e){ e.printStackTrace(); }
                             return new FilteredResponse(originalRequest);
                         }
                         @Override
@@ -173,6 +175,9 @@ public class ProxyService extends Service {
         try{
             if(guiDialog != null && !guiDialog.isShowing()){
                 guiDialog.show();
+            }else if (guiDialog == null){
+                cancelNotifications();
+                showGUI();
             }
         }catch (Exception e){
             e.printStackTrace();
