@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +51,7 @@ public class ProxyService extends Service {
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
     // ** //
-    private TextView txvPage;
+    private TextView txvPage, txvNum;
     private RecyclerView recyclerView;
     private ViewPager viewPager;
 
@@ -92,8 +94,10 @@ public class ProxyService extends Service {
             showGUI();
         }
     }
+    @SuppressWarnings("deprecation")
     private void initGUI(Dialog dialog){
         txvPage = dialog.findViewById(R.id.txvPage);
+        txvNum = dialog.findViewById(R.id.txvNum);
         viewPager = dialog.findViewById(R.id.viewPager);
         layoutPagerAdapter = new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
             @Override
@@ -104,6 +108,17 @@ public class ProxyService extends Service {
                     recyclerView.setLayoutManager(mLayoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 }catch (Exception e){e.printStackTrace();}
+                String pageNumHTML = "";
+                int color;
+                for(int i = 0; i < layouts.size(); i++){
+                    if(i == 0)
+                        color = ContextCompat.getColor(getApplicationContext(), R.color.color2);
+                    else
+                        color = ContextCompat.getColor(getApplicationContext(), android.R.color.white);
+                    pageNumHTML += "<font color=\"" + color + "\">" + String.valueOf(i+1) + " " + "</font>";
+                }
+                txvNum.setText(Html.fromHtml(pageNumHTML));
+                // TODO: 9/9/2018 Handle layouts here
             }
         });
         viewPager.setAdapter(layoutPagerAdapter);
@@ -116,9 +131,9 @@ public class ProxyService extends Service {
             @Override
             public void onPageSelected(int position) {
                 txvPage.setText(" > " + getString(LayoutPagerAdapter.PagerEnum.values()[position].getTitleResId()));
+                // TODO: 9/9/2018 Change txvNum
             }
         });
-
     }
     private void showGUI(){
         try {
