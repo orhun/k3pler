@@ -1,21 +1,22 @@
 package com.tht.k3pler;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.littleshoot.proxy.HttpFilters;
@@ -40,6 +41,7 @@ public class ProxyService extends Service {
     private Dialog guiDialog;
     // ** //
     private RecyclerView recyclerView;
+    private ViewPager viewPager;
 
     public interface IProxyStatus {
         void onReceive(HttpRequest httpRequest);
@@ -81,12 +83,18 @@ public class ProxyService extends Service {
         }
     }
     private void initGUI(Dialog dialog){
-        recyclerView = dialog.findViewById(R.id.recycler_view);
-        try {
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            recyclerView.setLayoutManager(mLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-        }catch (Exception e){e.printStackTrace();}
+        viewPager = dialog.findViewById(R.id.viewPager);
+        viewPager.setAdapter(new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
+            @Override
+            public void onViewsAdded(ArrayList<ViewGroup> layouts) {
+                recyclerView = layouts.get(0).findViewById(R.id.recycler_view);
+                try {
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                }catch (Exception e){e.printStackTrace();}
+            }
+        }));
     }
     private void showGUI(){
         try {
