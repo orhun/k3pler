@@ -8,11 +8,19 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@android:color/black">
+    <!--<TextView
+            android:id="@+id/txvAppname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" > k3pler proxy"
+            android:textColor="@color/lightGreen"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="14sp"/>-->
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/txvAppname"
         android:padding="5dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>

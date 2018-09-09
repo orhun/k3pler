@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -45,7 +46,7 @@ public class ProxyService extends Service {
     private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private Dialog guiDialog;
     private String decoderResult = "";
-    private RequestAdapter requestAdapter;
+    private Handler mainHandler;
     // ** //
     private RecyclerView recyclerView;
     private ViewPager viewPager;
@@ -111,6 +112,7 @@ public class ProxyService extends Service {
             guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
             initGUI(guiDialog);
+            mainHandler = new Handler(getApplicationContext().getMainLooper());
             guiDialog.show();
 
             startLocalProxy(new IProxyStatus() {
@@ -127,21 +129,20 @@ public class ProxyService extends Service {
                             httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
                             decoderResult,
                             getTime()));
-                    ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
+                    final ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
                     Collections.reverse(tmpHttpReqs);
-                    requestAdapter = new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
+                    Runnable setAdapterRunnable = new Runnable() {
                         @Override
-                        public void onItemClick(HTTPReq item, int i) {
-                            Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
+                        public void run() {
+                            recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(HTTPReq item, int i) {
+                                    Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
+                                }
+                            }));
                         }
-                    });
-                    requestAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                        @Override
-                        public void onChanged() {
-                            super.onChanged();
-                        }
-                    });
-                    recyclerView.setAdapter(requestAdapter);
+                    };
+                    mainHandler.post(setAdapterRunnable);
                 }
 
                 @Override
