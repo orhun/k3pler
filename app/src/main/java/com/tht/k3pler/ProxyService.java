@@ -63,7 +63,68 @@ public class ProxyService extends Service {
         this.checkExtras();
         return START_NOT_STICKY;
     }
+    private void checkExtras() {
+        if (currentIntent != null) {
+            try {
+                if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
+                    showGuiDialog();
+                } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
+                    stopSelf();
+                } else{
+                    showGUI();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            showGUI();
+        }
+    }
+    private void initGUI(Dialog dialog){
+        recyclerView = dialog.findViewById(R.id.recycler_view);
+        try {
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+        }catch (Exception e){e.printStackTrace();}
+    }
+    private void showGUI(){
+        try {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
+            guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
+            initGUI(guiDialog);
+            guiDialog.show();
 
+            startLocalProxy(new IProxyStatus() {
+                @Override
+                public void onReceive(HttpRequest httpRequest) {
+                    httpReqs.add(new HTTPReq(httpRequest.getUri(), httpRequest.getMethod().name()));
+                    recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), httpReqs, new RequestAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(HTTPReq item, int i) {
+                            Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
+                        }
+                    }));
+                }
+
+                @Override
+                public void onNotify(NotificationHandler notificationHandler) {}
+
+                @Override
+                public void onError(Exception e) {
+                    Log.d(getString(R.string.app_name), e.toString());
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d(getString(R.string.app_name), "GUI start error.");
+            stopSelf();
+        }
+    }
     private void startLocalProxy(final IProxyStatus proxyStatus){
         try {
             httpProxyServer = DefaultHttpProxyServer.bootstrap()
@@ -98,71 +159,6 @@ public class ProxyService extends Service {
                 proxyStatus.onError(e);
             }
             e.printStackTrace();
-        }
-    }
-    private void checkExtras() {
-        if (currentIntent != null) {
-            try {
-                if (currentIntent.getBooleanExtra(getString(R.string.show_gui), false)) {
-                    showGuiDialog();
-                } else if (currentIntent.getBooleanExtra(getString(R.string.proxy_stop), false)) {
-                    stopSelf();
-                } else{
-                    showGUI();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else{
-            showGUI();
-        }
-    }
-    private void initGUI(Dialog dialog){
-        recyclerView = dialog.findViewById(R.id.recycler_view);
-        initRV(recyclerView);
-    }
-    private void initRV(RecyclerView pRecyclerView){
-        try {
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            pRecyclerView.setLayoutManager(mLayoutManager);
-            pRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        }catch (Exception e){e.printStackTrace();}
-    }
-    private void showGUI(){
-        try {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
-            guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
-            initGUI(guiDialog);
-            guiDialog.show();
-            
-            startLocalProxy(new IProxyStatus() {
-                @Override
-                public void onReceive(HttpRequest httpRequest) {
-                    httpReqs.add(new HTTPReq(httpRequest.getUri(), httpRequest.getMethod().name()));
-                    recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), httpReqs, new RequestAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(HTTPReq item, int i) {
-                            Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
-                        }
-                    }));
-                }
-
-                @Override
-                public void onNotify(NotificationHandler notificationHandler) {}
-
-                @Override
-                public void onError(Exception e) {
-                    Log.d(getString(R.string.app_name), e.toString());
-                }
-            });
-            
-        }catch (Exception e){
-            e.printStackTrace();
-            Log.d(getString(R.string.app_name), "GUI start error.");
-            stopSelf();
         }
     }
     private void showGuiDialog(){
