@@ -112,9 +112,9 @@ public class ProxyService extends Service {
                 int color;
                 for(int i = 0; i < layouts.size(); i++){
                     if(i == 0)
-                        color = ContextCompat.getColor(getApplicationContext(), R.color.color2);
-                    else
                         color = ContextCompat.getColor(getApplicationContext(), android.R.color.white);
+                    else
+                        color = ContextCompat.getColor(getApplicationContext(), R.color.color2);
                     pageNumHTML += "<font color=\"" + color + "\">" + String.valueOf(i+1) + " " + "</font>";
                 }
                 txvNum.setText(Html.fromHtml(pageNumHTML));
@@ -122,7 +122,7 @@ public class ProxyService extends Service {
             }
         });
         viewPager.setAdapter(layoutPagerAdapter);
-        txvPage.setText(" > " + getString(LayoutPagerAdapter.PagerEnum.MainPage.getTitleResId()));
+        new TextViewEFX().useFX(txvPage, " > " + getString(LayoutPagerAdapter.PagerEnum.MainPage.getTitleResId()));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -130,8 +130,7 @@ public class ProxyService extends Service {
             public void onPageScrollStateChanged(int state) {}
             @Override
             public void onPageSelected(int position) {
-                txvPage.setText(" > " + getString(LayoutPagerAdapter.PagerEnum.values()[position].getTitleResId()));
-                // TODO: 9/9/2018 Change txvNum
+                new TextViewEFX().useFX(txvPage, " > " + getString(LayoutPagerAdapter.PagerEnum.values()[position].getTitleResId()));
             }
         });
     }
