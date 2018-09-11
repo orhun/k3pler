@@ -10,7 +10,7 @@ public class TextViewEFX {
     private static String randomStr = "あたアカサザジズゼゾシスセソキクケコイウエオジャな";
     private String tmpChr = "";
     private Random random = new Random();
-    private static int ms1 = 80, ms2 = 60, itCnt = 5;
+    private static int ms1 = 60, ms2 = 40, itCnt = 5;
     private String rnd;
 
     public void useFX(final TextView textView, final String text){
@@ -49,7 +49,7 @@ public class TextViewEFX {
             }, i * ms1);
         }
     }
-    public String getRandomStr(int len){
+    public String getRandomStr(int len){ /* Not used. */
         String rnd = "";
         for (int i = 0; i < len; i++){
             rnd += String.valueOf(

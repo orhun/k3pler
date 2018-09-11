@@ -47,7 +47,7 @@ public class ProxyService extends Service {
     private Intent currentIntent;
     private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private Dialog guiDialog;
-    private String decoderResult = "";
+    private String decoderResult = "", arrowChar = " > ";
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
     // ** //
@@ -108,21 +108,12 @@ public class ProxyService extends Service {
                     recyclerView.setLayoutManager(mLayoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 }catch (Exception e){e.printStackTrace();}
-                String pageNumHTML = "";
-                int color;
-                for(int i = 0; i < layouts.size(); i++){
-                    if(i == 0)
-                        color = ContextCompat.getColor(getApplicationContext(), android.R.color.white);
-                    else
-                        color = ContextCompat.getColor(getApplicationContext(), R.color.color2);
-                    pageNumHTML += "<font color=\"" + color + "\">" + String.valueOf(i+1) + " " + "</font>";
-                }
-                txvNum.setText(Html.fromHtml(pageNumHTML));
+                onViewPager_select(0);
                 // TODO: 9/9/2018 Handle layouts here
             }
         });
         viewPager.setAdapter(layoutPagerAdapter);
-        new TextViewEFX().useFX(txvPage, " > " + getString(LayoutPagerAdapter.PagerEnum.MainPage.getTitleResId()));
+        new TextViewEFX().useFX(txvPage, arrowChar + getString(LayoutPagerAdapter.PagerEnum.MainPage.getTitleResId()));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -130,7 +121,20 @@ public class ProxyService extends Service {
             public void onPageScrollStateChanged(int state) {}
             @Override
             public void onPageSelected(int position) {
-                new TextViewEFX().useFX(txvPage, " > " + getString(LayoutPagerAdapter.PagerEnum.values()[position].getTitleResId()));
+                new TextViewEFX().useFX(txvPage, arrowChar + getString(LayoutPagerAdapter.PagerEnum.values()[position].getTitleResId()));
+                onViewPager_select(position);
+            }
+        });
+        txvNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (viewPager.getCurrentItem() + 1 < layoutPagerAdapter.getCount()) {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                    } else {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
+                    }
+                }catch (Exception e){e.printStackTrace();}
             }
         });
     }
@@ -193,6 +197,18 @@ public class ProxyService extends Service {
             Log.d(getString(R.string.app_name), "GUI start error.");
             stopSelf();
         }
+    }
+    private void onViewPager_select(int position){
+        String pageNumHTML = "";
+        int color;
+        for(int i = 0; i < LayoutPagerAdapter.PagerEnum.values().length; i++){
+            if(i == position)
+                color = ContextCompat.getColor(getApplicationContext(), android.R.color.white);
+            else
+                color = ContextCompat.getColor(getApplicationContext(), R.color.color2);
+            pageNumHTML += "<font color=\"" + color + "\">" + String.valueOf(i+1) + " " + "</font>";
+        }
+        txvNum.setText(Html.fromHtml(pageNumHTML));
     }
     private void startLocalProxy(final IProxyStatus proxyStatus){
         try {
