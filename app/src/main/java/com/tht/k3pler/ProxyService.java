@@ -109,7 +109,7 @@ public class ProxyService extends Service {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 }catch (Exception e){e.printStackTrace();}
                 onViewPager_select(0);
-                // TODO: 9/9/2018 Handle layouts here
+
             }
         });
         viewPager.setAdapter(layoutPagerAdapter);
@@ -138,6 +138,7 @@ public class ProxyService extends Service {
             }
         });
     }
+    @SuppressWarnings("deprecation")
     private void showGUI(){
         try {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -198,6 +199,7 @@ public class ProxyService extends Service {
             stopSelf();
         }
     }
+    @SuppressWarnings("deprecation")
     private void onViewPager_select(int position){
         String pageNumHTML = "";
         int color;
