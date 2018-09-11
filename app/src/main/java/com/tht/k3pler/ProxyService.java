@@ -50,6 +50,7 @@ public class ProxyService extends Service {
     private String decoderResult = "", arrowChar = " > ";
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
+    private MainPageInflater mainPageInflater;
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView recyclerView;
@@ -102,14 +103,19 @@ public class ProxyService extends Service {
         layoutPagerAdapter = new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
             @Override
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
-                recyclerView = layouts.get(0).findViewById(R.id.recycler_view);
-                try {
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                }catch (Exception e){e.printStackTrace();}
                 onViewPager_select(0);
-
+                mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(0));
+                mainPageInflater.init(new MainPageInflater.IRecylerView() {
+                    @Override
+                    public void onInit(RecyclerView recyclerView) {
+                        ProxyService.this.recyclerView = recyclerView;
+                        try {
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            recyclerView.setLayoutManager(mLayoutManager);
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        }catch (Exception e){e.printStackTrace();}
+                    }
+                });
             }
         });
         viewPager.setAdapter(layoutPagerAdapter);
