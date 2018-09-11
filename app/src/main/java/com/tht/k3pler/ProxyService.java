@@ -179,6 +179,7 @@ public class ProxyService extends Service {
                                 @Override
                                 public void onItemClick(HTTPReq item, int i) {
                                     Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
+                                    // TODO: 9/11/2018 Show dialog 
                                 }
                             }));
                         }
