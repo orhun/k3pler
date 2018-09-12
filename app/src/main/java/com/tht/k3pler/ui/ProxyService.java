@@ -22,9 +22,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.ProxyNotifier;
 import com.tht.k3pler.R;
 import com.tht.k3pler.handler.RequestDialog;
+import com.tht.k3pler.sub.SQLiteBL;
 import com.tht.k3pler.sub.TextViewEFX;
 import com.tht.k3pler.adapter.LayoutPagerAdapter;
 import com.tht.k3pler.adapter.RequestAdapter;
@@ -41,6 +43,7 @@ import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
@@ -63,6 +66,8 @@ public class ProxyService extends Service {
     private LayoutPagerAdapter layoutPagerAdapter;
     private MainPageInflater mainPageInflater;
     private Boolean pageBackwards = false;
+    private SqliteDBHelper sqliteDBHelper;
+    private ArrayList<String> blackListArr;
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView recyclerView;
@@ -87,8 +92,16 @@ public class ProxyService extends Service {
     @Override
     public int onStartCommand(Intent currentIntent, int flags, int startId) {
         this.currentIntent = currentIntent;
-        this.checkExtras();
+        this.initDB();
         return START_NOT_STICKY;
+    }
+    private void initDB(){
+        sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
+                new SQLiteBL(getApplicationContext()).getWritableDatabase(),
+                SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+        blackListArr = new ArrayList<>(Arrays.asList(sqliteDBHelper.getAll().split("~")));
+        sqliteDBHelper.close();
+        checkExtras();
     }
     private void checkExtras() {
         if (currentIntent != null) {

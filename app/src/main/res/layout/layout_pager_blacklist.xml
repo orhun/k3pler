@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/gray">
 
+    <ListView
+        android:id="@+id/lstBlacklist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_centerHorizontal="true"
+        android:divider="@null"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"/>
+
 </RelativeLayout>
