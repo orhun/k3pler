@@ -169,6 +169,7 @@ public class ProxyService extends Service {
         txvPage = dialog.findViewById(R.id.txvPage);
         txvNum = dialog.findViewById(R.id.txvNum);
         viewPager = dialog.findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(5);
         rlMain = dialog.findViewById(R.id.rlMain);
         layoutPagerAdapter = new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
             @Override
