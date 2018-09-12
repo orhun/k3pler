@@ -21,7 +21,9 @@ public class SqliteDBHelper {
         this.table = table;
         this.db = db;
     }
-
+    public void setColumn(String column){
+        this.column = column;
+    }
     public Boolean insert(String requestAddr){
         try {
             ContentValues contentValues = new ContentValues();
@@ -74,9 +76,7 @@ public class SqliteDBHelper {
     }
     public Boolean delVal(String requestAddr){
         try {
-            ContentValues contentValues = new ContentValues();
-            contentValues.putNull(column);
-            db.update(table, contentValues, column + " = ?", new String[]{requestAddr});
+            db.delete(table, column + " = ?", new String[]{requestAddr});
             return true;
         }catch (Exception e){
             e.printStackTrace();

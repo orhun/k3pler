@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import com.tht.k3pler.handler.ServiceController;
 import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.SQLiteBL;
+import com.tht.k3pler.sub.SQLiteSettings;
 
 
 public class MainActivity extends Activity {
@@ -34,11 +35,23 @@ public class MainActivity extends Activity {
         SqliteDBHelper sqliteDBHelper1 = new SqliteDBHelper(getApplicationContext(),
                 new SQLiteBL(getApplicationContext()).getWritableDatabase()
                 ,SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+        sqliteDBHelper1.deleteAll();
         sqliteDBHelper1.insert("test1x");
         sqliteDBHelper1.insert("test2");
         sqliteDBHelper1.insert("test3x");
         sqliteDBHelper1.update("test2", "x");
         sqliteDBHelper1.close();
+
+        SqliteDBHelper sqliteDBHelper2 = new SqliteDBHelper(getApplicationContext(),
+                new SQLiteSettings(getApplicationContext()).getWritableDatabase()
+                ,SQLiteSettings.PORT_DATA, SQLiteSettings.TABLE_NAME);
+        sqliteDBHelper2.deleteAll();
+        sqliteDBHelper2.insert("8080");
+        sqliteDBHelper2.insert("8090");
+        sqliteDBHelper2.update("8080", "default");
+        sqliteDBHelper2.delVal("8090");
+        sqliteDBHelper2.insert("8090~1");
+        sqliteDBHelper2.close();
 
     }
     public void checkDrawOverlayPermission() {
