@@ -7,16 +7,21 @@ import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class ReqHandler {
+import io.netty.handler.codec.http.HttpRequest;
+
+public class RequestDialog {
     private Context context;
     private Dialog reqDialog;
-    public ReqHandler(Context context){
+    private HTTPReq httpReq;
+
+    public RequestDialog(Context context, HTTPReq httpReq){
         this.context = context;
+        this.httpReq = httpReq;
     }
     private void initDialog(Dialog dialog){
 
     }
-    public void showDetails(){
+    public void show(){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         reqDialog= new Dialog(context, android.R.style.Theme_Black);
         reqDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);

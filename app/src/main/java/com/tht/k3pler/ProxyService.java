@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSource;
@@ -178,8 +177,7 @@ public class ProxyService extends Service {
                             recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(HTTPReq item, int i) {
-                                    Toast.makeText(ProxyService.this, item.getUri(), Toast.LENGTH_SHORT).show();
-                                    // TODO: 9/11/2018 Show dialog 
+                                    new RequestDialog(getApplicationContext(), item).show();
                                 }
                             }));
                         }
