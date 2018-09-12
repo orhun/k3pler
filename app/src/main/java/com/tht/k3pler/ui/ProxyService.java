@@ -21,7 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.tht.k3pler.handler.ProxyNotifier;
+import com.tht.k3pler.sub.ProxyNotifier;
 import com.tht.k3pler.R;
 import com.tht.k3pler.handler.RequestDialog;
 import com.tht.k3pler.sub.TextViewEFX;
