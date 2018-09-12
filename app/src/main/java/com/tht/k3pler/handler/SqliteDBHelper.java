@@ -28,8 +28,8 @@ public class SqliteDBHelper {
             return true;
         }catch(Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
     public String getAll(String userName)
     {
@@ -48,15 +48,17 @@ public class SqliteDBHelper {
         }
         return allData;
     }
-    public void update(String requestAddr){
+    public Boolean update(String requestAddr){
         try {
             db = sqliteDB.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(sqliteDB.BLACKLIST_DATA, requestAddr);
             db.update(sqliteDB.TABLE_NAME, contentValues, sqliteDB.BLACKLIST_DATA + " = ?", new String[]{requestAddr});
             db.close();
+            return true;
         }catch(Exception e){
             e.printStackTrace();
         }
+        return false;
     }
 }

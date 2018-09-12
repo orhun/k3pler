@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 
 import com.tht.k3pler.handler.ServiceController;
+import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.ui.ProxyService;
 
 
@@ -28,7 +29,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        checkDrawOverlayPermission();
+        //checkDrawOverlayPermission();
+        SqliteDBHelper sqliteDBHelper = new SqliteDBHelper(getApplicationContext());
+        //test
     }
     public void checkDrawOverlayPermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
