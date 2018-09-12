@@ -8,20 +8,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="google.com.tr"
-        android:textColor="@color/color2lighter"
         android:fontFamily="monospace"
         android:layout_marginStart="3dp"
         android:textSize="15sp"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/txvReqBlacklistRemove"
-        android:layout_marginEnd="5dp"/>
+        android:layout_marginEnd="5dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/txvReqBlacklistRemove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="5dp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/color2lighter"
         android:text="[-]"
         android:fontFamily="monospace"
         android:textSize="15sp"/>

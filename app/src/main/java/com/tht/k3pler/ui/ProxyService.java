@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -64,12 +65,14 @@ public class ProxyService extends Service {
     private String decoderResult = "", arrowChar = " > ";
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
+    private BlacklistAdapter blacklistAdapter;
     private Boolean pageBackwards = false;
     private SqliteDBHelper sqliteDBHelper;
     private ArrayList<String> blackListArr;
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView mRecyclerView;
+    private ListView lstBlacklist;
     private ViewPager viewPager;
     private MainPageInflater mainPageInflater;
     private BlacklistPageInflater blacklistPageInflater;
@@ -113,13 +116,22 @@ public class ProxyService extends Service {
             showGUI();
         }
     }
-    private ArrayList<String> getBlackListArr(){
+    private void setBlacklistLstView(ListView listView){
         sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
                 new SQLiteBL(getApplicationContext()).getWritableDatabase(),
                 SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
-        blackListArr = new ArrayList<>(Arrays.asList(sqliteDBHelper.getAll().split("~")));
+        blackListArr = new ArrayList<>();
+        String[] blackList = sqliteDBHelper.getAll().split("~");
+        for(String item:blackList) {
+            if (item.length() > 3) {
+                blackListArr.add(item);
+            }
+        }
         sqliteDBHelper.close();
-        return blackListArr;
+        if(blackListArr.size() > 0) {
+            blacklistAdapter = new BlacklistAdapter(getApplicationContext(), blackListArr);
+            listView.setAdapter(blacklistAdapter);
+        }
     }
     @SuppressWarnings("deprecation")
     private void initGUI(Dialog dialog){
@@ -145,7 +157,8 @@ public class ProxyService extends Service {
                     blacklistPageInflater.init(new BlacklistPageInflater.IListView() {
                         @Override
                         public void onInit(ListView listView) {
-                            listView.setAdapter(new BlacklistAdapter(getApplicationContext(), getBlackListArr()));
+                            lstBlacklist = listView;
+                            setBlacklistLstView(listView);
                         }
                     });
                 }catch (Exception e){
@@ -220,7 +233,7 @@ public class ProxyService extends Service {
                                 mRecyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(HTTPReq item, int i) {
-                                        new RequestDialog(getApplicationContext(), item).show();
+                                       onRecycleItemClick(item);
                                     }
                                 }));
                             }catch (Exception e){
@@ -249,6 +262,25 @@ public class ProxyService extends Service {
             Log.d(getString(R.string.app_name), "GUI start error.");
             stopSelf();
         }
+    }
+    private void onRecycleItemClick(HTTPReq item){
+        new RequestDialog(getApplicationContext(), item).show(new RequestDialog.IBtnBlackList() {
+            @Override
+            public void onInit(Button btnReqBlackList, final Dialog dialog, final String uri) {
+                btnReqBlackList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
+                                new SQLiteBL(getApplicationContext()).getWritableDatabase(),
+                                SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+                        sqliteDBHelper.insert(uri);
+                        sqliteDBHelper.close();
+                        dialog.cancel();
+                        setBlacklistLstView(lstBlacklist);
+                    }
+                });
+            }
+        });
     }
     @SuppressWarnings("deprecation")
     private void onViewPager_select(int position){

@@ -17,6 +17,9 @@ public class RequestDialog {
     private Context context;
     private Dialog reqDialog;
     private HTTPReq httpReq;
+    public interface IBtnBlackList{
+        void onInit(Button btnReqBlackList, Dialog dialog, String uri);
+    }
     // * //
     private TextView txvReqAddr, txvReqMethod, txvReqProtocol, txvReqResult, txvReqTime;
     private Button btnReqBlacklist;
@@ -34,7 +37,7 @@ public class RequestDialog {
         btnReqBlacklist = dialog.findViewById(R.id.btnReqBlacklist);
     }
     @SuppressWarnings("deprecation")
-    public void show(){
+    public void show(IBtnBlackList iBtnBlackList){
         try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             reqDialog = new Dialog(context);
@@ -47,16 +50,10 @@ public class RequestDialog {
             txvReqProtocol.setText(httpReq.getProtocol());
             txvReqResult.setText(httpReq.getResult());
             txvReqTime.setText(httpReq.getTime().replace("{", "").replace("}", ""));
-            btnReqBlacklist.setOnClickListener(new btnBlacklist_onClick());
             reqDialog.show();
+            iBtnBlackList.onInit(btnReqBlacklist, reqDialog, httpReq.getUri());
         }catch (Exception e){
             e.printStackTrace();
-        }
-    }
-    private class btnBlacklist_onClick implements Button.OnClickListener{
-        @Override
-        public void onClick(View view) {
-            // TODO: 9/12/2018 SQLITE 
         }
     }
 
