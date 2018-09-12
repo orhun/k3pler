@@ -3,6 +3,7 @@ package com.tht.k3pler.ui;
 import android.app.Activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import android.view.WindowManager;
 
 import com.tht.k3pler.handler.ServiceController;
 import com.tht.k3pler.handler.SqliteDBHelper;
-import com.tht.k3pler.ui.ProxyService;
+import com.tht.k3pler.sub.SQLiteBL;
 
 
 public class MainActivity extends Activity {
@@ -30,8 +31,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         init();
         //checkDrawOverlayPermission();
-        SqliteDBHelper sqliteDBHelper = new SqliteDBHelper(getApplicationContext());
-        //test
+        SqliteDBHelper sqliteDBHelper1 = new SqliteDBHelper(getApplicationContext(),
+                new SQLiteBL(getApplicationContext()).getWritableDatabase()
+                ,SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+        sqliteDBHelper1.insert("test1x");
+        sqliteDBHelper1.insert("test2");
+        sqliteDBHelper1.insert("test3x");
+        sqliteDBHelper1.update("test2", "x");
+        sqliteDBHelper1.close();
+
     }
     public void checkDrawOverlayPermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){

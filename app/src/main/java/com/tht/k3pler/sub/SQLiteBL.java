@@ -4,16 +4,16 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class SqliteDB extends SQLiteOpenHelper {
+public class SQLiteBL extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
-    private static String DB_NAME = "k3.db";
-    public String TABLE_NAME = "k3table";
-    public String BLACKLIST_DATA = "BLACKLIST";
+    private static String DB_NAME = "k3blacklist.db";
+    public static String TABLE_NAME = "k3table";
+    public static String BLACKLIST_DATA = "BLACKLIST";
     private String CREATE_DB = "create table "+TABLE_NAME+
             "("+BLACKLIST_DATA+" text);";
 
-    public SqliteDB(Context context) {
+    public SQLiteBL(Context context) {
         super(context, DB_NAME, null, VERSION);
     }
     @Override
