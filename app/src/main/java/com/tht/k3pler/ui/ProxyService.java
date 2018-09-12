@@ -1,4 +1,4 @@
-package com.tht.k3pler;
+package com.tht.k3pler.ui;
 
 import android.app.Dialog;
 import android.app.Service;
@@ -20,6 +20,17 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.tht.k3pler.handler.ProxyNotifier;
+import com.tht.k3pler.R;
+import com.tht.k3pler.handler.RequestDialog;
+import com.tht.k3pler.sub.TextViewEFX;
+import com.tht.k3pler.adapter.LayoutPagerAdapter;
+import com.tht.k3pler.adapter.RequestAdapter;
+import com.tht.k3pler.frag.MainPageInflater;
+import com.tht.k3pler.handler.NotificationHandler;
+import com.tht.k3pler.sub.FilteredResponse;
+import com.tht.k3pler.sub.HTTPReq;
 
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSource;

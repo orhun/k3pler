@@ -1,10 +1,12 @@
-package com.tht.k3pler;
+package com.tht.k3pler.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.tht.k3pler.R;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ public class LayoutPagerAdapter extends android.support.v4.view.PagerAdapter {
     }
     private Context context;
     private ArrayList<ViewGroup> layouts = new ArrayList<>();
-    interface IViewPager{
+    public interface IViewPager{
         void onViewsAdded(ArrayList<ViewGroup> layouts);
     }
     private IViewPager iViewPager;

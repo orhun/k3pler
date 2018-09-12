@@ -1,7 +1,10 @@
-package com.tht.k3pler;
+package com.tht.k3pler.handler;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import com.tht.k3pler.R;
+import com.tht.k3pler.handler.NotificationHandler;
 
 import org.littleshoot.proxy.HttpProxyServer;
 

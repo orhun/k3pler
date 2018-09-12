@@ -1,4 +1,4 @@
-package com.tht.k3pler;
+package com.tht.k3pler.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.tht.k3pler.R;
+import com.tht.k3pler.sub.HTTPReq;
 
 import java.util.ArrayList;
 

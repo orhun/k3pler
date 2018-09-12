@@ -1,14 +1,16 @@
-package com.tht.k3pler;
+package com.tht.k3pler.frag;
 
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.tht.k3pler.R;
+
 public class MainPageInflater {
     private Context context;
     private ViewGroup viewGroup;
-    interface IRecylerView{
+    public interface IRecylerView{
         void onInit(RecyclerView recyclerView);
     }
     // ** //
@@ -22,8 +24,5 @@ public class MainPageInflater {
         recyclerView = viewGroup.findViewById(R.id.recycler_view);
         iRecylerView.onInit(recyclerView);
     }
-
-
-
 
 }

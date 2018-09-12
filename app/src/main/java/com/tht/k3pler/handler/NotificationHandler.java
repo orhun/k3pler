@@ -1,4 +1,4 @@
-package com.tht.k3pler;
+package com.tht.k3pler.handler;
 
 
 import android.app.NotificationChannel;
@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+
+import com.tht.k3pler.R;
 
 public class NotificationHandler {
     private Context context;

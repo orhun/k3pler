@@ -1,16 +1,17 @@
-package com.tht.k3pler;
+package com.tht.k3pler.ui;
 
 import android.app.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
+import com.tht.k3pler.handler.ServiceController;
+import com.tht.k3pler.ui.ProxyService;
 
 
 public class MainActivity extends Activity {

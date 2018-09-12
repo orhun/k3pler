@@ -1,4 +1,4 @@
-package com.tht.k3pler;
+package com.tht.k3pler.sub;
 
 
 import org.littleshoot.proxy.HttpFiltersAdapter;
@@ -11,7 +11,7 @@ import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 
-class FilteredResponse extends HttpFiltersAdapter {
+public class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
     private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY;
     private static String blockedList[] = new String[]{"twitter"};
