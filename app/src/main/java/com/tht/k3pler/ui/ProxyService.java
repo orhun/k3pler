@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tht.k3pler.sub.ProxyNotifier;
 import com.tht.k3pler.R;
@@ -61,6 +62,7 @@ public class ProxyService extends Service {
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
     private MainPageInflater mainPageInflater;
+    private Boolean pageBackwards = false;
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView recyclerView;
@@ -113,7 +115,6 @@ public class ProxyService extends Service {
         layoutPagerAdapter = new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
             @Override
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
-                onViewPager_select(0);
                 mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(0));
                 mainPageInflater.init(new MainPageInflater.IRecylerView() {
                     @Override
@@ -130,6 +131,7 @@ public class ProxyService extends Service {
         });
         viewPager.setAdapter(layoutPagerAdapter);
         new TextViewEFX().useFX(txvPage, arrowChar + getString(LayoutPagerAdapter.PagerEnum.MainPage.getTitleResId()));
+        onViewPager_select(0);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -145,12 +147,17 @@ public class ProxyService extends Service {
             @Override
             public void onClick(View view) {
                 try {
-                    if (viewPager.getCurrentItem() + 1 < layoutPagerAdapter.getCount()) {
+                    if(viewPager.getCurrentItem() + 1 != layoutPagerAdapter.getCount()
+                            && !pageBackwards || viewPager.getCurrentItem() - 1 == -1) {
+                        pageBackwards = false;
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-                    } else {
+                    }else{
+                        pageBackwards = true;
                         viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
                     }
-                }catch (Exception e){e.printStackTrace();}
+                }catch (Exception e1){
+                    e1.printStackTrace();
+                }
             }
         });
     }
@@ -185,12 +192,16 @@ public class ProxyService extends Service {
                     Runnable setAdapterRunnable = new Runnable() {
                         @Override
                         public void run() {
-                            recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(HTTPReq item, int i) {
-                                    new RequestDialog(getApplicationContext(), item).show();
-                                }
-                            }));
+                            try {
+                                recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(HTTPReq item, int i) {
+                                        new RequestDialog(getApplicationContext(), item).show();
+                                    }
+                                }));
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     };
                     mainHandler.post(setAdapterRunnable);
