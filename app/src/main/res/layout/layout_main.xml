@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true"
     android:background="@color/gray">
     <RelativeLayout
+        android:id="@+id/rlMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -33,11 +34,11 @@
             android:text="1 2"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_below="@+id/txvPage"
             android:layout_marginTop="1dp"/>
     </RelativeLayout>

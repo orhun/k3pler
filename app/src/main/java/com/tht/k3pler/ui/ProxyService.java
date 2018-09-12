@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tht.k3pler.adapter.BlacklistAdapter;
@@ -74,6 +76,7 @@ public class ProxyService extends Service {
     private RecyclerView mRecyclerView;
     private ListView lstBlacklist;
     private ViewPager viewPager;
+    private RelativeLayout rlMain;
     private MainPageInflater mainPageInflater;
     private BlacklistPageInflater blacklistPageInflater;
 
@@ -138,6 +141,7 @@ public class ProxyService extends Service {
         txvPage = dialog.findViewById(R.id.txvPage);
         txvNum = dialog.findViewById(R.id.txvNum);
         viewPager = dialog.findViewById(R.id.viewPager);
+        rlMain = dialog.findViewById(R.id.rlMain);
         layoutPagerAdapter = new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
             @Override
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
@@ -277,6 +281,7 @@ public class ProxyService extends Service {
                         sqliteDBHelper.close();
                         dialog.cancel();
                         setBlacklistLstView(lstBlacklist);
+                        // TODO: 9/12/2018 Toast 
                     }
                 });
             }
