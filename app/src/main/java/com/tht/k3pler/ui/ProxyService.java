@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +48,6 @@ import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
@@ -123,46 +121,44 @@ public class ProxyService extends Service {
         }
     }
     @SuppressWarnings("deprecation")
-    private void setBlacklistLstView(final ListView listView){
+    private void setBlacklistLstView(final ListView listView) {
         sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
                 new SQLiteBL(getApplicationContext()).getWritableDatabase(),
                 SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
         blackListArr = new ArrayList<>();
         String[] blackList = sqliteDBHelper.getAll().split("~");
         sqliteDBHelper.close();
-        for(String item:blackList) {
+        for (String item : blackList) {
             if (item.length() > 3) {
                 blackListArr.add(item);
             }
         }
-        if(blackListArr.size() > 0) {
-            blacklistAdapter = new BlacklistAdapter(getApplicationContext(), blackListArr);
-            listView.setAdapter(blacklistAdapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                    final String[] options = new String[]{getString(R.string.remove_blacklist)};
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_DeviceDefault_Dialog);
-                    builder.setTitle(blackListArr.get(i));
-                    builder.setItems(options, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if(which == 0){
-                                sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
-                                        new SQLiteBL(getApplicationContext()).getWritableDatabase(),
-                                        SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
-                                sqliteDBHelper.delVal(blackListArr.get(i));
-                                sqliteDBHelper.close();
-                                setBlacklistLstView(listView);
-                            }
+        blacklistAdapter = new BlacklistAdapter(getApplicationContext(), blackListArr);
+        listView.setAdapter(blacklistAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                final String[] options = new String[]{getString(R.string.remove_blacklist)};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_DeviceDefault_Dialog);
+                builder.setTitle(blackListArr.get(i));
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
+                                    new SQLiteBL(getApplicationContext()).getWritableDatabase(),
+                                    SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+                            sqliteDBHelper.delVal(blackListArr.get(i));
+                            sqliteDBHelper.close();
+                            setBlacklistLstView(listView);
                         }
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                    alertDialog.show();
-                }
-            });
-        }
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                alertDialog.show();
+            }
+        });
     }
     @SuppressWarnings("deprecation")
     private void initGUI(Dialog dialog){
