@@ -16,10 +16,10 @@
         android:textSize="18sp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text="rts.ssl2.duapss.com:443" />
+        android:text="@string/lyt_req_reqplaceholder" />
     <TextView
         android:id="@+id/txvReqMethodLabel"
-        android:text="Method:"
+        android:text="@string/lyt_req_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color2lighter"
@@ -39,11 +39,11 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqMethodLabel"
         android:layout_marginTop="10dp"
-        android:text="CONNECT"
+        android:text=""
         android:fontFamily="monospace"/>
     <TextView
         android:id="@+id/txvReqProtocolLabel"
-        android:text="Protocol:"
+        android:text="@string/lyt_req_protocol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color2lighter"
@@ -63,11 +63,11 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqProtocolLabel"
         android:layout_marginTop="10dp"
-        android:text="HTTP/1.1"
+        android:text=""
         android:fontFamily="monospace"/>
     <TextView
         android:id="@+id/txvReqResultLabel"
-        android:text="Result:"
+        android:text="@string/lyt_req_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color2lighter"
@@ -87,11 +87,11 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqResultLabel"
         android:layout_marginTop="10dp"
-        android:text="SUCCESS"
+        android:text=""
         android:fontFamily="monospace"/>
     <TextView
         android:id="@+id/txvReqTimeLabel"
-        android:text="Time:"
+        android:text="@string/lyt_req_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color2lighter"
@@ -111,7 +111,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqTimeLabel"
         android:layout_marginTop="10dp"
-        android:text="02:27:35"
+        android:text=""
         android:fontFamily="monospace" />
     <RelativeLayout
         android:id="@+id/rlActions"
@@ -125,7 +125,7 @@
             android:id="@+id/btnReqBlacklist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add to Blacklist"
+            android:text="@string/lyt_req_blacklist"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:paddingBottom="5dp"
