@@ -11,5 +11,5 @@
     <string name="lyt_req_result">Result:</string>
     <string name="lyt_req_protocol">Protocol:</string>
     <string name="lyt_req_method">Method:</string>
-    <string name="lyt_req_reqplaceholder">Request addrs</string>
+    <string name="lyt_req_reqplaceholder">Request addr</string>
 </resources>
