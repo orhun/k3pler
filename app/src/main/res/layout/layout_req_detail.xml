@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="#101010"
+    android:background="@color/gray"
     android:descendantFocusability="blocksDescendants">
     <TextView
         android:id="@+id/txvReqAddr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:textColor="#FFF"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="rts.ssl2.duapss.com:443" />
@@ -26,7 +26,9 @@
         android:textSize="15sp"
         android:layout_below="@+id/txvReqAddr"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/txvReqMethod"
         android:layout_width="wrap_content"
@@ -37,7 +39,8 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqMethodLabel"
         android:layout_marginTop="10dp"
-        android:text="CONNECT"/>
+        android:text="CONNECT"
+        android:fontFamily="monospace"/>
     <TextView
         android:id="@+id/txvReqProtocolLabel"
         android:text="Protocol:"
@@ -47,7 +50,9 @@
         android:textSize="15sp"
         android:layout_below="@+id/txvReqMethod"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/txvReqProtocol"
         android:layout_width="wrap_content"
@@ -58,7 +63,8 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqProtocolLabel"
         android:layout_marginTop="10dp"
-        android:text="HTTP/1.1"/>
+        android:text="HTTP/1.1"
+        android:fontFamily="monospace"/>
     <TextView
         android:id="@+id/txvReqResultLabel"
         android:text="Result:"
@@ -68,7 +74,9 @@
         android:textSize="15sp"
         android:layout_below="@+id/txvReqProtocol"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/txvReqResult"
         android:layout_width="wrap_content"
@@ -79,7 +87,8 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqResultLabel"
         android:layout_marginTop="10dp"
-        android:text="SUCCESS"/>
+        android:text="SUCCESS"
+        android:fontFamily="monospace"/>
     <TextView
         android:id="@+id/txvReqTimeLabel"
         android:text="Time:"
@@ -89,7 +98,9 @@
         android:textSize="15sp"
         android:layout_below="@+id/txvReqResult"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/txvReqTime"
         android:layout_width="wrap_content"
@@ -100,8 +111,8 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvReqTimeLabel"
         android:layout_marginTop="10dp"
-        android:text="02:27:35"/>
-
+        android:text="02:27:35"
+        android:fontFamily="monospace" />
     <RelativeLayout
         android:id="@+id/rlActions"
         android:layout_width="match_parent"
@@ -111,7 +122,7 @@
         android:layout_below="@+id/txvReqTime"
         android:layout_marginTop="15dp">
         <Button
-            android:id="@+id/btnKillProcess"
+            android:id="@+id/btnReqBlacklist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add to Blacklist"

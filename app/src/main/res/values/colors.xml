@@ -6,6 +6,7 @@
     <color name="yellow">#FFE641</color>
     <color name="lightYellow">#F9DB13</color>
     <color name="orange">#C08A05</color>
+    <color name="gray">#101010</color>
 
     <color name="color1">#3F52B5</color>
     <color name="color1dark">#2137AA</color>
@@ -21,5 +22,4 @@
     <color name="color3dark">#12769C</color>
     <color name="color3light">#4F9FBD</color>
     <color name="color3lighter">#7CBDD6</color>
-
 </resources>
