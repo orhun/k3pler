@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -19,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.tht.k3pler.adapter.BlacklistAdapter;
+import com.tht.k3pler.frag.BlacklistPageInflater;
 import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.ProxyNotifier;
 import com.tht.k3pler.R;
@@ -64,14 +64,15 @@ public class ProxyService extends Service {
     private String decoderResult = "", arrowChar = " > ";
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
-    private MainPageInflater mainPageInflater;
     private Boolean pageBackwards = false;
     private SqliteDBHelper sqliteDBHelper;
     private ArrayList<String> blackListArr;
     // ** //
     private TextView txvPage, txvNum;
-    private RecyclerView recyclerView;
+    private RecyclerView mRecyclerView;
     private ViewPager viewPager;
+    private MainPageInflater mainPageInflater;
+    private BlacklistPageInflater blacklistPageInflater;
 
     public interface IProxyStatus {
         void onReceive(HttpRequest httpRequest);
@@ -92,16 +93,8 @@ public class ProxyService extends Service {
     @Override
     public int onStartCommand(Intent currentIntent, int flags, int startId) {
         this.currentIntent = currentIntent;
-        this.initDB();
+        this.checkExtras();
         return START_NOT_STICKY;
-    }
-    private void initDB(){
-        sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
-                new SQLiteBL(getApplicationContext()).getWritableDatabase(),
-                SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
-        blackListArr = new ArrayList<>(Arrays.asList(sqliteDBHelper.getAll().split("~")));
-        sqliteDBHelper.close();
-        checkExtras();
     }
     private void checkExtras() {
         if (currentIntent != null) {
@@ -120,6 +113,14 @@ public class ProxyService extends Service {
             showGUI();
         }
     }
+    private ArrayList<String> getBlackListArr(){
+        sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
+                new SQLiteBL(getApplicationContext()).getWritableDatabase(),
+                SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+        blackListArr = new ArrayList<>(Arrays.asList(sqliteDBHelper.getAll().split("~")));
+        sqliteDBHelper.close();
+        return blackListArr;
+    }
     @SuppressWarnings("deprecation")
     private void initGUI(Dialog dialog){
         txvPage = dialog.findViewById(R.id.txvPage);
@@ -128,18 +129,28 @@ public class ProxyService extends Service {
         layoutPagerAdapter = new LayoutPagerAdapter(getApplicationContext(), new LayoutPagerAdapter.IViewPager() {
             @Override
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
-                mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(0));
-                mainPageInflater.init(new MainPageInflater.IRecylerView() {
-                    @Override
-                    public void onInit(RecyclerView recyclerView) {
-                        ProxyService.this.recyclerView = recyclerView;
-                        try {
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                            recyclerView.setLayoutManager(mLayoutManager);
-                            recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        }catch (Exception e){e.printStackTrace();}
-                    }
-                });
+                try {
+                    mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(0));
+                    mainPageInflater.init(new MainPageInflater.IRecylerView() {
+                        @Override
+                        public void onInit(RecyclerView recyclerView) {
+                            mRecyclerView = recyclerView;
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                try {
+                    blacklistPageInflater = new BlacklistPageInflater(getApplicationContext(), layouts.get(1));
+                    blacklistPageInflater.init(new BlacklistPageInflater.IListView() {
+                        @Override
+                        public void onInit(ListView listView) {
+                            listView.setAdapter(new BlacklistAdapter(getApplicationContext(), getBlackListArr()));
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
         viewPager.setAdapter(layoutPagerAdapter);
@@ -206,7 +217,7 @@ public class ProxyService extends Service {
                         @Override
                         public void run() {
                             try {
-                                recyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
+                                mRecyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(HTTPReq item, int i) {
                                         new RequestDialog(getApplicationContext(), item).show();

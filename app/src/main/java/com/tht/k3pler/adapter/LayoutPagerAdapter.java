@@ -2,6 +2,7 @@ package com.tht.k3pler.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +50,7 @@ public class LayoutPagerAdapter extends android.support.v4.view.PagerAdapter {
                 collection, false);
         layouts.add(layout);
         collection.addView(layout);
-        if(position == getCount() - 1){
-            iViewPager.onViewsAdded(layouts);
-        }
+        iViewPager.onViewsAdded(layouts);
         return layout;
     }
     @Override
