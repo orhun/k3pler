@@ -1,8 +1,10 @@
 package com.tht.k3pler.ui;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -119,21 +122,46 @@ public class ProxyService extends Service {
             showGUI();
         }
     }
-    private void setBlacklistLstView(ListView listView){
+    @SuppressWarnings("deprecation")
+    private void setBlacklistLstView(final ListView listView){
         sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
                 new SQLiteBL(getApplicationContext()).getWritableDatabase(),
                 SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
         blackListArr = new ArrayList<>();
         String[] blackList = sqliteDBHelper.getAll().split("~");
+        sqliteDBHelper.close();
         for(String item:blackList) {
             if (item.length() > 3) {
                 blackListArr.add(item);
             }
         }
-        sqliteDBHelper.close();
         if(blackListArr.size() > 0) {
             blacklistAdapter = new BlacklistAdapter(getApplicationContext(), blackListArr);
             listView.setAdapter(blacklistAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                    final String[] options = new String[]{getString(R.string.remove_blacklist)};
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_DeviceDefault_Dialog);
+                    builder.setTitle(blackListArr.get(i));
+                    builder.setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(which == 0){
+                                sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
+                                        new SQLiteBL(getApplicationContext()).getWritableDatabase(),
+                                        SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+                                sqliteDBHelper.delVal(blackListArr.get(i));
+                                sqliteDBHelper.close();
+                                setBlacklistLstView(listView);
+                            }
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    alertDialog.show();
+                }
+            });
         }
     }
     @SuppressWarnings("deprecation")
@@ -277,11 +305,13 @@ public class ProxyService extends Service {
                         sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
                                 new SQLiteBL(getApplicationContext()).getWritableDatabase(),
                                 SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
-                        sqliteDBHelper.insert(uri);
+                        if(!sqliteDBHelper.getAll().contains(uri)) {
+                            sqliteDBHelper.insert(uri);
+                        }
                         sqliteDBHelper.close();
                         dialog.cancel();
                         setBlacklistLstView(lstBlacklist);
-                        // TODO: 9/12/2018 Toast 
+                        // TODO: 9/12/2018 Toast
                     }
                 });
             }
