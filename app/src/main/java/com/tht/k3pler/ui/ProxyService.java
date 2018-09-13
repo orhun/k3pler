@@ -70,6 +70,19 @@ public class ProxyService extends Service {
     private LayoutPagerAdapter layoutPagerAdapter;
     private BlacklistAdapter blacklistAdapter;
     private Boolean pageBackwards = false, blocked = false;
+    private enum pageIDs {
+        Main(0),
+        BlackList(1),
+        Settings(2),
+        About(3);
+        private int ID;
+        private pageIDs(int ID){
+            this.ID = ID;
+        }
+        private int getID(){
+            return ID;
+        }
+    }
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView mRecyclerView;
@@ -129,7 +142,7 @@ public class ProxyService extends Service {
             @Override
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
                 try {
-                    mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(0));
+                    mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(pageIDs.Main.getID()));
                     mainPageInflater.init(new MainPageInflater.IRecylerView() {
                         @Override
                         public void onInit(RecyclerView recyclerView) {
@@ -140,7 +153,7 @@ public class ProxyService extends Service {
                     e.printStackTrace();
                 }
                 try {
-                    blacklistPageInflater = new BlacklistPageInflater(getApplicationContext(), layouts.get(1));
+                    blacklistPageInflater = new BlacklistPageInflater(getApplicationContext(), layouts.get(pageIDs.BlackList.getID()));
                     blacklistPageInflater.init();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -219,7 +232,7 @@ public class ProxyService extends Service {
                                 mRecyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(HTTPReq item, int i) {
-                                       mainPageInflater.onDetailDialogItemClick(item, blacklistPageInflater);
+                                       mainPageInflater.onDetailDialogItemClick(item, blacklistPageInflater, viewPager, pageIDs.BlackList.getID());
                                     }
                                 }));
                             }catch (Exception e){

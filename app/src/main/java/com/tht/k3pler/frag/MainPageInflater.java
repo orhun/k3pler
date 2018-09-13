@@ -3,6 +3,7 @@ package com.tht.k3pler.frag;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +39,8 @@ public class MainPageInflater {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         iRecylerView.onInit(recyclerView);
     }
-    public void onDetailDialogItemClick(HTTPReq item, final BlacklistPageInflater blacklistPageInflater){
+    public void onDetailDialogItemClick(final HTTPReq item, final BlacklistPageInflater blacklistPageInflater,
+                                        final ViewPager viewPager, final int pageID){
         new RequestDialog(context, item).show(new RequestDialog.IBtnBlackList() {
             @Override
             public void onInit(Button btnReqBlackList, final Dialog dialog, final String uri) {
@@ -54,6 +56,7 @@ public class MainPageInflater {
                         sqliteDBHelper.close();
                         dialog.cancel();
                         blacklistPageInflater.setBlacklistLstView();
+                        viewPager.setCurrentItem(pageID);
                     }
                 });
             }
