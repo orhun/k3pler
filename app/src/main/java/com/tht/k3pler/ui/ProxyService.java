@@ -70,8 +70,7 @@ public class ProxyService extends Service {
     private LayoutPagerAdapter layoutPagerAdapter;
     private BlacklistAdapter blacklistAdapter;
     private Boolean pageBackwards = false;
-    private SqliteDBHelper sqliteDBHelper;
-    private ArrayList<String> blackListArr;
+
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView mRecyclerView;
@@ -121,46 +120,6 @@ public class ProxyService extends Service {
         }
     }
     @SuppressWarnings("deprecation")
-    private void setBlacklistLstView(final ListView listView) {
-        sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
-                new SQLiteBL(getApplicationContext()).getWritableDatabase(),
-                SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
-        blackListArr = new ArrayList<>();
-        String[] blackList = sqliteDBHelper.getAll().split("~");
-        sqliteDBHelper.close();
-        for (String item : blackList) {
-            if (item.length() > 3) {
-                blackListArr.add(item);
-            }
-        }
-        blacklistAdapter = new BlacklistAdapter(getApplicationContext(), blackListArr);
-        listView.setAdapter(blacklistAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                final String[] options = new String[]{getString(R.string.remove_blacklist)};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_DeviceDefault_Dialog);
-                builder.setTitle(blackListArr.get(i));
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
-                                    new SQLiteBL(getApplicationContext()).getWritableDatabase(),
-                                    SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
-                            sqliteDBHelper.delVal(blackListArr.get(i));
-                            sqliteDBHelper.close();
-                            setBlacklistLstView(listView);
-                        }
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                alertDialog.show();
-            }
-        });
-    }
-    @SuppressWarnings("deprecation")
     private void initGUI(Dialog dialog){
         txvPage = dialog.findViewById(R.id.txvPage);
         txvNum = dialog.findViewById(R.id.txvNum);
@@ -183,13 +142,7 @@ public class ProxyService extends Service {
                 }
                 try {
                     blacklistPageInflater = new BlacklistPageInflater(getApplicationContext(), layouts.get(1));
-                    blacklistPageInflater.init(new BlacklistPageInflater.IListView() {
-                        @Override
-                        public void onInit(ListView listView) {
-                            lstBlacklist = listView;
-                            setBlacklistLstView(listView);
-                        }
-                    });
+                    blacklistPageInflater.init();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -262,7 +215,7 @@ public class ProxyService extends Service {
                                 mRecyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(HTTPReq item, int i) {
-                                       onRecycleItemClick(item);
+                                       mainPageInflater.onDetailDialogItemClick(item, blacklistPageInflater);
                                     }
                                 }));
                             }catch (Exception e){
@@ -291,28 +244,6 @@ public class ProxyService extends Service {
             Log.d(getString(R.string.app_name), "GUI start error.");
             stopSelf();
         }
-    }
-    private void onRecycleItemClick(HTTPReq item){
-        new RequestDialog(getApplicationContext(), item).show(new RequestDialog.IBtnBlackList() {
-            @Override
-            public void onInit(Button btnReqBlackList, final Dialog dialog, final String uri) {
-                btnReqBlackList.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sqliteDBHelper = new SqliteDBHelper(getApplicationContext(),
-                                new SQLiteBL(getApplicationContext()).getWritableDatabase(),
-                                SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
-                        if(!sqliteDBHelper.getAll().contains(uri)) {
-                            sqliteDBHelper.insert(uri);
-                        }
-                        sqliteDBHelper.close();
-                        dialog.cancel();
-                        setBlacklistLstView(lstBlacklist);
-                        // TODO: 9/12/2018 Toast
-                    }
-                });
-            }
-        });
     }
     @SuppressWarnings("deprecation")
     private void onViewPager_select(int position){
