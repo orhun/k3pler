@@ -13,7 +13,7 @@ public class SqliteDBHelper {
     private static SQLiteDatabase db;
     private Context context;
     private String column, table;
-    private static String SPLIT_CHAR = "~";
+    public static String SPLIT_CHAR = "~";
 
     public SqliteDBHelper(Context context, SQLiteDatabase db, String column, String table){
         this.context = context;

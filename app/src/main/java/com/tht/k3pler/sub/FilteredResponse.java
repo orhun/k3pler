@@ -1,6 +1,8 @@
 package com.tht.k3pler.sub;
 
 
+import com.tht.k3pler.handler.SqliteDBHelper;
+
 import org.littleshoot.proxy.HttpFiltersAdapter;
 
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
@@ -14,22 +16,31 @@ import io.netty.handler.codec.http.HttpVersion;
 public class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
     private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY;
-    private static String blockedList[] = new String[]{"twitter"};
-    public FilteredResponse(HttpRequest originalRequest){
+    private String blackListArr[], blackList;
+    public FilteredResponse(HttpRequest originalRequest,
+                            String blackList){
         super(originalRequest, null);
+        this.blackList = blackList;
+        this.blackListArr = blackList.split("["+SqliteDBHelper.SPLIT_CHAR+"]");
+    }
+    public FilteredResponse(){
+        super(null, null);
     }
     @Override
     public HttpResponse clientToProxyRequest(HttpObject httpObject) {
-        Boolean block = false;
-        for(String item : blockedList){
-            if(originalRequest.getUri().contains(item)){
-                block = true;
+        if(isBlacklisted(originalRequest.getUri(), blackListArr))
+            return getBlockedResponse();
+        return super.clientToProxyRequest(httpObject);
+    }
+    public boolean isBlacklisted(String uri, String[] bl){
+        Boolean blocked = false;
+        for(String item : bl){
+            if(uri.contains(item)){
+                blocked = true;
                 break;
             }
         }
-        if(block)
-            return getBlockedResponse();
-        return super.clientToProxyRequest(httpObject);
+        return blocked;
     }
     private HttpResponse getBlockedResponse(){
         httpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, httpResponseStatus);

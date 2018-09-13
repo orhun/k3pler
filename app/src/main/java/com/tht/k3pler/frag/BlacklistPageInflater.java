@@ -45,7 +45,7 @@ public class BlacklistPageInflater {
     }
     @SuppressWarnings("deprecation")
     public void setBlacklistLstView() {
-        String[] blackList = getBlacklist().split("~");
+        String[] blackList = getBlacklist().split("["+SqliteDBHelper.SPLIT_CHAR+"]");
         blackListArr.clear();
         for (String item : blackList) {
             if (item.length() > 3) {

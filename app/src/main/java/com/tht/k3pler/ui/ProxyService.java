@@ -162,7 +162,7 @@ public class ProxyService extends Service {
         });
         viewPager.setAdapter(layoutPagerAdapter);
         new TextViewEFX().useFX(txvPage, arrowChar + getString(LayoutPagerAdapter.PagerEnum.MainPage.getTitleResId()));
-        onViewPager_select(0);
+        onViewPager_select(pageIDs.Main.getID());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -207,22 +207,18 @@ public class ProxyService extends Service {
             startLocalProxy(new IProxyStatus() {
                 @Override
                 public void onReceive(HttpRequest httpRequest) {
-                    currentBlackList = blacklistPageInflater.getBlacklist();
                     if(httpRequest.getDecoderResult().isSuccess())
                         decoderResult = "S";
                     else if(httpRequest.getDecoderResult().isFinished())
                         decoderResult = "F";
                     else if(httpRequest.getDecoderResult().isFailure())
                         decoderResult = "X";
-                    if (currentBlackList.contains(httpRequest.getUri()))
-                        blocked = true;
-                    else
-                        blocked = false;
                     httpReqs.add(new HTTPReq(httpRequest.getUri(),
                             String.valueOf(httpRequest.getMethod().name().charAt(0)),
                             httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
                             decoderResult,
-                            getTime(), blocked));
+                            getTime(), new FilteredResponse().isBlacklisted(httpRequest.getUri(),
+                            currentBlackList.split("["+SqliteDBHelper.SPLIT_CHAR+"]"))));
                     final ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
                     Collections.reverse(tmpHttpReqs);
                     Runnable setAdapterRunnable = new Runnable() {
@@ -282,10 +278,11 @@ public class ProxyService extends Service {
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
                         public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
+                            currentBlackList = blacklistPageInflater.getBlacklist();
                             try {
                                 proxyStatus.onReceive(originalRequest);
                             }catch (Exception e){ e.printStackTrace(); }
-                            return new FilteredResponse(originalRequest);
+                            return new FilteredResponse(originalRequest, currentBlackList);
                         }
                         @Override
                         public int getMaximumRequestBufferSizeInBytes() {
