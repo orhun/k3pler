@@ -3,13 +3,15 @@ package com.tht.k3pler.sub;
 
 public class HTTPReq {
     private String uri, method, protocol, result, time;
+    private Boolean blocked;
     public HTTPReq(String uri, String method, String protocol,
-                   String result, String time){
+                   String result, String time, Boolean blocked){
         this.uri = uri;
         this.method = method;
         this.protocol = protocol;
         this.result = result;
         this.time = time;
+        this.blocked = blocked;
     }
 
     public String getUri() {
@@ -23,6 +25,7 @@ public class HTTPReq {
     public String getProtocol() {
         return protocol;
     }
+
     public String getResult() {
         return result;
     }
@@ -31,6 +34,9 @@ public class HTTPReq {
         return time;
     }
 
+    public Boolean getBlocked() {
+        return blocked;
+    }
     public void setProtocol(String protocol) {
         this.protocol = protocol;
     }
@@ -49,5 +55,9 @@ public class HTTPReq {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
     }
 }

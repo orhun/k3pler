@@ -65,12 +65,11 @@ public class ProxyService extends Service {
     private Intent currentIntent;
     private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private Dialog guiDialog;
-    private String decoderResult = "", arrowChar = " > ";
+    private String decoderResult = "", arrowChar = " > ", currentBlackList;
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
     private BlacklistAdapter blacklistAdapter;
-    private Boolean pageBackwards = false;
-
+    private Boolean pageBackwards = false, blocked = false;
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView mRecyclerView;
@@ -195,17 +194,22 @@ public class ProxyService extends Service {
             startLocalProxy(new IProxyStatus() {
                 @Override
                 public void onReceive(HttpRequest httpRequest) {
+                    currentBlackList = blacklistPageInflater.getBlacklist();
                     if(httpRequest.getDecoderResult().isSuccess())
                         decoderResult = "S";
                     else if(httpRequest.getDecoderResult().isFinished())
                         decoderResult = "F";
                     else if(httpRequest.getDecoderResult().isFailure())
                         decoderResult = "X";
+                    if (currentBlackList.contains(httpRequest.getUri()))
+                        blocked = true;
+                    else
+                        blocked = false;
                     httpReqs.add(new HTTPReq(httpRequest.getUri(),
                             String.valueOf(httpRequest.getMethod().name().charAt(0)),
                             httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
                             decoderResult,
-                            getTime()));
+                            getTime(), blocked));
                     final ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
                     Collections.reverse(tmpHttpReqs);
                     Runnable setAdapterRunnable = new Runnable() {

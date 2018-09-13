@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
     private Context context;
     public ArrayList<HTTPReq> requests;
+    private int requestColor;
 
     public interface OnItemClickListener {
         void onItemClick(HTTPReq item, int i);
@@ -54,9 +55,13 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     @Override
     @SuppressWarnings("deprecation")
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (requests.get(position).getBlocked())
+            requestColor = ContextCompat.getColor(context, android.R.color.holo_red_dark);
+        else
+            requestColor = ContextCompat.getColor(context, android.R.color.white);
         String htmlEntry = "<b>"+
                 "<font color=\"" +
-                ContextCompat.getColor(context, android.R.color.white) + "\">"
+                requestColor + "\">"
                 + requests.get(position).getUri() + "</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color3lighter) +  "\">"
                 +" ~ </font>"+"<font color=\""+
