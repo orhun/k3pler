@@ -15,7 +15,7 @@ import io.netty.handler.codec.http.HttpVersion;
 
 public class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
-    private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY;
+    private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY; //// TODO: 9/15/2018 Add to settings 
     private String blackListArr[], blackList;
     private int matchType = 0;
     public FilteredResponse(HttpRequest originalRequest,

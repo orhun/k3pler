@@ -32,7 +32,6 @@ public class TextViewEFX {
                                     if (b == itCnt - 1) {
                                         tmpChr += String.valueOf(text.charAt(i1));
                                     } else {
-
                                         if (i1 == text.length() - 1) {
                                             textView.setText(text);
                                         }else {
