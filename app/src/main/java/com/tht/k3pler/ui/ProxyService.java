@@ -60,12 +60,11 @@ import io.netty.handler.codec.http.HttpRequest;
 public class ProxyService extends Service {
 
     public HttpProxyServer httpProxyServer;
-    public static final int PORT_NUMBER = 8090;
-    private static final int MAX_BUFFER = 10 * 1024 * 1024;
     private NotificationHandler notificationHandler;
     private final IBinder mBinder = new Binder();
     private Intent currentIntent;
     private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
+    private ArrayList<String> settings = new ArrayList<>();
     private Dialog guiDialog;
     private String decoderResult = "", arrowChar = " > ";
     private Handler mainHandler;
@@ -205,8 +204,9 @@ public class ProxyService extends Service {
             initGUI(guiDialog);
             mainHandler = new Handler(getApplicationContext().getMainLooper());
             guiDialog.show();
-
-            new LProxy(getApplicationContext(), PORT_NUMBER, MAX_BUFFER).start(new LProxy.IProxyStatus() {
+            settings = new SettingsPageInflater(getApplicationContext(), null).getSettings();
+            new LProxy(getApplicationContext(), Integer.parseInt(settings.get(0)),
+                    Integer.parseInt(settings.get(1))).start(new LProxy.IProxyStatus() {
                         @Override
                         public void onReceive(HttpRequest httpRequest, String blacklist) {
                             if (httpRequest.getDecoderResult().isSuccess())
