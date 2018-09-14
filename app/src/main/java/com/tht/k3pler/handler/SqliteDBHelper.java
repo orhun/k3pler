@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.tht.k3pler.sub.SQLiteBL;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class SqliteDBHelper {
 
     private static SQLiteDatabase db;
@@ -28,6 +32,23 @@ public class SqliteDBHelper {
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put(column, requestAddr);
+            db.insert(table, null, contentValues);
+            return true;
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public Boolean insertMultiple(HashMap<String, String> hashMap) {
+        try {
+            ContentValues contentValues = new ContentValues();
+            Iterator it = hashMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                contentValues.put(pair.getKey().toString(),
+                        pair.getValue().toString());
+                it.remove();
+            }
             db.insert(table, null, contentValues);
             return true;
         }catch(Exception e) {

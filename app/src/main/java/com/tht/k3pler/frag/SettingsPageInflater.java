@@ -21,11 +21,15 @@ import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.SQLiteBL;
 import com.tht.k3pler.sub.SQLiteSettings;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class SettingsPageInflater {
     private Context context;
     private ViewGroup viewGroup;
     private SqliteDBHelper sqliteDBHelper;
+    private String defaultBuffer = "10485760", defaultBufferNum = "10x1024x1024";
     // ** //
     private TextView txvStPort, txvStMaxBuffer;
 
@@ -39,12 +43,25 @@ public class SettingsPageInflater {
         setValues();
     }
     private void setValues(){
-        settextWithUnderline(txvStPort, String.valueOf(getPortSetting()));
-        settextWithUnderline(txvStMaxBuffer, txvStMaxBuffer.getText().toString());
+        ArrayList<String> settings = getSettings();
+        settextWithUnderline(txvStPort, settings.get(0));
+        if(settings.get(1).equals(defaultBuffer)){
+            settextWithUnderline(txvStMaxBuffer, defaultBufferNum);
+        }else {
+            settextWithUnderline(txvStMaxBuffer, settings.get(1));
+        }
         txvStPort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showEditDialog(txvStPort.getText().toString(), SQLiteSettings.PORT_DATA);
+                showEditDialog(context.getString(R.string.lyt_port_addr).replace(":", ""),
+                        txvStPort.getText().toString(), SQLiteSettings.PORT_DATA);
+            }
+        });
+        txvStMaxBuffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEditDialog(context.getString(R.string.lyt_max_buffer).replace(":", ""),
+                        txvStMaxBuffer.getText().toString(), SQLiteSettings.BUFFER_DATA);
             }
         });
     }
@@ -53,9 +70,9 @@ public class SettingsPageInflater {
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         textView.setText(content);
     }
-
-    public int getPortSetting(){
+    public ArrayList<String> getSettings(){
         int port = Integer.parseInt(context.getString(R.string.default_port));
+        int buffer = 10 * 1024 * 1024;
         sqliteDBHelper = new SqliteDBHelper(context,
                 new SQLiteSettings(context).getWritableDatabase(),
                 SQLiteSettings.PORT_DATA, SQLiteSettings.TABLE_NAME);
@@ -63,15 +80,33 @@ public class SettingsPageInflater {
             port = Integer.parseInt(sqliteDBHelper.get(SQLiteSettings.PORT_DATA));
         }catch (NumberFormatException e){
             e.printStackTrace();
-            sqliteDBHelper.insert(String.valueOf(port));
         }
+        sqliteDBHelper = new SqliteDBHelper(context,
+                new SQLiteSettings(context).getWritableDatabase(),
+                SQLiteSettings.BUFFER_DATA, SQLiteSettings.TABLE_NAME);
+        try {
+            buffer = Integer.parseInt(sqliteDBHelper.get(SQLiteSettings.BUFFER_DATA));
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        sqliteDBHelper.deleteAll();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(SQLiteSettings.PORT_DATA, String.valueOf(port));
+        hashMap.put(SQLiteSettings.BUFFER_DATA, String.valueOf(buffer));
+        sqliteDBHelper.insertMultiple(hashMap);
         sqliteDBHelper.close();
-        return port;
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(String.valueOf(port));
+        arrayList.add(String.valueOf(buffer));
+        return arrayList;
     }
+
     @SuppressWarnings("deprecation")
-    private void showEditDialog(final String currentItem, final String DATA){
+    private void showEditDialog(String title, String currentItem, final String DATA){
+        if(currentItem.equals(defaultBufferNum)){currentItem=defaultBuffer;}
+        final String currentItem1 = currentItem;
         AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog);
-        builder.setTitle(context.getString(R.string.edit_setting));
+        builder.setTitle(title);
         final EditText editText = new EditText(context);
         editText.setText(currentItem);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -79,7 +114,7 @@ public class SettingsPageInflater {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(dpToPx(20), 0, dpToPx(20), 0);
+        layoutParams.setMargins(dpToPx(20), dpToPx(10), dpToPx(20), 0);
         editText.setLayoutParams(layoutParams);
         parentLayout.addView(editText);
         builder.setView(parentLayout);
@@ -91,7 +126,7 @@ public class SettingsPageInflater {
                     sqliteDBHelper = new SqliteDBHelper(context,
                             new SQLiteSettings(context).getWritableDatabase(),
                             DATA, SQLiteSettings.TABLE_NAME);
-                    sqliteDBHelper.update(currentItem, item);
+                    sqliteDBHelper.update(currentItem1, item);
                     sqliteDBHelper.close();
                     setValues();
                 }
