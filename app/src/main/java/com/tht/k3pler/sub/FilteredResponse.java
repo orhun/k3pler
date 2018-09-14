@@ -1,6 +1,8 @@
 package com.tht.k3pler.sub;
 
 
+import android.util.Log;
+
 import com.tht.k3pler.handler.SqliteDBHelper;
 
 import org.littleshoot.proxy.HttpFiltersAdapter;
@@ -36,9 +38,11 @@ public class FilteredResponse extends HttpFiltersAdapter {
         Boolean blocked = false;
         if(bl.length>0) {
             for (String item : bl) {
-                if (uri.contains(item)) {
-                    blocked = true;
-                    break;
+                if(item != null && item.length()>3) {
+                    if (uri.contains(item)) {
+                        blocked = true;
+                        break;
+                    }
                 }
             }
         }
