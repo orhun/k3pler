@@ -31,7 +31,7 @@ public class SettingsPageInflater {
     private SqliteDBHelper sqliteDBHelper;
     private String defaultBuffer = "10485760", defaultBufferNum = "10x1024x1024";
     // ** //
-    private TextView txvStPort, txvStMaxBuffer, txvStRestart;
+    private TextView txvStPort, txvStMaxBuffer, txvStMatchType, txvStRestart;
 
     public SettingsPageInflater(Context context, ViewGroup viewGroup){
         this.context = context;
@@ -40,6 +40,7 @@ public class SettingsPageInflater {
     public void init(){
         txvStPort = viewGroup.findViewById(R.id.txvStPort);
         txvStMaxBuffer = viewGroup.findViewById(R.id.txvStMaxBuffer);
+        txvStMatchType = viewGroup.findViewById(R.id.txvStMatchType);
         txvStRestart = viewGroup.findViewById(R.id.txvStRestart);
         setValues();
     }
@@ -51,6 +52,12 @@ public class SettingsPageInflater {
         }else {
             settextWithUnderline(txvStMaxBuffer, settings.get(1));
         }
+        if(Integer.valueOf(settings.get(2))==0){
+            settextWithUnderline(txvStMatchType, context.getString(R.string.match_type_1));
+        }else{
+            settextWithUnderline(txvStMatchType, context.getString(R.string.match_type_2));
+        }
+
         txvStPort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +72,13 @@ public class SettingsPageInflater {
                         txvStMaxBuffer.getText().toString(), SQLiteSettings.BUFFER_DATA);
             }
         });
+        txvStMatchType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSelectDialog(context.getString(R.string.lyt_match_type).replace(":", ""),
+                        txvStMatchType.getText().toString(), SQLiteSettings.MATCH_DATA);
+            }
+        });
     }
     private void settextWithUnderline(TextView textView, String text){
         SpannableString content = new SpannableString(text);
@@ -74,6 +88,7 @@ public class SettingsPageInflater {
     public ArrayList<String> getSettings(){
         int port = Integer.parseInt(context.getString(R.string.default_port));
         int buffer = 10 * 1024 * 1024;
+        int match =  Integer.parseInt(context.getString(R.string.default_matchtype));
         sqliteDBHelper = new SqliteDBHelper(context,
                 new SQLiteSettings(context).getWritableDatabase(),
                 SQLiteSettings.PORT_DATA, SQLiteSettings.TABLE_NAME);
@@ -90,15 +105,25 @@ public class SettingsPageInflater {
         }catch (NumberFormatException e){
             e.printStackTrace();
         }
+        sqliteDBHelper = new SqliteDBHelper(context,
+                new SQLiteSettings(context).getWritableDatabase(),
+                SQLiteSettings.MATCH_DATA, SQLiteSettings.TABLE_NAME);
+        try {
+            match = Integer.parseInt(sqliteDBHelper.get(SQLiteSettings.MATCH_DATA));
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
         sqliteDBHelper.deleteAll();
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(SQLiteSettings.PORT_DATA, String.valueOf(port));
         hashMap.put(SQLiteSettings.BUFFER_DATA, String.valueOf(buffer));
+        hashMap.put(SQLiteSettings.MATCH_DATA, String.valueOf(match));
         sqliteDBHelper.insertMultiple(hashMap);
         sqliteDBHelper.close();
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(String.valueOf(port));
         arrayList.add(String.valueOf(buffer));
+        arrayList.add(String.valueOf(match));
         return arrayList;
     }
 
@@ -139,5 +164,28 @@ public class SettingsPageInflater {
     }
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+    @SuppressWarnings("deprecation")
+    private void showSelectDialog(String title, String currentItem, final String DATA){
+        if(currentItem.equals(context.getString(R.string.match_type_1))){currentItem="0";}else{currentItem="1";}
+        final String currentItem1 = currentItem;
+        final String[] options = new String[]{context.getString(R.string.match_type_1),
+                context.getString(R.string.match_type_2)};
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog);
+        builder.setTitle(title);
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sqliteDBHelper = new SqliteDBHelper(context,
+                        new SQLiteSettings(context).getWritableDatabase(),
+                        DATA, SQLiteSettings.TABLE_NAME);
+                sqliteDBHelper.update(currentItem1, String.valueOf(which));
+                sqliteDBHelper.close();
+                setValues();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.show();
     }
 }

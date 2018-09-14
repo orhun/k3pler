@@ -24,5 +24,9 @@
     <string name="lyt_port_addr">Proxy Port:</string>
     <string name="lyt_max_buffer">Max. Buffer: </string>
     <string name="lyt_max_buffer_placeholder">10x1024x1024</string>
+    <string name="lyt_match_type">Match Type:</string>
+    <string name="match_type_1">Full</string>
+    <string name="match_type_2">Keyword</string>
     <string name="default_port">8090</string>
+    <string name="default_matchtype">1</string>
 </resources>

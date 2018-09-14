@@ -1,8 +1,6 @@
 package com.tht.k3pler.sub;
 
 
-import android.util.Log;
-
 import com.tht.k3pler.handler.SqliteDBHelper;
 
 import org.littleshoot.proxy.HttpFiltersAdapter;
@@ -19,11 +17,13 @@ public class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
     private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY;
     private String blackListArr[], blackList;
+    private int matchType = 0;
     public FilteredResponse(HttpRequest originalRequest,
-                            String blackList){
+                            String blackList, int matchType){
         super(originalRequest, null);
         this.blackList = blackList;
         this.blackListArr = blackList.split("["+SqliteDBHelper.SPLIT_CHAR+"]");
+        this.matchType = matchType;
     }
     public FilteredResponse(){
         super(null, null);
@@ -39,9 +39,16 @@ public class FilteredResponse extends HttpFiltersAdapter {
         if(bl.length>0) {
             for (String item : bl) {
                 if(item != null && item.length()>3) {
-                    if (uri.contains(item)) {
-                        blocked = true;
-                        break;
+                    if(matchType == 0){
+                        if(uri.equals(item)){
+                            blocked = true;
+                            break;
+                        }
+                    }else {
+                        if (uri.contains(item)) {
+                            blocked = true;
+                            break;
+                        }
                     }
                 }
             }

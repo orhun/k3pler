@@ -20,16 +20,17 @@ import io.netty.handler.codec.http.HttpRequest;
 public class LProxy {
     private Context context;
     private String blacklist;
-    private int PORT_NUMBER, MAX_BUFFER;
+    private int PORT_NUMBER, MAX_BUFFER, matchType;
     public interface IProxyStatus {
         void onReceive(HttpRequest httpRequest, String blacklist);
         void onNotify(NotificationHandler notificationHandler, HttpProxyServer httpProxyServer);
         void onError(Exception e);
     }
-    public LProxy(Context context, int PORT_NUMBER, int MAX_BUFFER){
+    public LProxy(Context context, int PORT_NUMBER, int MAX_BUFFER, int matchType){
         this.context = context;
         this.PORT_NUMBER = PORT_NUMBER;
         this.MAX_BUFFER = MAX_BUFFER;
+        this.matchType = matchType;
     }
     public void start(final IProxyStatus proxyStatus){
         try {
@@ -42,7 +43,7 @@ public class LProxy {
                             try{
                                 proxyStatus.onReceive(originalRequest, blacklist);
                             }catch (Exception e){ e.printStackTrace(); }
-                            return new FilteredResponse(originalRequest, blacklist);
+                            return new FilteredResponse(originalRequest, blacklist, matchType);
                         }
                         @Override
                         public int getMaximumRequestBufferSizeInBytes() {

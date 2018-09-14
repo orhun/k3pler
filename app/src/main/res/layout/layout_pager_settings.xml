@@ -48,10 +48,33 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/txvStMaxBufferLabel"
         android:layout_marginTop="10dp"
-        android:text="10x1024x1024"
+        android:text=""
         android:fontFamily="monospace"
         android:layout_below="@+id/txvStPortLabel"/>
-
+    <TextView
+        android:id="@+id/txvStMatchTypeLabel"
+        android:text="@string/lyt_match_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color2lighter"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:layout_below="@+id/txvStMaxBufferLabel"/>
+    <TextView
+        android:id="@+id/txvStMatchType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/txvStMatchTypeLabel"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:fontFamily="monospace"
+        android:layout_below="@+id/txvStMaxBufferLabel"/>
     <TextView
         android:id="@+id/txvStRestart"
         android:layout_width="wrap_content"
