@@ -277,7 +277,6 @@ public class ProxyService extends Service {
         }
         txvNum.setText(Html.fromHtml(pageNumHTML));
     }
-
     private void showGuiDialog(){
         try{
             if(guiDialog != null && !guiDialog.isShowing()){

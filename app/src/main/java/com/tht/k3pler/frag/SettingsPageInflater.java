@@ -31,7 +31,7 @@ public class SettingsPageInflater {
     private SqliteDBHelper sqliteDBHelper;
     private String defaultBuffer = "10485760", defaultBufferNum = "10x1024x1024";
     // ** //
-    private TextView txvStPort, txvStMaxBuffer;
+    private TextView txvStPort, txvStMaxBuffer, txvStRestart;
 
     public SettingsPageInflater(Context context, ViewGroup viewGroup){
         this.context = context;
@@ -40,6 +40,7 @@ public class SettingsPageInflater {
     public void init(){
         txvStPort = viewGroup.findViewById(R.id.txvStPort);
         txvStMaxBuffer = viewGroup.findViewById(R.id.txvStMaxBuffer);
+        txvStRestart = viewGroup.findViewById(R.id.txvStRestart);
         setValues();
     }
     private void setValues(){

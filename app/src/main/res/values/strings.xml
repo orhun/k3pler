@@ -12,6 +12,7 @@
     <string name="clear_blacklist">Clear Blacklist</string>
     <string name="edit_blaclist_item">Edit</string>
     <string name="edit_setting">Edit Setting</string>
+    <string name="restart_app">Restart App to see the changes</string>
     <string name="OK">OK</string>
     <string name="is_notification">IS_NOTIFICATION</string>
     <string name="lyt_req_blacklist">Add to Blacklist</string>
