@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tht.k3pler.R;
 import com.tht.k3pler.adapter.BlacklistAdapter;
@@ -29,6 +30,7 @@ public class BlacklistPageInflater {
     private BlacklistAdapter blacklistAdapter;
     // * //
     private ListView lstBlacklist;
+    private TextView txvBlacklistOptions;
 
     public BlacklistPageInflater(Context context, ViewGroup viewGroup){
         this.context = context;
@@ -40,6 +42,18 @@ public class BlacklistPageInflater {
     public void init(){
         lstBlacklist = viewGroup.findViewById(R.id.lstBlacklist);
         setBlacklistLstView();
+        txvBlacklistOptions = viewGroup.findViewById(R.id.txvBlacklistOptions);
+        txvBlacklistOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sqliteDBHelper = new SqliteDBHelper(context,
+                        new SQLiteBL(context).getWritableDatabase(),
+                        SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+                sqliteDBHelper.deleteAll();
+                sqliteDBHelper.close();
+                setBlacklistLstView();
+            }
+        });
     }
     public String getBlacklist(){
         String blackList = "";

@@ -9,6 +9,8 @@
     <string name="show_gui">Show GUI</string>
     <string name="add_blacklist">Added to blacklist.</string>
     <string name="remove_blacklist">Remove</string>
+    <string name="options">Options</string>
+    <string name="clear_blacklist">Clear Blacklist</string>
     <string name="edit_blaclist_item">Edit</string>
     <string name="OK">OK</string>
     <string name="is_notification">IS_NOTIFICATION</string>
