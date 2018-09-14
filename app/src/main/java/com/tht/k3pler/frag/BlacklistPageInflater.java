@@ -136,8 +136,7 @@ public class BlacklistPageInflater {
         alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alertDialog.show();
     }
-    public static int dpToPx(int dp)
-    {
+    public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 }
