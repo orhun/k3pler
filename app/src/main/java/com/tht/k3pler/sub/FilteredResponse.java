@@ -25,8 +25,9 @@ public class FilteredResponse extends HttpFiltersAdapter {
         this.blackListArr = blackList.split("["+SqliteDBHelper.SPLIT_CHAR+"]");
         this.matchType = matchType;
     }
-    public FilteredResponse(){
+    public FilteredResponse(int matchType){
         super(null, null);
+        this.matchType = matchType;
     }
     @Override
     public HttpResponse clientToProxyRequest(HttpObject httpObject) {

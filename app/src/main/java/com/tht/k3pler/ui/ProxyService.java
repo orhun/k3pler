@@ -220,7 +220,7 @@ public class ProxyService extends Service {
                                     String.valueOf(httpRequest.getMethod().name().charAt(0)),
                                     httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
                                     decoderResult,
-                                    getTime(), new FilteredResponse().isBlacklisted(httpRequest.getUri(),
+                                    getTime(), new FilteredResponse(Integer.parseInt(settings.get(2))).isBlacklisted(httpRequest.getUri(),
                                     blacklist.split("[" + SqliteDBHelper.SPLIT_CHAR + "]"))));
                             final ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
                             Collections.reverse(tmpHttpReqs);

@@ -56,7 +56,7 @@ public class MainPageInflater {
                         sqliteDBHelper.close();
                         dialog.cancel();
                         blacklistPageInflater.setBlacklistLstView();
-                        viewPager.setCurrentItem(pageID);
+                        /* viewPager.setCurrentItem(pageID); */
                     }
                 });
             }
