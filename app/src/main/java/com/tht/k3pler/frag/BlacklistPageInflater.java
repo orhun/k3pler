@@ -30,6 +30,9 @@ public class BlacklistPageInflater {
         this.context = context;
         this.viewGroup = viewGroup;
     }
+    public BlacklistPageInflater(Context context){
+        this.context = context;
+    }
     public void init(){
         lstBlacklist = viewGroup.findViewById(R.id.lstBlacklist);
         setBlacklistLstView();

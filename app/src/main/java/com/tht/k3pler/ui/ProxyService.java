@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.tht.k3pler.adapter.BlacklistAdapter;
 import com.tht.k3pler.frag.BlacklistPageInflater;
+import com.tht.k3pler.handler.LProxy;
 import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.ProxyNotifier;
 import com.tht.k3pler.R;
@@ -65,11 +66,10 @@ public class ProxyService extends Service {
     private Intent currentIntent;
     private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private Dialog guiDialog;
-    private String decoderResult = "", arrowChar = " > ", currentBlackList;
+    private String decoderResult = "", arrowChar = " > ";
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
-    private BlacklistAdapter blacklistAdapter;
-    private Boolean pageBackwards = false, blocked = false;
+    private Boolean pageBackwards = false;
     private enum pageIDs {
         Main(0),
         BlackList(1),
@@ -86,17 +86,11 @@ public class ProxyService extends Service {
     // ** //
     private TextView txvPage, txvNum;
     private RecyclerView mRecyclerView;
-    private ListView lstBlacklist;
     private ViewPager viewPager;
     private RelativeLayout rlMain;
     private MainPageInflater mainPageInflater;
     private BlacklistPageInflater blacklistPageInflater;
 
-    public interface IProxyStatus {
-        void onReceive(HttpRequest httpRequest);
-        void onNotify(NotificationHandler notificationHandler);
-        void onError(Exception e);
-    }
 
     public ProxyService() {}
 
@@ -204,53 +198,57 @@ public class ProxyService extends Service {
             mainHandler = new Handler(getApplicationContext().getMainLooper());
             guiDialog.show();
 
-            startLocalProxy(new IProxyStatus() {
-                @Override
-                public void onReceive(HttpRequest httpRequest) {
-                    if(httpRequest.getDecoderResult().isSuccess())
-                        decoderResult = "S";
-                    else if(httpRequest.getDecoderResult().isFinished())
-                        decoderResult = "F";
-                    else if(httpRequest.getDecoderResult().isFailure())
-                        decoderResult = "X";
-                    httpReqs.add(new HTTPReq(httpRequest.getUri(),
-                            String.valueOf(httpRequest.getMethod().name().charAt(0)),
-                            httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
-                            decoderResult,
-                            getTime(), new FilteredResponse().isBlacklisted(httpRequest.getUri(),
-                            currentBlackList.split("["+SqliteDBHelper.SPLIT_CHAR+"]"))));
-                    final ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
-                    Collections.reverse(tmpHttpReqs);
-                    Runnable setAdapterRunnable = new Runnable() {
+            new LProxy(getApplicationContext(), PORT_NUMBER, MAX_BUFFER).start(new LProxy.IProxyStatus() {
                         @Override
-                        public void run() {
-                            try {
-                                mRecyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(HTTPReq item, int i) {
-                                       mainPageInflater.onDetailDialogItemClick(item, blacklistPageInflater, viewPager, pageIDs.BlackList.getID());
+                        public void onReceive(HttpRequest httpRequest, String blacklist) {
+                            if (httpRequest.getDecoderResult().isSuccess())
+                                decoderResult = "S";
+                            else if (httpRequest.getDecoderResult().isFinished())
+                                decoderResult = "F";
+                            else if (httpRequest.getDecoderResult().isFailure())
+                                decoderResult = "X";
+                            httpReqs.add(new HTTPReq(httpRequest.getUri(),
+                                    String.valueOf(httpRequest.getMethod().name().charAt(0)),
+                                    httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
+                                    decoderResult,
+                                    getTime(), new FilteredResponse().isBlacklisted(httpRequest.getUri(),
+                                    blacklist.split("[" + SqliteDBHelper.SPLIT_CHAR + "]"))));
+                            final ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
+                            Collections.reverse(tmpHttpReqs);
+                            Runnable setAdapterRunnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        mRecyclerView.setAdapter(new RequestAdapter(getApplicationContext(), tmpHttpReqs, new RequestAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(HTTPReq item, int i) {
+                                                mainPageInflater.onDetailDialogItemClick(item, blacklistPageInflater, viewPager, pageIDs.BlackList.getID());
+                                            }
+                                        }));
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                }));
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
+                                }
+                            };
+                            mainHandler.post(setAdapterRunnable);
                         }
-                    };
-                    mainHandler.post(setAdapterRunnable);
-                }
 
-                @Override
-                public void onNotify(NotificationHandler notificationHandler) {}
+                        @Override
+                        public void onNotify(NotificationHandler notificationHandler1, HttpProxyServer httpProxyServer1) {
+                            notificationHandler = notificationHandler1;
+                            httpProxyServer = httpProxyServer1;
+                        }
 
-                @Override
-                public void onError(Exception e) {
-                    Log.d(getString(R.string.app_name), e.toString());
-                }
-                private String getTime() {
-                    DateFormat df = new SimpleDateFormat("{HH:mm:ss}", Locale.getDefault());
-                    return df.format(Calendar.getInstance().getTime());
-                }
-            });
+                        @Override
+                        public void onError(Exception e) {
+                            Log.d(getString(R.string.app_name), e.toString());
+                        }
+
+                        private String getTime() {
+                            DateFormat df = new SimpleDateFormat("{HH:mm:ss}", Locale.getDefault());
+                            return df.format(Calendar.getInstance().getTime());
+                        }
+                    });
 
         }catch (Exception e){
             e.printStackTrace();
@@ -271,45 +269,7 @@ public class ProxyService extends Service {
         }
         txvNum.setText(Html.fromHtml(pageNumHTML));
     }
-    private void startLocalProxy(final IProxyStatus proxyStatus){
-        try {
-            httpProxyServer = DefaultHttpProxyServer.bootstrap()
-                    .withPort(PORT_NUMBER)
-                    .withFiltersSource(new HttpFiltersSource() {
-                        @Override
-                        public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
-                            currentBlackList = blacklistPageInflater.getBlacklist();
-                            try {
-                                proxyStatus.onReceive(originalRequest);
-                            }catch (Exception e){ e.printStackTrace(); }
-                            return new FilteredResponse(originalRequest, currentBlackList);
-                        }
-                        @Override
-                        public int getMaximumRequestBufferSizeInBytes() {
-                            return MAX_BUFFER;
-                        }
 
-                        @Override
-                        public int getMaximumResponseBufferSizeInBytes() {
-                            return MAX_BUFFER;
-                        }
-                    }).start();
-            notificationHandler = new NotificationHandler(1, getApplicationContext(), ProxyService.class);
-            if(httpProxyServer != null){
-                new ProxyNotifier(getApplicationContext(), httpProxyServer, notificationHandler).execute();
-            }else{
-                throw new Exception("Failed to start proxy.");
-            }
-            if(proxyStatus!=null){
-                proxyStatus.onNotify(notificationHandler);
-            }
-        }catch (Exception e){
-            if(proxyStatus!=null){
-                proxyStatus.onError(e);
-            }
-            e.printStackTrace();
-        }
-    }
     private void showGuiDialog(){
         try{
             if(guiDialog != null && !guiDialog.isShowing()){

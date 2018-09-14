@@ -50,7 +50,9 @@ public class LayoutPagerAdapter extends android.support.v4.view.PagerAdapter {
                 collection, false);
         layouts.add(layout);
         collection.addView(layout);
-        iViewPager.onViewsAdded(layouts);
+        if(position == getCount() - 1) {
+            iViewPager.onViewsAdded(layouts);
+        }
         return layout;
     }
     @Override

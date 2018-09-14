@@ -34,10 +34,12 @@ public class FilteredResponse extends HttpFiltersAdapter {
     }
     public boolean isBlacklisted(String uri, String[] bl){
         Boolean blocked = false;
-        for(String item : bl){
-            if(uri.contains(item)){
-                blocked = true;
-                break;
+        if(bl.length>0) {
+            for (String item : bl) {
+                if (uri.contains(item)) {
+                    blocked = true;
+                    break;
+                }
             }
         }
         return blocked;
