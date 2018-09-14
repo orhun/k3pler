@@ -19,4 +19,8 @@
     <string name="lyt_req_protocol">Protocol:</string>
     <string name="lyt_req_method">Method:</string>
     <string name="lyt_req_reqplaceholder">Request addr</string>
+    <string name="lyt_port_addr">Proxy Port:</string>
+    <string name="lyt_max_buffer">Max. Buffer: </string>
+    <string name="lyt_max_buffer_placeholder">10x1024x1024</string>
+    <string name="default_port">8090</string>
 </resources>

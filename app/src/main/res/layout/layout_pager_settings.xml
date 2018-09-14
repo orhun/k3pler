@@ -5,5 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray">
+    <TextView
+        android:id="@+id/txvStPortLabel"
+        android:text="@string/lyt_port_addr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color2lighter"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/txvStPort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/txvStPortLabel"
+        android:layout_marginTop="10dp"
+        android:text="8080"
+        android:fontFamily="monospace"/>
+    <TextView
+        android:id="@+id/txvStMaxBufferLabel"
+        android:text="@string/lyt_max_buffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color2lighter"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:layout_below="@+id/txvStPortLabel"/>
+    <TextView
+        android:id="@+id/txvStMaxBuffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/txvStMaxBufferLabel"
+        android:layout_marginTop="10dp"
+        android:text="10x1024x1024"
+        android:fontFamily="monospace"
+        android:layout_below="@+id/txvStPortLabel"/>
 
 </RelativeLayout>

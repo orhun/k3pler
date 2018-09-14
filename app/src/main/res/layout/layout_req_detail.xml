@@ -18,7 +18,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/lyt_req_reqplaceholder" />
     <TextView
-        android:id="@+id/txvReqMethodLabel"
+        android:id="@+id/txvStPortLabel"
         android:text="@string/lyt_req_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:textSize="15sp"
         android:layout_below="@+id/txvReqAddr"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@+id/txvReqMethodLabel"
+        android:layout_toEndOf="@+id/txvStPortLabel"
         android:layout_marginTop="10dp"
         android:text=""
         android:fontFamily="monospace"/>

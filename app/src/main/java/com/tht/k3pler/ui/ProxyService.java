@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.tht.k3pler.adapter.BlacklistAdapter;
 import com.tht.k3pler.frag.BlacklistPageInflater;
+import com.tht.k3pler.frag.SettingsPageInflater;
 import com.tht.k3pler.handler.LProxy;
 import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.ProxyNotifier;
@@ -90,6 +91,7 @@ public class ProxyService extends Service {
     private RelativeLayout rlMain;
     private MainPageInflater mainPageInflater;
     private BlacklistPageInflater blacklistPageInflater;
+    private SettingsPageInflater settingsPageInflater;
 
 
     public ProxyService() {}
@@ -149,6 +151,12 @@ public class ProxyService extends Service {
                 try {
                     blacklistPageInflater = new BlacklistPageInflater(getApplicationContext(), layouts.get(pageIDs.BlackList.getID()));
                     blacklistPageInflater.init();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                try {
+                    settingsPageInflater = new SettingsPageInflater(getApplicationContext(), layouts.get(pageIDs.Settings.getID()));
+                    settingsPageInflater.init();
                 }catch (Exception e){
                     e.printStackTrace();
                 }

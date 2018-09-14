@@ -15,7 +15,7 @@ public class LayoutPagerAdapter extends android.support.v4.view.PagerAdapter {
     public enum PagerEnum {
         MainPage(R.string.main_page, R.layout.layout_pager_main),
         BlackListPage(R.string.blacklist_page, R.layout.layout_pager_blacklist),
-        SettingsPage(R.string.settings_page, R.layout.layout_pager_main),
+        SettingsPage(R.string.settings_page, R.layout.layout_pager_settings),
         AboutPage(R.string.about_page, R.layout.layout_pager_about);
         private int mTitleResId;
         private int mLayoutResId;
