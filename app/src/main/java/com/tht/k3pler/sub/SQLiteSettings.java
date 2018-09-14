@@ -9,9 +9,9 @@ public class SQLiteSettings extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static String DB_NAME = "k3settings.db";
     public static String TABLE_NAME = "k3table";
-    public static String PORT_DATA = "PORT";
+    public static String PORT_DATA = "PORT", BUFFER_DATA = "MAX_BUFFER";
     private String CREATE_DB = "create table "+TABLE_NAME+
-            "("+ PORT_DATA +" text);";
+            "("+ PORT_DATA +" text, " + BUFFER_DATA +" text);";
 
     public SQLiteSettings(Context context) {
         super(context, DB_NAME, null, VERSION);
