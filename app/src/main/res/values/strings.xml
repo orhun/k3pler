@@ -8,7 +8,9 @@
     <string name="proxy_stop">Stop Proxy</string>
     <string name="show_gui">Show GUI</string>
     <string name="add_blacklist">Added to blacklist.</string>
-    <string name="remove_blacklist">Remove from blacklist</string>
+    <string name="remove_blacklist">Remove</string>
+    <string name="edit_blaclist_item">Edit</string>
+    <string name="OK">OK</string>
     <string name="is_notification">IS_NOTIFICATION</string>
     <string name="lyt_req_blacklist">Add to Blacklist</string>
     <string name="lyt_req_time">Time:</string>

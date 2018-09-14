@@ -4,10 +4,14 @@ package com.tht.k3pler.frag;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.tht.k3pler.R;
@@ -60,7 +64,8 @@ public class BlacklistPageInflater {
         lstBlacklist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                final String[] options = new String[]{context.getString(R.string.remove_blacklist)};
+                final String[] options = new String[]{context.getString(R.string.remove_blacklist),
+                        context.getString(R.string.edit_blaclist_item)};
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog);
                 builder.setTitle(blackListArr.get(i));
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -73,6 +78,8 @@ public class BlacklistPageInflater {
                             sqliteDBHelper.delVal(blackListArr.get(i));
                             sqliteDBHelper.close();
                             setBlacklistLstView();
+                        }else if(which == 1){
+                            showEditDialog(blackListArr.get(i));
                         }
                     }
                 });
@@ -81,5 +88,42 @@ public class BlacklistPageInflater {
                 alertDialog.show();
             }
         });
+    }
+    @SuppressWarnings("deprecation")
+    private void showEditDialog(final String item){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog);
+        builder.setTitle(context.getString(R.string.edit_blaclist_item));
+        final EditText editText = new EditText(context);
+        editText.setText(item);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        LinearLayout parentLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.setMargins(dpToPx(20), 0, dpToPx(20), 0);
+        editText.setLayoutParams(layoutParams);
+        parentLayout.addView(editText);
+        builder.setView(parentLayout);
+        builder.setPositiveButton(context.getString(R.string.OK), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newAddr = editText.getText().toString();
+                if(newAddr.length() > 3) {
+                    sqliteDBHelper = new SqliteDBHelper(context,
+                            new SQLiteBL(context).getWritableDatabase(),
+                            SQLiteBL.BLACKLIST_DATA, SQLiteBL.TABLE_NAME);
+                    sqliteDBHelper.update(item, newAddr);
+                    sqliteDBHelper.close();
+                    setBlacklistLstView();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.show();
+    }
+    public static int dpToPx(int dp)
+    {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 }
