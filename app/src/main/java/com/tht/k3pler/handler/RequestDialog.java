@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.tht.k3pler.R;
+import com.tht.k3pler.adapter.RequestAdapter;
 import com.tht.k3pler.sub.HTTPReq;
 
 public class RequestDialog {
@@ -48,7 +49,7 @@ public class RequestDialog {
             txvReqAddr.setText(httpReq.getUri());
             txvReqMethod.setText(httpReq.getMethod());
             txvReqProtocol.setText(httpReq.getProtocol());
-            txvReqResult.setText(httpReq.getResult());
+            txvReqResult.setText(RequestAdapter.getLongResult(httpReq.getResult()));
             txvReqTime.setText(httpReq.getTime().replace("{", "").replace("}", ""));
             reqDialog.show();
             iBtnBlackList.onInit(btnReqBlacklist, reqDialog, httpReq.getUri());

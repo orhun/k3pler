@@ -15,6 +15,8 @@ import com.tht.k3pler.sub.HTTPReq;
 
 import java.util.ArrayList;
 
+import io.netty.handler.codec.DecoderResult;
+
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
     private Context context;
@@ -59,6 +61,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             requestColor = ContextCompat.getColor(context, android.R.color.holo_red_dark);
         else
             requestColor = ContextCompat.getColor(context, android.R.color.white);
+        String method = String.valueOf(requests.get(position).getMethod().charAt(0));
+        String protocol = requests.get(position).getProtocol().replace("HTTP", "H");
+        String decoderResult = getShortResult(requests.get(position).getResult());
         String htmlEntry = "<b>"+
                 "<font color=\"" +
                 requestColor + "\">"
@@ -66,11 +71,11 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 ContextCompat.getColor(context, R.color.color3lighter) +  "\">"
                 +" ~ </font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color2) + "\">"
-                + requests.get(position).getMethod() +"</font>"+"<font color=\""+
+                + method +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color1) +  "\">"
-                + " [" + requests.get(position).getProtocol() + "] " +"</font>"+"<font color=\""+
+                + " [" + protocol + "] " +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.orange) +  "\">"
-                + "_" + requests.get(position).getResult() + "_ " +"</font>"+"<font color=\""+
+                + "_" + decoderResult + "_ " +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.lightYellow) +  "\">"
                 + " " + requests.get(position).getTime()  +"</font>"
                 + "</b>";
@@ -81,5 +86,20 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     public int getItemCount() {
         return requests.size();
     }
+
+    private String getShortResult(DecoderResult result){
+        if (result.isSuccess())
+            return "S";
+        else if (result.isFinished())
+            return "F";
+        else if (result.isFailure())
+            return "X";
+        else
+            return "-";
+    }
+    public static String getLongResult(DecoderResult result){
+        return result.toString();
+    }
+
 
 }

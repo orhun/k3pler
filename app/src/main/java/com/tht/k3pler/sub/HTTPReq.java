@@ -1,11 +1,14 @@
 package com.tht.k3pler.sub;
 
 
+import io.netty.handler.codec.DecoderResult;
+
 public class HTTPReq {
-    private String uri, method, protocol, result, time;
+    private String uri, method, protocol, time;
+    private DecoderResult result;
     private Boolean blocked;
     public HTTPReq(String uri, String method, String protocol,
-                   String result, String time, Boolean blocked){
+                   DecoderResult result, String time, Boolean blocked){
         this.uri = uri;
         this.method = method;
         this.protocol = protocol;
@@ -26,7 +29,7 @@ public class HTTPReq {
         return protocol;
     }
 
-    public String getResult() {
+    public DecoderResult getResult() {
         return result;
     }
 
@@ -41,7 +44,7 @@ public class HTTPReq {
         this.protocol = protocol;
     }
 
-    public void setResult(String result) {
+    public void setResult(DecoderResult result) {
         this.result = result;
     }
 

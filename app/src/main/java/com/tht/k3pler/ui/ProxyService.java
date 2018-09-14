@@ -210,16 +210,10 @@ public class ProxyService extends Service {
                     .start(new LProxy.IProxyStatus() {
                         @Override
                         public void onReceive(HttpRequest httpRequest, String blacklist) {
-                            if (httpRequest.getDecoderResult().isSuccess())
-                                decoderResult = "S";
-                            else if (httpRequest.getDecoderResult().isFinished())
-                                decoderResult = "F";
-                            else if (httpRequest.getDecoderResult().isFailure())
-                                decoderResult = "X";
                             httpReqs.add(new HTTPReq(httpRequest.getUri(),
-                                    String.valueOf(httpRequest.getMethod().name().charAt(0)),
-                                    httpRequest.getProtocolVersion().text().replace("HTTP", "H"),
-                                    decoderResult,
+                                    httpRequest.getMethod().name(),
+                                    httpRequest.getProtocolVersion().text(),
+                                    httpRequest.getDecoderResult(),
                                     getTime(), new FilteredResponse(Integer.parseInt(settings.get(2))).isBlacklisted(httpRequest.getUri(),
                                     blacklist.split("[" + SqliteDBHelper.SPLIT_CHAR + "]"))));
                             final ArrayList<HTTPReq> tmpHttpReqs = new ArrayList<>(httpReqs);
