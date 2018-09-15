@@ -16,7 +16,7 @@
     <string name="OK">OK</string>
     <string name="is_notification">IS_NOTIFICATION</string>
     <string name="lyt_req_blacklist">Add to Blacklist</string>
-    <string name="lyt_req_time">Time:</string>
+    <string name="lyt_req_time">Date:</string>
     <string name="lyt_req_result">Result:</string>
     <string name="lyt_req_protocol">Protocol:</string>
     <string name="lyt_req_method">Method:</string>
