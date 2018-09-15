@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ public class BlacklistPageInflater {
     // * //
     private ListView lstBlacklist;
     private TextView txvBlacklistOptions;
+    private SwipeRefreshLayout swpBlacklist;
 
     public BlacklistPageInflater(Context context, ViewGroup viewGroup){
         this.context = context;
@@ -52,6 +55,19 @@ public class BlacklistPageInflater {
                 sqliteDBHelper.deleteAll();
                 sqliteDBHelper.close();
                 setBlacklistLstView();
+            }
+        });
+        swpBlacklist = viewGroup.findViewById(R.id.swpBlacklist);
+        swpBlacklist.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setBlacklistLstView();
+                        swpBlacklist.setRefreshing(false);
+                    }
+                }, 1000);
             }
         });
     }
