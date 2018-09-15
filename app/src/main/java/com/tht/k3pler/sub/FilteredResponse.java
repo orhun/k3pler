@@ -15,15 +15,17 @@ import io.netty.handler.codec.http.HttpVersion;
 
 public class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
-    private static HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY; //// TODO: 9/15/2018 Add to settings 
+    private HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY;
     private String blackListArr[], blackList;
     private int matchType = 0;
     public FilteredResponse(HttpRequest originalRequest,
-                            String blackList, int matchType){
+                            String blackList, int matchType,
+                            HttpResponseStatus httpResponseStatus){
         super(originalRequest, null);
         this.blackList = blackList;
         this.blackListArr = blackList.split("["+SqliteDBHelper.SPLIT_CHAR+"]");
         this.matchType = matchType;
+        this.httpResponseStatus = httpResponseStatus;
     }
     public FilteredResponse(int matchType){
         super(null, null);

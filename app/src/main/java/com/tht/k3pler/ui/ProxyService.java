@@ -206,7 +206,8 @@ public class ProxyService extends Service {
             guiDialog.show();
             settings = new SettingsPageInflater(getApplicationContext(), null).getSettings();
             new LProxy(getApplicationContext(), Integer.parseInt(settings.get(0)),
-                    Integer.parseInt(settings.get(1)), Integer.parseInt(settings.get(2)))
+                    Integer.parseInt(settings.get(1)), Integer.parseInt(settings.get(2)),
+                    Integer.parseInt(settings.get(3)))
                     .start(new LProxy.IProxyStatus() {
                         @Override
                         public void onReceive(HttpRequest httpRequest, String blacklist) {
