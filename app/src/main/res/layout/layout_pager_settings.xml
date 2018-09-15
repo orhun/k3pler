@@ -76,6 +76,30 @@
         android:fontFamily="monospace"
         android:layout_below="@+id/txvStMaxBufferLabel"/>
     <TextView
+        android:id="@+id/txvStBlResponseLabel"
+        android:text="@string/lyt_blacklist_response"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color2lighter"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:layout_below="@+id/txvStMatchTypeLabel"/>
+    <TextView
+        android:id="@+id/txvStBlResponse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/txvStBlResponseLabel"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:fontFamily="monospace"
+        android:layout_below="@+id/txvStMatchTypeLabel"/>
+    <TextView
         android:id="@+id/txvStRestart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

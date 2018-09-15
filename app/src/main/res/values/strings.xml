@@ -25,8 +25,13 @@
     <string name="lyt_max_buffer">Max. Buffer: </string>
     <string name="lyt_max_buffer_placeholder">10x1024x1024</string>
     <string name="lyt_match_type">Match Type:</string>
+    <string name="lyt_blacklist_response">Blacklist Response:</string>
     <string name="match_type_1">Full</string>
     <string name="match_type_2">Keyword</string>
     <string name="default_port">8090</string>
     <string name="default_matchtype">1</string>
+    <string name="resp_status_1">BAD GATEWAY</string>
+    <string name="resp_status_2">BAD REQUEST</string>
+    <string name="resp_status_3">FORBIDDEN</string>
+    <string name="resp_status_4">NOT FOUND</string>
 </resources>

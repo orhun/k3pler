@@ -49,6 +49,7 @@ public class SqliteDBHelper {
                         pair.getValue().toString());
                 it.remove();
             }
+
             db.insert(table, null, contentValues);
             return true;
         }catch(Exception e) {
