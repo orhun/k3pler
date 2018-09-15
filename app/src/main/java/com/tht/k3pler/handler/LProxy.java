@@ -40,7 +40,9 @@ public class LProxy {
                     .withFiltersSource(new HttpFiltersSource() {
                         @Override
                         public HttpFilters filterRequest(HttpRequest originalRequest, ChannelHandlerContext ctx) {
-                            blacklist = new BlacklistPageInflater(context).getBlacklist();
+                            try {
+                                blacklist = new BlacklistPageInflater(context).getBlacklist();
+                            }catch (Exception e){e.printStackTrace();}
                             try{
                                 proxyStatus.onReceive(originalRequest, blacklist);
                             }catch (Exception e){ e.printStackTrace(); }

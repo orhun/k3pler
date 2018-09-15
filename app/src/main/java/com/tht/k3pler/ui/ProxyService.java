@@ -63,7 +63,7 @@ public class ProxyService extends Service {
     private NotificationHandler notificationHandler;
     private final IBinder mBinder = new Binder();
     private Intent currentIntent;
-    private ArrayList<HTTPReq> httpReqs = new ArrayList<>();
+    private static ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private ArrayList<String> settings = new ArrayList<>();
     private Dialog guiDialog;
     private String decoderResult = "", arrowChar = " > ";
@@ -91,7 +91,6 @@ public class ProxyService extends Service {
     private MainPageInflater mainPageInflater;
     private BlacklistPageInflater blacklistPageInflater;
     private SettingsPageInflater settingsPageInflater;
-
 
     public ProxyService() {}
 
@@ -137,7 +136,7 @@ public class ProxyService extends Service {
             @Override
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
                 try {
-                    mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(pageIDs.Main.getID()));
+                    mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(pageIDs.Main.getID()), httpReqs);
                     mainPageInflater.init(new MainPageInflater.IRecylerView() {
                         @Override
                         public void onInit(RecyclerView recyclerView) {
