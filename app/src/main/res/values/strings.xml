@@ -34,4 +34,8 @@
     <string name="resp_status_2">BAD REQUEST</string>
     <string name="resp_status_3">FORBIDDEN</string>
     <string name="resp_status_4">NOT FOUND</string>
+    <string name="detail_setting_port">Local Proxy port for connection</string>
+    <string name="detail_setting_buffer">Maximum response buffer size in bytes</string>
+    <string name="detail_setting_match">Full: Block if request URI \'equals\' blacklist item\nKeyword: Block if request URI \'contains\' blacklist item</string>
+    <string name="detail_setting_resp">Response status which will be sent to blocked address</string>
 </resources>

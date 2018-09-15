@@ -62,5 +62,4 @@ public class MainPageInflater {
             }
         });
     }
-    // TODO: 9/15/2018 Add refresh layout 
 }
