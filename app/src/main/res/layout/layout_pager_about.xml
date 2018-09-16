@@ -5,5 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray">
+    <TextView
+        android:id="@+id/txvK3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:text="Coded By KeyLo99"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:fontFamily="monospace"
+        android:textSize="17sp"
+        android:textStyle="normal|bold"
+        android:background="@color/transparent_red" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TurkHackTeam.org"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="@color/lightBlue"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/txvK3"/>
+
 
 </RelativeLayout>
