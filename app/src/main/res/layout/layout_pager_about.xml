@@ -16,7 +16,7 @@
         android:fontFamily="monospace"
         android:textSize="17sp"
         android:textStyle="normal|bold"
-        android:background="@color/transparent_red" />
+        android:background="@color/transparent_gray" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
