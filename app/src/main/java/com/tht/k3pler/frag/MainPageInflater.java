@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.tht.k3pler.R;
 import com.tht.k3pler.handler.RequestDialog;
@@ -26,25 +27,29 @@ public class MainPageInflater {
     private ViewGroup viewGroup;
     private SqliteDBHelper sqliteDBHelper;
     private ArrayList httpReqs;
-    public interface IRecylerView{
-        void onInit(RecyclerView recyclerView);
+    public interface IMainPage {
+        void onRecyclerViewInit(RecyclerView recyclerView);
+        void onTextViewInit(TextView textView);
     }
     // ** //
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swpMain;
+    private TextView txvMainPageMsg;
 
     public MainPageInflater(Context context, ViewGroup viewGroup, ArrayList httpReqs){
         this.context = context;
         this.viewGroup = viewGroup;
         this.httpReqs = httpReqs;
     }
-    public void init(IRecylerView iRecylerView){
+    public void init(IMainPage iMainPage){
+        txvMainPageMsg = viewGroup.findViewById(R.id.txvMainPageMsg);
         recyclerView = viewGroup.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        iRecylerView.onInit(recyclerView);
+        iMainPage.onRecyclerViewInit(recyclerView);
+        iMainPage.onTextViewInit(txvMainPageMsg);
         swpMain = viewGroup.findViewById(R.id.swpMain);
         swpMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -54,6 +59,7 @@ public class MainPageInflater {
                     public void run() {
                         httpReqs.clear();
                         recyclerView.setAdapter(null);
+                        txvMainPageMsg.setVisibility(View.VISIBLE);
                         swpMain.setRefreshing(false);
                     }
                 }, 800);

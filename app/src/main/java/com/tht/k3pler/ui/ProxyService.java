@@ -1,10 +1,8 @@
 package com.tht.k3pler.ui;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
@@ -19,21 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tht.k3pler.adapter.BlacklistAdapter;
 import com.tht.k3pler.frag.BlacklistPageInflater;
 import com.tht.k3pler.frag.SettingsPageInflater;
 import com.tht.k3pler.handler.LProxy;
 import com.tht.k3pler.handler.SqliteDBHelper;
-import com.tht.k3pler.sub.ProxyNotifier;
 import com.tht.k3pler.R;
-import com.tht.k3pler.handler.RequestDialog;
-import com.tht.k3pler.sub.SQLiteBL;
 import com.tht.k3pler.sub.TextViewEFX;
 import com.tht.k3pler.adapter.LayoutPagerAdapter;
 import com.tht.k3pler.adapter.RequestAdapter;
@@ -42,10 +33,7 @@ import com.tht.k3pler.handler.NotificationHandler;
 import com.tht.k3pler.sub.FilteredResponse;
 import com.tht.k3pler.sub.HTTPReq;
 
-import org.littleshoot.proxy.HttpFilters;
-import org.littleshoot.proxy.HttpFiltersSource;
 import org.littleshoot.proxy.HttpProxyServer;
-import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -54,7 +42,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 
 public class ProxyService extends Service {
@@ -84,7 +71,7 @@ public class ProxyService extends Service {
         }
     }
     // ** //
-    private TextView txvPage, txvNum;
+    private TextView txvPage, txvNum, txvMainPageMsg;
     private RecyclerView mRecyclerView;
     private ViewPager viewPager;
     private RelativeLayout rlMain;
@@ -137,10 +124,14 @@ public class ProxyService extends Service {
             public void onViewsAdded(ArrayList<ViewGroup> layouts) {
                 try {
                     mainPageInflater = new MainPageInflater(getApplicationContext(), layouts.get(pageIDs.Main.getID()), httpReqs);
-                    mainPageInflater.init(new MainPageInflater.IRecylerView() {
+                    mainPageInflater.init(new MainPageInflater.IMainPage() {
                         @Override
-                        public void onInit(RecyclerView recyclerView) {
+                        public void onRecyclerViewInit(RecyclerView recyclerView) {
                             mRecyclerView = recyclerView;
+                        }
+                        @Override
+                        public void onTextViewInit(TextView textView) {
+                            txvMainPageMsg = textView;
                         }
                     });
                 }catch (Exception e){
@@ -228,6 +219,8 @@ public class ProxyService extends Service {
                                                 mainPageInflater.onDetailDialogItemClick(item, blacklistPageInflater, viewPager, pageIDs.BlackList.getID());
                                             }
                                         }));
+                                        if(txvMainPageMsg != null && txvMainPageMsg.getVisibility() == View.VISIBLE)
+                                            txvMainPageMsg.setVisibility(View.GONE);
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
