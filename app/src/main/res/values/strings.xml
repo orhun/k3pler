@@ -2,7 +2,7 @@
     <string name="app_name">k3pler</string>
     <string name="main_page">k3pler proxy</string>
     <string name="blacklist_page">blacklist</string>
-    <string name="settings_page">settings &amp; how-to</string>
+    <string name="settings_page">settings</string>
     <string name="about_page">about</string>
     <string name="proxy_running">Proxy running</string>
     <string name="proxy_stop">Stop Proxy</string>

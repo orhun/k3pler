@@ -18,16 +18,76 @@
         android:textStyle="normal|bold"
         android:background="@color/transparent_gray" />
     <TextView
+        android:id="@+id/txvTHT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TurkHackTeam.org"
         android:fontFamily="sans-serif-smallcaps"
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:gravity="center"
-        android:textColor="@color/lightBlue"
+        android:textColor="@color/green"
         android:textStyle="bold"
         android:layout_marginTop="5dp"
         android:layout_below="@+id/txvK3"/>
-
+    <LinearLayout
+        android:id="@+id/rlK3Contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvTHT"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/gh"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="monospace"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/bb"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="monospace"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/tw"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="monospace"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/yt"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="monospace"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/@"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:fontFamily="monospace"
+            android:textStyle="bold"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="k3Pwn.me"
+        android:layout_marginEnd="10dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textStyle="bold"
+        android:layout_below="@+id/rlK3Contact"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>
