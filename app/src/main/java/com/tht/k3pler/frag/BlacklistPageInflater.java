@@ -32,7 +32,7 @@ public class BlacklistPageInflater {
     private BlacklistAdapter blacklistAdapter;
     // * //
     private ListView lstBlacklist;
-    private TextView txvBlacklistOptions;
+    private TextView txvBlacklistOptions, txvBlPageMsg;
     private SwipeRefreshLayout swpBlacklist;
 
     public BlacklistPageInflater(Context context, ViewGroup viewGroup){
@@ -44,7 +44,6 @@ public class BlacklistPageInflater {
     }
     public void init(){
         lstBlacklist = viewGroup.findViewById(R.id.lstBlacklist);
-        setBlacklistLstView();
         txvBlacklistOptions = viewGroup.findViewById(R.id.txvBlacklistOptions);
         txvBlacklistOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +56,7 @@ public class BlacklistPageInflater {
                 setBlacklistLstView();
             }
         });
+        txvBlPageMsg = viewGroup.findViewById(R.id.txvBlPageMsg);
         swpBlacklist = viewGroup.findViewById(R.id.swpBlacklist);
         swpBlacklist.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -64,12 +64,13 @@ public class BlacklistPageInflater {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        setBlacklistLstView();
                         swpBlacklist.setRefreshing(false);
+                        setBlacklistLstView();
                     }
                 }, 1000);
             }
         });
+        setBlacklistLstView();
     }
     public String getBlacklist(){
         String blackList = "";
@@ -118,6 +119,13 @@ public class BlacklistPageInflater {
                 alertDialog.show();
             }
         });
+        if(blackListArr.size()>0){
+            txvBlacklistOptions.setVisibility(View.VISIBLE);
+            txvBlPageMsg.setVisibility(View.GONE);
+        }else{
+            txvBlacklistOptions.setVisibility(View.GONE);
+            txvBlPageMsg.setVisibility(View.VISIBLE);
+        }
     }
     @SuppressWarnings("deprecation")
     private void showEditDialog(final String item){

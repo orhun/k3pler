@@ -5,10 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray">
+    <TextView
+        android:id="@+id/txvBlPageMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_bl_msg"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/lightGray"
+        android:fontFamily="monospace"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swpBlacklist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txvBlPageMsg"
+        android:layout_above="@+id/txvBlacklistOptions">
         <ListView
             android:id="@+id/lstBlacklist"
             android:layout_width="match_parent"
@@ -21,18 +32,18 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="8dp"
             android:layout_above="@+id/txvBlacklistOptions"/>
-        <TextView
-            android:id="@+id/txvBlacklistOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clear_blacklist"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/lightGray"
-            android:fontFamily="monospace" />
     </android.support.v4.widget.SwipeRefreshLayout>
+    <TextView
+        android:id="@+id/txvBlacklistOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_blacklist"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/lightGray"
+        android:fontFamily="monospace" />
 </RelativeLayout>
