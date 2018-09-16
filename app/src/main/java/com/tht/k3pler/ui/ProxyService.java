@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tht.k3pler.frag.AboutPageInflater;
 import com.tht.k3pler.frag.BlacklistPageInflater;
 import com.tht.k3pler.frag.SettingsPageInflater;
 import com.tht.k3pler.handler.LProxy;
@@ -78,6 +79,7 @@ public class ProxyService extends Service {
     private MainPageInflater mainPageInflater;
     private BlacklistPageInflater blacklistPageInflater;
     private SettingsPageInflater settingsPageInflater;
+    private AboutPageInflater aboutPageInflater;
 
     public ProxyService() {}
 
@@ -146,6 +148,12 @@ public class ProxyService extends Service {
                 try {
                     settingsPageInflater = new SettingsPageInflater(getApplicationContext(), layouts.get(pageIDs.Settings.getID()));
                     settingsPageInflater.init();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                try {
+                    aboutPageInflater = new AboutPageInflater(getApplicationContext(), layouts.get(pageIDs.About.getID()));
+                    aboutPageInflater.init();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
