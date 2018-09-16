@@ -38,4 +38,8 @@
     <string name="detail_setting_buffer">Maximum response buffer size in bytes</string>
     <string name="detail_setting_match">Full: Block if request URI \'equals\' blacklist item\nKeyword: Block if request URI \'contains\' blacklist item</string>
     <string name="detail_setting_resp">Response status which will be sent to blocked address</string>
+    <string name="configure_proxy_wifi">Configuring Proxy (WIFI)</string>
+    <string name="howto_configure_proxy_wifi">1. WIFI Settings\n2. Long tap on connected network\n3. Modify Network -> Advanced Options\n4. Set manual proxy to k3pler proxy settings\n(e.g: localhost:8090)</string>
+    <string name="configure_proxy_mobile">Configuring Proxy (Mobile Network)</string>
+    <string name="howto_configure_proxy_mobile">1. Mobile Network Settings\n2. Access Point Names\n3. Tap on used APN\n4. Set proxy/port to k3pler settings\n(e.g: localhost:8090)</string>
 </resources>
