@@ -135,10 +135,10 @@ public class AboutPageInflater {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+            dismissGuiDialog();
         }catch (Exception e){
             e.printStackTrace();
         }
-        dismissGuiDialog();
     }
     private void openTwitterIntent(Context context) {
         try {
@@ -146,12 +146,10 @@ public class AboutPageInflater {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name="+id));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+            dismissGuiDialog();
         } catch (Exception e) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/KeyLo_99"));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            openPage("https://twitter.com/KeyLo_99");
         }
-        dismissGuiDialog();
     }
     private void openYoutubeIntent(Context context) {
         try {
@@ -159,12 +157,10 @@ public class AboutPageInflater {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + id));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+            dismissGuiDialog();
         } catch (Exception e) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UC1Y6oS0iyZkjbHxidx5Oirg"));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            openPage("https://www.youtube.com/channel/UC1Y6oS0iyZkjbHxidx5Oirg");
         }
-        dismissGuiDialog();
     }
     private void copyToClipBoard(String data){
         try{
