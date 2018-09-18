@@ -38,6 +38,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp">
         <TextView
+            android:id="@+id/txvContactGh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/github_addr"
@@ -46,6 +47,7 @@
             android:fontFamily="monospace"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/txvContactBb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bitbucket_addr"
@@ -54,6 +56,7 @@
             android:fontFamily="monospace"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/txvContactTw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/twitter_addr"
@@ -62,6 +65,7 @@
             android:fontFamily="monospace"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/txvContactYt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/youtube_addr"
@@ -70,6 +74,7 @@
             android:fontFamily="monospace"
             android:textStyle="bold"/>
         <TextView
+            android:id="@+id/txvContactMail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mail_addr"
