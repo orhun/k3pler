@@ -9,8 +9,8 @@
         android:id="@+id/txvK3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:text="Coded By KeyLo99"
+        android:textColor="@android:color/white"
+        android:text="@string/coded_by_k3"
         android:gravity="center"
         android:layout_marginTop="5dp"
         android:fontFamily="monospace"
@@ -21,7 +21,7 @@
         android:id="@+id/txvTHT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TurkHackTeam.org"
+        android:text="@string/turkhackteam_url"
         android:fontFamily="sans-serif-smallcaps"
         android:textSize="15sp"
         android:gravity="center"
@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/gh"
+            android:text="@string/github_addr"
             android:layout_marginEnd="10dp"
             android:textColor="@android:color/white"
             android:fontFamily="monospace"
@@ -48,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/bb"
+            android:text="@string/bitbucket_addr"
             android:layout_marginEnd="10dp"
             android:textColor="@android:color/white"
             android:fontFamily="monospace"
@@ -56,7 +56,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/tw"
+            android:text="@string/twitter_addr"
             android:layout_marginEnd="10dp"
             android:textColor="@android:color/white"
             android:fontFamily="monospace"
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/yt"
+            android:text="@string/youtube_addr"
             android:layout_marginEnd="10dp"
             android:textColor="@android:color/white"
             android:fontFamily="monospace"
@@ -72,16 +72,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/@"
+            android:text="@string/mail_addr"
             android:layout_marginEnd="10dp"
             android:textColor="@android:color/white"
             android:fontFamily="monospace"
             android:textStyle="bold"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/txvK3pwn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="k3Pwn.me"
+        android:text="@string/k3pwn_url"
         android:layout_marginEnd="10dp"
         android:textColor="@android:color/white"
         android:fontFamily="sans-serif-smallcaps"
@@ -89,5 +90,48 @@
         android:layout_below="@+id/rlK3Contact"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"/>
-
+    <TextView
+        android:id="@+id/txvProjectInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text="@string/main_page"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textSize="15sp"
+        android:textStyle="normal|bold"
+        android:background="@color/transparent_more_gray"
+        android:layout_below="@+id/txvK3pwn" />
+    <TextView
+        android:id="@+id/txvOpenSourceLicences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txvProjectInfo"
+        android:layout_marginTop="5dp"
+        android:fontFamily="monospace"
+        android:textColor="@color/lighterGray"
+        android:text="@string/open_source_licence"
+        android:gravity="center"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/txvLicenceRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/lightGray"
+        android:gravity="center"
+        android:layout_below="@+id/txvOpenSourceLicences"
+        android:text="@string/recyclerview_lib"
+        android:fontFamily="monospace"/>
+    <TextView
+        android:id="@+id/txvLicenceLittleProxy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/lightGray"
+        android:gravity="center"
+        android:layout_below="@+id/txvLicenceRecycler"
+        android:text="@string/littleproxy_lib"
+        android:fontFamily="monospace"/>
 </RelativeLayout>
