@@ -2,6 +2,8 @@ package com.tht.k3pler.handler;
 
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,12 +49,28 @@ public class RequestDialog {
             reqDialog.setContentView(inflater.inflate(R.layout.layout_req_detail, null));
             initDialog(reqDialog);
             txvReqAddr.setText(httpReq.getUri());
+            txvReqAddr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    copyToClipBoard(txvReqAddr.getText().toString());
+                    reqDialog.dismiss();
+                }
+            });
             txvReqMethod.setText(httpReq.getMethod());
             txvReqProtocol.setText(httpReq.getProtocol());
             txvReqResult.setText(RequestAdapter.getLongResult(httpReq.getResult()));
             txvReqTime.setText(httpReq.getTime().replace("{", "").replace("}", ""));
             reqDialog.show();
             iBtnBlackList.onInit(btnReqBlacklist, reqDialog, httpReq.getUri());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void copyToClipBoard(String data){
+        try{
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText(context.getString(R.string.app_name), data);
+            clipboard.setPrimaryClip(clip);
         }catch (Exception e){
             e.printStackTrace();
         }
