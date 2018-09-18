@@ -152,7 +152,7 @@ public class ProxyService extends Service {
                     e.printStackTrace();
                 }
                 try {
-                    aboutPageInflater = new AboutPageInflater(getApplicationContext(), layouts.get(pageIDs.About.getID()));
+                    aboutPageInflater = new AboutPageInflater(getApplicationContext(), layouts.get(pageIDs.About.getID()), guiDialog);
                     aboutPageInflater.init();
                 }catch (Exception e){
                     e.printStackTrace();

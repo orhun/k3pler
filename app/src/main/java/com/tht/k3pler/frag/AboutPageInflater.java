@@ -1,6 +1,7 @@
 package com.tht.k3pler.frag;
 
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -19,6 +20,7 @@ import com.tht.k3pler.R;
 public class AboutPageInflater {
     private Context context;
     private ViewGroup viewGroup;
+    private Dialog guiDialog;
     private static String version = "1.0",
             github_page = "https://github.com/KeyLo99",
             bitbucket_page = "https://bitbucket.org/KeyLo99/",
@@ -34,9 +36,10 @@ public class AboutPageInflater {
             txvContactMail, txvK3pwn, txvProjectInfo,
             txvOpenSourceLicences, txvLicenceRecycler,
             txvLicenceLittleProxy;
-    public AboutPageInflater(Context context, ViewGroup viewGroup){
+    public AboutPageInflater(Context context, ViewGroup viewGroup, Dialog guiDialog){
         this.context = context;
         this.viewGroup = viewGroup;
+        this.guiDialog = guiDialog;
     }
     public void init(){
         txvK3 = viewGroup.findViewById(R.id.txvK3);
@@ -135,6 +138,7 @@ public class AboutPageInflater {
         }catch (Exception e){
             e.printStackTrace();
         }
+        dismissGuiDialog();
     }
     private void openTwitterIntent(Context context) {
         try {
@@ -147,6 +151,7 @@ public class AboutPageInflater {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
+        dismissGuiDialog();
     }
     private void openYoutubeIntent(Context context) {
         try {
@@ -159,12 +164,22 @@ public class AboutPageInflater {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
+        dismissGuiDialog();
     }
     private void copyToClipBoard(String data){
         try{
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText(context.getString(R.string.app_name), data);
             clipboard.setPrimaryClip(clip);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void dismissGuiDialog(){
+        try {
+            if(guiDialog != null && guiDialog.isShowing()) {
+                guiDialog.dismiss();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
