@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
@@ -64,7 +65,6 @@ public class NotificationHandler {
     public void notify(String messageTitle, String messageBody, Boolean isOnGoing) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, String.valueOf(ID))
                 .setSmallIcon(R.mipmap.k3pler_logo)
-                 //.addAction(0, context.getString(R.string.show_gui), getShowPendingIntent())
                 .addAction(0, context.getString(R.string.proxy_stop), getStopPendingIntent())
                 .setContentTitle(messageTitle)
                 .setContentText(messageBody)

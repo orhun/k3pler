@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="5dp"
-        android:textColor="@color/color2lighter"
+        android:textColor="@color/color2light"
         android:text="[-]"
         android:fontFamily="monospace"
         android:textSize="15sp"/>
