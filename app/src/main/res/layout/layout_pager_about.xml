@@ -5,6 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray">
+    <ImageView
+        android:id="@+id/imgK3pler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/k3plerlogo1_gray"/>
+    <TextView
+        android:id="@+id/txvProjectInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text="@string/main_page"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:fontFamily="monospace"
+        android:textSize="15sp"
+        android:textStyle="normal|bold"
+        android:background="@color/transparent_gray"
+        android:layout_below="@+id/imgK3pler"/>
+    <TextView
+        android:id="@+id/txvOpenSourceLicences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txvProjectInfo"
+        android:layout_marginTop="5dp"
+        android:fontFamily="monospace"
+        android:textColor="@color/lighterGray"
+        android:text="@string/open_source_licence"
+        android:gravity="center"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/txvLicenceRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/lightGray"
+        android:gravity="center"
+        android:layout_below="@+id/txvOpenSourceLicences"
+        android:text="@string/recyclerview_lib"
+        android:fontFamily="monospace"/>
+    <TextView
+        android:id="@+id/txvLicenceLittleProxy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/lightGray"
+        android:gravity="center"
+        android:layout_below="@+id/txvLicenceRecycler"
+        android:text="@string/littleproxy_lib"
+        android:fontFamily="monospace"/>
+
     <TextView
         android:id="@+id/txvK3"
         android:layout_width="match_parent"
@@ -12,11 +62,12 @@
         android:textColor="@android:color/white"
         android:text="@string/coded_by_k3"
         android:gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="monospace"
         android:textSize="17sp"
         android:textStyle="normal|bold"
-        android:background="@color/transparent_gray" />
+        android:background="@color/transparent_more_gray"
+        android:layout_below="@+id/txvLicenceLittleProxy"/>
     <TextView
         android:id="@+id/txvTHT"
         android:layout_width="match_parent"
@@ -25,7 +76,7 @@
         android:fontFamily="sans-serif-smallcaps"
         android:textSize="15sp"
         android:gravity="center"
-        android:textColor="@color/green"
+        android:textColor="@color/lighterGray"
         android:textStyle="bold"
         android:layout_marginTop="5dp"
         android:layout_below="@+id/txvK3"/>
@@ -95,48 +146,4 @@
         android:layout_below="@+id/rlK3Contact"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"/>
-    <TextView
-        android:id="@+id/txvProjectInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:text="@string/main_page"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:fontFamily="monospace"
-        android:textSize="15sp"
-        android:textStyle="normal|bold"
-        android:background="@color/transparent_more_gray"
-        android:layout_below="@+id/txvK3pwn" />
-    <TextView
-        android:id="@+id/txvOpenSourceLicences"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txvProjectInfo"
-        android:layout_marginTop="5dp"
-        android:fontFamily="monospace"
-        android:textColor="@color/lighterGray"
-        android:text="@string/open_source_licence"
-        android:gravity="center"
-        android:textStyle="bold"/>
-    <TextView
-        android:id="@+id/txvLicenceRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/lightGray"
-        android:gravity="center"
-        android:layout_below="@+id/txvOpenSourceLicences"
-        android:text="@string/recyclerview_lib"
-        android:fontFamily="monospace"/>
-    <TextView
-        android:id="@+id/txvLicenceLittleProxy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/lightGray"
-        android:gravity="center"
-        android:layout_below="@+id/txvLicenceRecycler"
-        android:text="@string/littleproxy_lib"
-        android:fontFamily="monospace"/>
 </RelativeLayout>
