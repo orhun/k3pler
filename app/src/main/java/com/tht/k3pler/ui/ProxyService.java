@@ -268,7 +268,7 @@ public class ProxyService extends Service {
             if(i == position)
                 color = ContextCompat.getColor(getApplicationContext(), android.R.color.white);
             else
-                color = ContextCompat.getColor(getApplicationContext(), R.color.color2lighter);
+                color = ContextCompat.getColor(getApplicationContext(), R.color.color2dark);
             pageNumHTML += "<font color=\"" + color + "\">" + String.valueOf(i+1) + " " + "</font>";
         }
         txvNum.setText(Html.fromHtml(pageNumHTML));
