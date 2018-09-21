@@ -68,9 +68,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 "<font color=\"" +
                 requestColor + "\">"
                 + requests.get(position).getUri() + "</font>"+"<font color=\""+
-                ContextCompat.getColor(context, R.color.color3lighter) +  "\">"
+                ContextCompat.getColor(context, R.color.color2) +  "\">"
                 +" ~ </font>"+"<font color=\""+
-                ContextCompat.getColor(context, R.color.color2) + "\">"
+                ContextCompat.getColor(context, R.color.k3pler2) + "\">"
                 + method +"</font>"+"<font color=\""+
                 ContextCompat.getColor(context, R.color.color1) +  "\">"
                 + " [" + protocol + "] " +"</font>"+"<font color=\""+
