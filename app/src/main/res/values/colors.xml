@@ -12,15 +12,23 @@
     <color name="transparent_gray">#80444444</color>
     <color name="transparent_more_gray">#80222222</color>
 
+    <color name="k3pler2">#cfdfda</color>
+
+    <color name="color0">#653BB5</color>
+    <color name="color0dark">#4C1CAA</color>
+    <color name="color0light">#7F5AC7</color>
+    <color name="color0lighter">#A385DC</color>
+
     <color name="color1">#3F52B5</color>
     <color name="color1dark">#2137AA</color>
     <color name="color1light">#5E6FC7</color>
     <color name="color1lighter">#8895DC</color>
 
-    <color name="color2">#653BB5</color>
-    <color name="color2dark">#4C1CAA</color>
-    <color name="color2light">#7F5AC7</color>
-    <color name="color2lighter">#A385DC</color>
+    <color name="color2">#595565</color>
+    <color name="color2dark">#7079d3</color>
+    <color name="color2light">#7079d3</color>
+    <color name="color2lighter">#4F5ABD</color>
+    <color name="transparent_color2">#40b1b3c9</color>
 
     <color name="color3">#3087A8</color>
     <color name="color3dark">#12769C</color>

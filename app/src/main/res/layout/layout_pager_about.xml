@@ -18,7 +18,7 @@
                 android:id="@+id/imgK3pler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/k3plerlogo1_gray"/>
+                android:src="@drawable/k3plerlogo1"/>
             <TextView
                 android:id="@+id/txvProjectInfo"
                 android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:fontFamily="monospace"
                 android:textSize="15sp"
                 android:textStyle="normal|bold"
-                android:background="@color/transparent_gray"
+                android:background="@color/transparent_color2"
                 android:layout_below="@+id/imgK3pler"/>
             <TextView
                 android:id="@+id/txvOpenSourceLicences"
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/k3pwn_url"
                 android:layout_marginEnd="10dp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/k3pler2"
                 android:fontFamily="sans-serif-smallcaps"
                 android:textStyle="bold"
                 android:layout_below="@+id/rlK3Contact"
