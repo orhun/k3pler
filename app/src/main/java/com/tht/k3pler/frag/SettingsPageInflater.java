@@ -29,9 +29,9 @@ public class SettingsPageInflater {
     private ViewGroup viewGroup;
     private SqliteDBHelper sqliteDBHelper;
     private String defaultBuffer = "10485760", defaultBufferNum = "10x1024x1024";
-    private String[] respOptions, matchOptions;
+    private String[] respOptions, matchOptions, splashOptions;
     // ** //
-    private TextView txvStPort, txvStMaxBuffer, txvStMatchType, txvStBlResponse, txvStRestart;
+    private TextView txvStPort, txvStMaxBuffer, txvStMatchType, txvStBlResponse, txvStShowSplash, txvStRestart;
 
     public SettingsPageInflater(Context context, ViewGroup viewGroup){
         this.context = context;
@@ -42,6 +42,7 @@ public class SettingsPageInflater {
         txvStMaxBuffer = viewGroup.findViewById(R.id.txvStMaxBuffer);
         txvStMatchType = viewGroup.findViewById(R.id.txvStMatchType);
         txvStBlResponse = viewGroup.findViewById(R.id.txvStBlResponse);
+        txvStShowSplash = viewGroup.findViewById(R.id.txvStShowSplash);
         txvStRestart = viewGroup.findViewById(R.id.txvStRestart);
         respOptions = new String[]{
                 context.getString(R.string.resp_status_1),
@@ -51,6 +52,10 @@ public class SettingsPageInflater {
         matchOptions = new String[]{
                 context.getString(R.string.match_type_1),
                 context.getString(R.string.match_type_2)};
+        splashOptions = new String[]{
+                context.getString(R.string.option_y),
+                context.getString(R.string.option_n)
+        };
         setValues();
     }
     private void setValues(){
@@ -67,6 +72,11 @@ public class SettingsPageInflater {
             setTextWithUnderline(txvStMatchType, context.getString(R.string.match_type_2));
         }
         setTextWithUnderline(txvStBlResponse, getRespText(Integer.valueOf(settings.get(3))));
+        if(Integer.valueOf(settings.get(4))==0){
+            setTextWithUnderline(txvStShowSplash, context.getString(R.string.option_y));
+        }else{
+            setTextWithUnderline(txvStShowSplash, context.getString(R.string.option_n));
+        }
         txvStPort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +105,13 @@ public class SettingsPageInflater {
                         txvStBlResponse.getText().toString(), SQLiteSettings.RESPONSE_DATA, respOptions);
             }
         });
+        txvStShowSplash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSelectDialog(context.getString(R.string.lyt_show_splash).replace(":", ""),
+                        txvStShowSplash.getText().toString(), SQLiteSettings.SPLASH_DATA, splashOptions);
+            }
+        });
     }
     private void setTextWithUnderline(TextView textView, String text){
         SpannableString content = new SpannableString(text);
@@ -107,6 +124,7 @@ public class SettingsPageInflater {
         int buffer = 10 * 1024 * 1024;
         int match =  Integer.parseInt(context.getString(R.string.default_matchtype));
         int resp = 0;
+        int splash = 0;
         sqliteDBHelper = new SqliteDBHelper(context,
                 new SQLiteSettings(context).getWritableDatabase(),
                 SQLiteSettings.PORT_DATA, SQLiteSettings.TABLE_NAME);
@@ -143,6 +161,15 @@ public class SettingsPageInflater {
             e.printStackTrace();
             notFound = true;
         }
+        sqliteDBHelper = new SqliteDBHelper(context,
+                new SQLiteSettings(context).getWritableDatabase(),
+                SQLiteSettings.SPLASH_DATA, SQLiteSettings.TABLE_NAME);
+        try {
+            splash = Integer.parseInt(sqliteDBHelper.get(SQLiteSettings.SPLASH_DATA));
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            notFound = true;
+        }
         if(notFound){
             sqliteDBHelper.deleteAll();
             HashMap<String, String> hashMap = new HashMap<>();
@@ -150,6 +177,7 @@ public class SettingsPageInflater {
             hashMap.put(SQLiteSettings.BUFFER_DATA, String.valueOf(buffer));
             hashMap.put(SQLiteSettings.MATCH_DATA, String.valueOf(match));
             hashMap.put(SQLiteSettings.RESPONSE_DATA, String.valueOf(resp));
+            hashMap.put(SQLiteSettings.SPLASH_DATA, String.valueOf(splash));
             sqliteDBHelper.insertMultiple(hashMap);
         }
         sqliteDBHelper.close();
@@ -158,6 +186,7 @@ public class SettingsPageInflater {
         arrayList.add(String.valueOf(buffer));
         arrayList.add(String.valueOf(match));
         arrayList.add(String.valueOf(resp));
+        arrayList.add(String.valueOf(splash));
         return arrayList;
     }
 
@@ -203,8 +232,11 @@ public class SettingsPageInflater {
     private void showSelectDialog(String title, String currentItem, final String DATA, String[] options){
         if(DATA.equals(SQLiteSettings.MATCH_DATA)){
             if(currentItem.equals(context.getString(R.string.match_type_1))){currentItem="0";}else{currentItem="1";}
+        }else if(DATA.equals(SQLiteSettings.RESPONSE_DATA)){
+            currentItem = String.valueOf(getRespID(currentItem));
+        }else if(DATA.equals(SQLiteSettings.SPLASH_DATA)){
+            if(currentItem.equals(context.getString(R.string.option_y))){currentItem="0";}else{currentItem="1";}
         }
-        if(DATA.equals(SQLiteSettings.RESPONSE_DATA)){currentItem = String.valueOf(getRespID(currentItem));}
         final String currentItem1 = currentItem;
         AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog);
         builder.setTitle(title);

@@ -166,6 +166,42 @@
                     android:layout_below="@+id/txvStBlResponseLabel"/>
 
                 <TextView
+                    android:id="@+id/txvStShowSplashLabel"
+                    android:text="@string/lyt_show_splash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color2light"
+                    android:textSize="15sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/txvStBlResponseDetail"/>
+                <TextView
+                    android:id="@+id/txvStShowSplash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/txvStShowSplashLabel"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:fontFamily="monospace"
+                    android:layout_below="@+id/txvStBlResponseDetail"/>
+                <TextView
+                    android:id="@+id/txvStShowSplashDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_show_splash"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="5dp"
+                    android:textColor="@color/lightGray"
+                    android:fontFamily="monospace"
+                    android:layout_below="@+id/txvStShowSplash"/>
+
+                <TextView
                     android:id="@+id/txvHwProxyConfigLabelWifi"
                     android:text="@string/configure_proxy_wifi"
                     android:layout_width="match_parent"
@@ -177,7 +213,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-smallcaps"
                     android:textStyle="bold"
-                    android:layout_below="@+id/txvStBlResponseDetail" />
+                    android:layout_below="@+id/txvStShowSplashDetail" />
                 <TextView
                     android:id="@+id/txvHwProxyConfigWifi"
                     android:layout_width="wrap_content"
