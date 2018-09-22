@@ -11,6 +11,7 @@
     <color name="lighterGray">#888888</color>
     <color name="transparent_gray">#80444444</color>
     <color name="transparent_more_gray">#80222222</color>
+    <color name="transparent_lightgray">#90222222</color>
 
     <color name="k3pler2">#cfdfda</color>
     <color name="k3pler3">#202240</color>
@@ -30,6 +31,7 @@
     <color name="color2light">#7079d3</color>
     <color name="color2lighter">#4F5ABD</color>
     <color name="transparent_color2">#40b1b3c9</color>
+
 
     <color name="color3">#3087A8</color>
     <color name="color3dark">#12769C</color>

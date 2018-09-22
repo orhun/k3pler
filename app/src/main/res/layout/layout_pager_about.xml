@@ -29,26 +29,39 @@
                 android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:fontFamily="monospace"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="normal|bold"
                 android:background="@color/transparent_color2"
                 android:layout_below="@+id/imgK3pler"/>
             <TextView
-                android:id="@+id/txvOpenSourceLicences"
+                android:id="@+id/txvProjectDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txvProjectInfo"
                 android:layout_marginTop="5dp"
                 android:fontFamily="monospace"
                 android:textColor="@color/lighterGray"
+                android:text="@string/desc_long"
+                android:gravity="center"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/txvOpenSourceLicences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txvProjectDesc"
+                android:layout_marginTop="5dp"
+                android:fontFamily="monospace"
+                android:textColor="@android:color/white"
                 android:text="@string/open_source_licence"
                 android:gravity="center"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:background="@color/transparent_lightgray"
+                android:textSize="15sp"/>
             <TextView
                 android:id="@+id/txvLicenceRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/lightGray"
                 android:gravity="center"
                 android:layout_below="@+id/txvOpenSourceLicences"
