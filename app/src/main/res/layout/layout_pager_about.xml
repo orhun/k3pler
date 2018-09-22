@@ -16,9 +16,10 @@
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/imgK3pler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/k3plerlogo1"/>
+                android:layout_width="255dp"
+                android:layout_height="255dp"
+                android:src="@drawable/k3plerlogo2"
+                android:layout_centerHorizontal="true"/>
             <TextView
                 android:id="@+id/txvProjectInfo"
                 android:layout_width="match_parent"
@@ -47,22 +48,24 @@
                 android:id="@+id/txvLicenceRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="1dp"
                 android:textColor="@color/lightGray"
                 android:gravity="center"
                 android:layout_below="@+id/txvOpenSourceLicences"
                 android:text="@string/recyclerview_lib"
-                android:fontFamily="monospace"/>
+                android:fontFamily="monospace"
+                android:textSize="13sp"/>
             <TextView
                 android:id="@+id/txvLicenceLittleProxy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:textColor="@color/lightGray"
                 android:gravity="center"
                 android:layout_below="@+id/txvLicenceRecycler"
                 android:text="@string/littleproxy_lib"
-                android:fontFamily="monospace"/>
+                android:fontFamily="monospace"
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/txvK3"
@@ -71,7 +74,7 @@
                 android:textColor="@android:color/white"
                 android:text="@string/coded_by_k3"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:fontFamily="monospace"
                 android:textSize="17sp"
                 android:textStyle="normal|bold"
@@ -149,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/k3pwn_url"
                 android:layout_marginEnd="10dp"
-                android:textColor="@color/k3pler2"
+                android:textColor="@color/lighterGray"
                 android:fontFamily="sans-serif-smallcaps"
                 android:textStyle="bold"
                 android:layout_below="@+id/rlK3Contact"

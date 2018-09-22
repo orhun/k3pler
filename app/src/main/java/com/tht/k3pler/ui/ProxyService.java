@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -56,7 +57,7 @@ public class ProxyService extends Service {
     private Intent currentIntent;
     private static ArrayList<HTTPReq> httpReqs = new ArrayList<>();
     private ArrayList<String> settings = new ArrayList<>();
-    private Dialog guiDialog;
+    private Dialog guiDialog, splashDialog;
     private String decoderResult = "", arrowChar = " > ";
     private Handler mainHandler;
     private LayoutPagerAdapter layoutPagerAdapter;
@@ -201,46 +202,21 @@ public class ProxyService extends Service {
     private void showSplash(final ISplash iSplash){
         try {
             LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final Dialog splashDialog = new Dialog(this, android.R.style.Theme_Black);
+            splashDialog = new Dialog(this, android.R.style.Theme_Black);
             splashDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
             splashDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             splashDialog.setContentView(inflater.inflate(R.layout.layout_splash, null));
             splashDialog.setCancelable(false);
-            final ImageView imgK3plerLogo = splashDialog.findViewById(R.id.imgK3plerLogo);
-            final TextView txvK3pler = splashDialog.findViewById(R.id.txvK3pler);
-            final Animation zoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoomout);
-            final Animation fade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
-            imgK3plerLogo.startAnimation(zoomout);
-            final String label = getString(R.string.main_page);
-            for (int s = 0; s < label.toCharArray().length; s++) {
-                final int i = s;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        txvK3pler.append(String.valueOf(label.toCharArray()[i]));
-                        if (i == label.toCharArray().length - 1) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    /*imgK3plerLogo.startAnimation(fade);
-                                    txvK3pler.startAnimation(fade);
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            splashDialog.cancel();
-                                        }
-                                    }, 800);*/
-                                    iSplash.onShow();
-                                    splashDialog.cancel();
-                                }
-                            }, 800);
-                        }
-                    }
-                }, s * 200);
-            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    iSplash.onShow();
+                }
+            }, 4000);
             splashDialog.show();
         }catch (Exception e){
             e.printStackTrace();
+            iSplash.onShow();
         }
     }
     @SuppressWarnings("deprecation")
@@ -249,7 +225,6 @@ public class ProxyService extends Service {
             showSplash(new ISplash() {
                 @Override
                 public void onShow() {
-
                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
                     guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -258,6 +233,9 @@ public class ProxyService extends Service {
                     initGUI(guiDialog);
                     mainHandler = new Handler(getApplicationContext().getMainLooper());
                     guiDialog.show();
+                    if(splashDialog != null && splashDialog.isShowing()) {
+                        splashDialog.cancel();
+                    }
                     settings = new SettingsPageInflater(getApplicationContext(), null).getSettings();
                     new LProxy(getApplicationContext(), Integer.parseInt(settings.get(0)),
                             Integer.parseInt(settings.get(1)), Integer.parseInt(settings.get(2)),
