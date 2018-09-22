@@ -35,7 +35,7 @@ public class AboutPageInflater {
             txvContactBb, txvContactTw, txvContactYt,
             txvContactMail, txvK3pwn, txvProjectInfo,
             txvOpenSourceLicences, txvLicenceRecycler,
-            txvLicenceLittleProxy;
+            txvLicenceLittleProxy, txvJKepler;
     public AboutPageInflater(Context context, ViewGroup viewGroup, Dialog guiDialog){
         this.context = context;
         this.viewGroup = viewGroup;
@@ -54,6 +54,7 @@ public class AboutPageInflater {
         txvOpenSourceLicences = viewGroup.findViewById(R.id.txvOpenSourceLicences);
         txvLicenceRecycler = viewGroup.findViewById(R.id.txvLicenceRecycler);
         txvLicenceLittleProxy = viewGroup.findViewById(R.id.txvLicenceLittleProxy);
+        txvJKepler = viewGroup.findViewById(R.id.txvJKepler);
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
@@ -124,6 +125,12 @@ public class AboutPageInflater {
         });
         setTextWithUnderline(txvTHT, txvTHT.getText().toString());
         setTextWithUnderline(txvK3pwn, txvK3pwn.getText().toString());
+        txvJKepler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPage(context.getString(R.string.jkepler_link));
+            }
+        });
     }
     private void setTextWithUnderline(TextView textView, String text){
         SpannableString content = new SpannableString(text);

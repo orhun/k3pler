@@ -171,6 +171,19 @@
                 android:layout_below="@+id/rlK3Contact"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/txvJKepler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="13sp"
+                android:textColor="@color/lightGray"
+                android:fontFamily="monospace"
+                android:textStyle="italic"
+                android:text="@string/jkepler"/>
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>
