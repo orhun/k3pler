@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">k3pler</string>
     <string name="main_page">k3pler proxy</string>
+    <string name="desc_long">Network connection blocker and packet analyzer built on top of local HTTP proxy.</string>
+    <string name="desc_short">Network connection blocker and packet analyzer</string>
     <string name="blacklist_page">blacklist</string>
     <string name="settings_page">settings</string>
     <string name="about_page">about</string>

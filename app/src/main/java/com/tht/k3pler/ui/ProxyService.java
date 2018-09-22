@@ -207,12 +207,26 @@ public class ProxyService extends Service {
             splashDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             splashDialog.setContentView(inflater.inflate(R.layout.layout_splash, null));
             splashDialog.setCancelable(false);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    iSplash.onShow();
-                }
-            }, 4000);
+            final TextView txvK3Load = splashDialog.findViewById(R.id.txvK3Load);
+            final String loadDots = "...";
+            for (int s = 0; s < loadDots.toCharArray().length; s++) {
+                final int i = s;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txvK3Load.setText("[" + txvK3Load.getText().toString().replace("[", "").replace("]", "") +
+                                String.valueOf(loadDots.toCharArray()[i]) + "]");
+                        if (i == loadDots.toCharArray().length - 1) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iSplash.onShow();
+                                }
+                            }, 1200);
+                        }
+                    }
+                }, s * 800);
+            }
             splashDialog.show();
         }catch (Exception e){
             e.printStackTrace();
@@ -232,10 +246,10 @@ public class ProxyService extends Service {
                     guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
                     initGUI(guiDialog);
                     mainHandler = new Handler(getApplicationContext().getMainLooper());
-                    guiDialog.show();
                     if(splashDialog != null && splashDialog.isShowing()) {
                         splashDialog.cancel();
                     }
+                    guiDialog.show();
                     settings = new SettingsPageInflater(getApplicationContext(), null).getSettings();
                     new LProxy(getApplicationContext(), Integer.parseInt(settings.get(0)),
                             Integer.parseInt(settings.get(1)), Integer.parseInt(settings.get(2)),
