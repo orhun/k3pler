@@ -207,7 +207,7 @@ public class ProxyService extends Service {
                     splashDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                     splashDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                     splashDialog.setContentView(inflater.inflate(R.layout.layout_splash, null));
-                    splashDialog.setCancelable(false);
+                    /* splashDialog.setCancelable(false); */
                     final TextView txvK3Load = splashDialog.findViewById(R.id.txvK3Load);
                     final String loadDots = "...";
                     final int delay1 = 800, delay2 = 1200;
