@@ -13,7 +13,7 @@
         <RelativeLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/imgK3pler"
                 android:layout_width="255dp"
