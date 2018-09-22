@@ -201,34 +201,45 @@ public class ProxyService extends Service {
     @SuppressWarnings("deprecation")
     private void showSplash(final ISplash iSplash){
         try {
-            LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            splashDialog = new Dialog(this, android.R.style.Theme_Black);
-            splashDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            splashDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            splashDialog.setContentView(inflater.inflate(R.layout.layout_splash, null));
-            splashDialog.setCancelable(false);
-            final TextView txvK3Load = splashDialog.findViewById(R.id.txvK3Load);
-            final String loadDots = "...";
-            for (int s = 0; s < loadDots.toCharArray().length; s++) {
-                final int i = s;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        txvK3Load.setText("[" + txvK3Load.getText().toString().replace("[", "").replace("]", "") +
-                                String.valueOf(loadDots.toCharArray()[i]) + "]");
-                        if (i == loadDots.toCharArray().length - 1) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    iSplash.onShow();
+            settings = new SettingsPageInflater(getApplicationContext(), null).getSettings();
+            if (Integer.valueOf(settings.get(4)) == 1) {
+                iSplash.onShow();
+            } else {
+                try {
+                    LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    splashDialog = new Dialog(this, android.R.style.Theme_Black);
+                    splashDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    splashDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    splashDialog.setContentView(inflater.inflate(R.layout.layout_splash, null));
+                    splashDialog.setCancelable(false);
+                    final TextView txvK3Load = splashDialog.findViewById(R.id.txvK3Load);
+                    final String loadDots = "...";
+                    final int delay1 = 800, delay2 = 1200;
+                    for (int s = 0; s < loadDots.toCharArray().length; s++) {
+                        final int i = s;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                txvK3Load.setText("[" + txvK3Load.getText().toString().replace("[", "").replace("]", "") +
+                                        String.valueOf(loadDots.toCharArray()[i]) + "]");
+                                if (i == loadDots.toCharArray().length - 1) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            iSplash.onShow();
+                                        }
+                                    }, delay2);
                                 }
-                            }, 1200);
-                        }
+                            }
+                        }, s * delay1);
                     }
-                }, s * 800);
+                    splashDialog.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    iSplash.onShow();
+                }
             }
-            splashDialog.show();
-        }catch (Exception e){
+        }catch (Exception e) {
             e.printStackTrace();
             iSplash.onShow();
         }
