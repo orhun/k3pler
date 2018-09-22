@@ -138,7 +138,7 @@ public class BlacklistPageInflater {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(dpToPx(20), 0, dpToPx(20), 0);
+        layoutParams.setMargins(dpToPx(20), dpToPx(20), dpToPx(20), dpToPx(20));
         editText.setLayoutParams(layoutParams);
         parentLayout.addView(editText);
         builder.setView(parentLayout);
