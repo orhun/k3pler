@@ -19,7 +19,7 @@ public class BlacklistAdapter extends BaseAdapter {
     private TextView txvReqBlacklist;
 
     private void init(View view) {
-        txvReqBlacklist = (TextView) view.findViewById(R.id.txvReqBlacklist);
+        txvReqBlacklist = view.findViewById(R.id.txvReqBlacklist);
     }
 
     public BlacklistAdapter(Context context, ArrayList<String> blackList){

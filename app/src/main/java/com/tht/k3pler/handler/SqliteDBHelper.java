@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import com.tht.k3pler.sub.SQLiteBL;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

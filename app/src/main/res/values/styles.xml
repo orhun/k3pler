@@ -9,5 +9,4 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-
 </resources>

@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;

@@ -3,7 +3,6 @@ package com.tht.k3pler.ui;
 import android.app.Activity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,9 +11,6 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 
 import com.tht.k3pler.handler.ServiceController;
-import com.tht.k3pler.handler.SqliteDBHelper;
-import com.tht.k3pler.sub.SQLiteBL;
-import com.tht.k3pler.sub.SQLiteSettings;
 
 
 public class MainActivity extends Activity {
