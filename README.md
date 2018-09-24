@@ -1,8 +1,8 @@
 # k3pler proxy
 
-![k3pler](https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png "k3pler")
+### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
 
-Android network connection blocker and packet analyzer built on top of local HTTP proxy.
+![k3pler](https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png "k3pler")
 
 ### Features
 * Show network traffic in a list (HTTP Request/Response)
