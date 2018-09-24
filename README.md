@@ -9,7 +9,7 @@ Android network connection blocker and packet analyzer built on top of local HTT
 (C -> Connect | H/1.1 -> HTTP version | _S_ -> Success)
 * Blacklist connection after getting detailed information
 * Edit/Remove item at blacklist - clear blacklist
-* Settings
+* Settings:
     ```
     Proxy Port: Local Proxy port for connection
     Max. Buffer: Maximum response buffer size in bytes
