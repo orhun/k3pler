@@ -2,12 +2,12 @@
 
 ### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
 
-![k3pler](https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png "k3pler")
+<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png" width="270" height="385"/>
 
 ### Features
 * Show network traffic in a list (HTTP Request/Response)
 
-![network-traffic](https://github.com/KeyLo99/k3pler/blob/master/etc/page1.png "network-traffic")
+<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/page1.png" width="341" height="606"/>
 
 * Gives details about requests/responses with abbreviations in list.
 (eg: ```example.com ~ C [H/1.1] _S_ {time}```)
@@ -15,7 +15,7 @@
 * Blacklist connection after getting detailed information
 * Edit/Remove item at blacklist - clear blacklist
 
-![blacklist](https://github.com/KeyLo99/k3pler/blob/master/etc/page2.png "blacklist")
+<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/page2.png" width="341" height="606"/>
 
 * Settings:
     ```
@@ -28,7 +28,7 @@
     Splash Screen: Show splash screen when app starts
     ```
 
-![settings](https://github.com/KeyLo99/k3pler/blob/master/etc/page3.png "settings")
+<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/page3.png" width="341" height="606"/>
 
 * Shows instructions of configuring proxy (WIFI / Mobile Network)
 
