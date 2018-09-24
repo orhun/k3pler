@@ -27,7 +27,7 @@
     <string name="lyt_max_buffer">Max. Buffer: </string>
     <string name="lyt_max_buffer_placeholder">10x1024x1024</string>
     <string name="lyt_match_type">Eşleşme Türü:</string>
-    <string name="lyt_blacklist_response">Blacklist Response:</string>
+    <string name="lyt_blacklist_response">Karaliste HTTP Cevabı:</string>
     <string name="lyt_show_splash">Başlangıç Ekranı:</string>
     <string name="match_type_1">Tamamı</string>
     <string name="match_type_2">Kelime</string>
