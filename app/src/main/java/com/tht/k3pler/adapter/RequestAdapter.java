@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import io.netty.handler.codec.DecoderResult;
 
-
+/** Adapter for recyclerView list [main page]  **/
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
     private Context context;
     public ArrayList<HTTPReq> requests;

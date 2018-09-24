@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/** SQLite connections **/
 public class SqliteDBHelper {
 
     private static SQLiteDatabase db;

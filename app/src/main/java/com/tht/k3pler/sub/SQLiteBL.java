@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/** Blacklist database **/
 public class SQLiteBL extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;

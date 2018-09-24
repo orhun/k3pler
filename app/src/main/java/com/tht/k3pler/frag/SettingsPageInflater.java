@@ -22,7 +22,7 @@ import com.tht.k3pler.sub.SQLiteSettings;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/** Settings page **/
 public class SettingsPageInflater {
     private Context context;
     private ViewGroup viewGroup;

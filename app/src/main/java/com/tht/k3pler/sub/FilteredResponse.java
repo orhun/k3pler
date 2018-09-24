@@ -13,6 +13,7 @@ import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 
+/** Response for blacklisted requests **/
 public class FilteredResponse extends HttpFiltersAdapter {
     private HttpResponse httpResponse;
     private HttpResponseStatus httpResponseStatus = HttpResponseStatus.BAD_GATEWAY;

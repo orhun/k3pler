@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+/** TextView setText effect **/
 public class TextViewEFX {
     private static String randomStr = "あたアカサザジズゼゾシスセソキクケコイウエオジャな";
     private String tmpChr = "";

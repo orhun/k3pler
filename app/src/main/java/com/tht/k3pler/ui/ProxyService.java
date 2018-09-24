@@ -45,6 +45,7 @@ import java.util.Locale;
 
 import io.netty.handler.codec.http.HttpRequest;
 
+/** Main service **/
 public class ProxyService extends Service {
 
     public HttpProxyServer httpProxyServer;

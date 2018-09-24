@@ -10,6 +10,7 @@ import com.tht.k3pler.R;
 
 import java.util.ArrayList;
 
+/** Layout inflater class for viewPager layouts **/
 public class LayoutPagerAdapter extends android.support.v4.view.PagerAdapter {
     public enum PagerEnum {
         MainPage(R.string.main_page, R.layout.layout_pager_main),

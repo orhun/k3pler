@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 
+/** Start/stop service **/
 public class ServiceController {
     private Activity activity;
     private Class service;

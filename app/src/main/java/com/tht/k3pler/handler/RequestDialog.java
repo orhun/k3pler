@@ -16,6 +16,7 @@ import com.tht.k3pler.R;
 import com.tht.k3pler.adapter.RequestAdapter;
 import com.tht.k3pler.sub.HTTPReq;
 
+/** Show detailed info about request **/
 public class RequestDialog {
     private Context context;
     private Dialog reqDialog;

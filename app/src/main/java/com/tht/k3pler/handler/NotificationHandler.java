@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.tht.k3pler.R;
 
+/** Handle notifications **/
 public class NotificationHandler {
     private Context context;
     private Class mClass;

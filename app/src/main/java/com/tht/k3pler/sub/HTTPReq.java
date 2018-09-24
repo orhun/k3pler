@@ -1,8 +1,8 @@
 package com.tht.k3pler.sub;
 
-
 import io.netty.handler.codec.DecoderResult;
 
+/** HTTP Request implementation **/
 public class HTTPReq {
     private String uri, method, protocol, time;
     private DecoderResult result;

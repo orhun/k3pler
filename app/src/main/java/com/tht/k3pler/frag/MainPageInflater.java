@@ -22,6 +22,7 @@ import com.tht.k3pler.sub.SQLiteBL;
 
 import java.util.ArrayList;
 
+/** Main page **/
 public class MainPageInflater {
     private Context context;
     private ViewGroup viewGroup;

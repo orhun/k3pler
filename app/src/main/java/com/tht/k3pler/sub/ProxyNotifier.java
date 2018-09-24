@@ -8,6 +8,7 @@ import com.tht.k3pler.handler.NotificationHandler;
 
 import org.littleshoot.proxy.HttpProxyServer;
 
+/** Get proxy details and show with notificationHandler **/
 public class ProxyNotifier extends AsyncTask<Void, String, String> {
     private Context context;
     private HttpProxyServer httpProxyServer;

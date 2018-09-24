@@ -12,7 +12,7 @@ import android.view.WindowManager;
 
 import com.tht.k3pler.handler.ServiceController;
 
-
+/** Entry point for application **/
 public class MainActivity extends Activity {
     private ServiceController serviceController;
     private int OVERLAY_REQUEST = 0x63;

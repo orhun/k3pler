@@ -11,6 +11,7 @@ import com.tht.k3pler.R;
 
 import java.util.ArrayList;
 
+/** Adapter for recyclerView list [blacklist page] **/
 public class BlacklistAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> blackList;

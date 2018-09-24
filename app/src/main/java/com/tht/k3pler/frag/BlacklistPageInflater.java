@@ -24,13 +24,14 @@ import com.tht.k3pler.sub.SQLiteBL;
 
 import java.util.ArrayList;
 
+/** Blacklist page **/
 public class BlacklistPageInflater {
     private Context context;
     private ViewGroup viewGroup;
     private SqliteDBHelper sqliteDBHelper;
     private ArrayList<String> blackListArr = new ArrayList<>();
     private BlacklistAdapter blacklistAdapter;
-    // * //
+    // ** //
     private ListView lstBlacklist;
     private TextView txvBlacklistOptions, txvBlPageMsg;
     private SwipeRefreshLayout swpBlacklist;

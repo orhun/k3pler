@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.tht.k3pler.R;
 
+/** About page **/
 public class AboutPageInflater {
     private Context context;
     private ViewGroup viewGroup;
