@@ -1,3 +1,7 @@
+![AUR](https://img.shields.io/aur/license/yaourt.svg)
+![AUR](https://img.shields.io/badge/platform-android-green.svg)
+![AUR](https://img.shields.io/badge/Release-1.0-lightgrey.svg)
+
 # k3pler proxy
 
 ### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
