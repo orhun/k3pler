@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.tht.k3pler.R;
 import com.tht.k3pler.adapter.BlacklistAdapter;
+import com.tht.k3pler.handler.RequestDialog;
 import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.SQLiteBL;
 
@@ -116,7 +117,7 @@ public class BlacklistPageInflater {
                     }
                 });
                 AlertDialog alertDialog = builder.create();
-                alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                alertDialog.getWindow().setType(new RequestDialog().getWindowType());
                 alertDialog.show();
             }
         });
@@ -158,7 +159,7 @@ public class BlacklistPageInflater {
             }
         });
         AlertDialog alertDialog = builder.create();
-        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.getWindow().setType(new RequestDialog().getWindowType());
         alertDialog.show();
     }
     public static int dpToPx(int dp) {

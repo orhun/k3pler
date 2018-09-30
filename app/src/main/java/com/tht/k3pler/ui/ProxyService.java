@@ -24,6 +24,7 @@ import com.tht.k3pler.frag.AboutPageInflater;
 import com.tht.k3pler.frag.BlacklistPageInflater;
 import com.tht.k3pler.frag.SettingsPageInflater;
 import com.tht.k3pler.handler.LProxy;
+import com.tht.k3pler.handler.RequestDialog;
 import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.R;
 import com.tht.k3pler.sub.TextViewEFX;
@@ -206,7 +207,7 @@ public class ProxyService extends Service {
                     LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     splashDialog = new Dialog(this, android.R.style.Theme_Black);
                     splashDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                    splashDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    splashDialog.getWindow().setType(new RequestDialog().getWindowType());
                     splashDialog.setContentView(inflater.inflate(R.layout.layout_splash, null));
                     /* splashDialog.setCancelable(false); */
                     final TextView txvK3Load = splashDialog.findViewById(R.id.txvK3Load);
@@ -250,7 +251,7 @@ public class ProxyService extends Service {
                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     guiDialog = new Dialog(getApplicationContext(), android.R.style.Theme_Black);
                     guiDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                    guiDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    guiDialog.getWindow().setType(new RequestDialog().getWindowType());
                     guiDialog.setContentView(inflater.inflate(R.layout.layout_main, null));
                     initGUI(guiDialog);
                     mainHandler = new Handler(getApplicationContext().getMainLooper());

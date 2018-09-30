@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tht.k3pler.R;
+import com.tht.k3pler.handler.RequestDialog;
 import com.tht.k3pler.handler.SqliteDBHelper;
 import com.tht.k3pler.sub.SQLiteSettings;
 
@@ -221,7 +222,7 @@ public class SettingsPageInflater {
             }
         });
         AlertDialog alertDialog = builder.create();
-        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.getWindow().setType(new RequestDialog().getWindowType());
         alertDialog.show();
     }
     public static int dpToPx(int dp) {
@@ -251,7 +252,7 @@ public class SettingsPageInflater {
             }
         });
         AlertDialog alertDialog = builder.create();
-        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alertDialog.getWindow().setType(new RequestDialog().getWindowType());
         alertDialog.show();
     }
     private int getRespID(String resp){

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -32,6 +33,7 @@ public class RequestDialog {
         this.context = context;
         this.httpReq = httpReq;
     }
+    public RequestDialog(){}
     private void initDialog(Dialog dialog){
         txvReqAddr = dialog.findViewById(R.id.txvReqAddr);
         txvReqMethod = dialog.findViewById(R.id.txvReqMethod);
@@ -46,7 +48,7 @@ public class RequestDialog {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             reqDialog = new Dialog(context);
             reqDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            reqDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            reqDialog.getWindow().setType(getWindowType());
             reqDialog.setContentView(inflater.inflate(R.layout.layout_req_detail, null));
             initDialog(reqDialog);
             txvReqAddr.setText(httpReq.getUri());
@@ -76,5 +78,12 @@ public class RequestDialog {
             e.printStackTrace();
         }
     }
-
+    @SuppressWarnings("deprecation")
+    public int getWindowType(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        }else{
+            return WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        }
+    }
 }
