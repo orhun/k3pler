@@ -2,6 +2,12 @@
 ![AUR](https://img.shields.io/badge/platform-android-green.svg)
 ![AUR](https://img.shields.io/badge/Release-1.1-lightgrey.svg)
 
+<a href="https://github.com/PyObfx/PyObfx/issues"><img src="https://img.shields.io/github/issues/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/PyObfx/PyObfx/pulls"><img src="https://img.shields.io/github/issues-pr/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/PyObfx/PyObfx/stargazers"><img src="https://img.shields.io/github/stars/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/PyObfx/PyObfx/network"><img src="https://img.shields.io/github/forks/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/PyObfx/PyObfx/blob/master/LICENSE"><img src="https://img.shields.io/github/license/KeyLo99/k3pler.svg"/>
+
 # k3pler proxy
 
 ### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
