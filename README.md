@@ -42,3 +42,7 @@
 ### Licenses
 * [Android v7 RecyclerView Library](https://developer.android.com/topic/libraries/support-library/packages) `(Apache 2.0)`
 * [LittleProxy 1.1.2](https://github.com/adamfisk/LittleProxy) `(Apache 2.0)`
+
+## Download
+* [fdroid](https://apt.izzysoft.de/fdroid/index/apk/com.tht.k3pler)
+* [play](https://play.google.com/store/apps/details?id=com.tht.k3pler)
