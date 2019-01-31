@@ -1,5 +1,6 @@
 
-# k3pler proxy
+# k3pler proxy <a href="https://github.com/KeyLo99/k3pler/releases"><img src="https://img.shields.io/github/release/KeyLo99/k3pler.svg"/>
+</a>
 
 <a href="https://github.com/KeyLo99/k3pler/issues"><img src="https://img.shields.io/github/issues/KeyLo99/k3pler.svg"/></a>
 <a href="https://github.com/KeyLo99/k3pler/pulls"><img src="https://img.shields.io/github/issues-pr/KeyLo99/k3pler.svg"/></a>
