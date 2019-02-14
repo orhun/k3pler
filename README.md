@@ -1,4 +1,3 @@
-
 # k3pler proxy <a href="https://github.com/KeyLo99/k3pler/releases"><img src="https://img.shields.io/github/release/KeyLo99/k3pler.svg"/>
 </a>
 
@@ -9,6 +8,13 @@
 <a href="https://github.com/KeyLo99/k3pler/blob/master/LICENSE"><img src="https://img.shields.io/github/license/KeyLo99/k3pler.svg"/>
 
 ### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=com.tht.k3pler)
+[<img src="https://f-droid.org/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.tht.k3pler/)
 
 <img src="https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png" width="270" height="385"/>
 
@@ -43,7 +49,3 @@
 ### Licenses
 * [Android v7 RecyclerView Library](https://developer.android.com/topic/libraries/support-library/packages) `(Apache 2.0)`
 * [LittleProxy 1.1.2](https://github.com/adamfisk/LittleProxy) `(Apache 2.0)`
-
-### Download
-* [fdroid](https://apt.izzysoft.de/fdroid/index/apk/com.tht.k3pler)
-* [play](https://play.google.com/store/apps/details?id=com.tht.k3pler)
