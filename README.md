@@ -48,7 +48,7 @@
 
 ## APK
 
-[Download APK](~~)
+[Download APK](https://github.com/KeyLo99/k3pler/raw/master/app/dist/k3pler_v1-2.apk)
 
 ## Licenses
 
