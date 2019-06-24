@@ -1,10 +1,20 @@
-![AUR](https://img.shields.io/aur/license/yaourt.svg)
-![AUR](https://img.shields.io/badge/platform-android-green.svg)
-![AUR](https://img.shields.io/badge/Release-1.1-lightgrey.svg)
+# k3pler proxy <a href="https://github.com/KeyLo99/k3pler/releases"><img src="https://img.shields.io/github/release/KeyLo99/k3pler.svg"/>
+</a>
 
-# k3pler proxy
+<a href="https://github.com/KeyLo99/k3pler/issues"><img src="https://img.shields.io/github/issues/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/pulls"><img src="https://img.shields.io/github/issues-pr/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/stargazers"><img src="https://img.shields.io/github/stars/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/network"><img src="https://img.shields.io/github/forks/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/blob/master/LICENSE"><img src="https://img.shields.io/github/license/KeyLo99/k3pler.svg"/>
 
 ### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=com.tht.k3pler)
+[<img src="https://f-droid.org/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.tht.k3pler/)
 
 <img src="https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png" width="270" height="385"/>
 
