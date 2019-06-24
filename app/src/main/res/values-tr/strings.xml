@@ -51,7 +51,6 @@
     <string name="check_proxy_msg">Ağ trafiği bekleniyor&#8230;</string>
     <string name="empty_bl_msg">[Karaliste boş]</string>
     <string name="coded_by_k3">Coded By KeyLo99</string>
-    <string name="mail_addr">/@</string>
     <string name="k3pwn_url">k3Pwn.me</string>
     <string name="open_source_licence">Açık Kaynak Lisanslar</string>
     <string name="recyclerview_lib">Android v7 RecyclerView Library</string>
