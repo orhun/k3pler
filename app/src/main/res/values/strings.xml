@@ -51,10 +51,6 @@
     <string name="check_proxy_msg">Waiting for network traffic&#8230;</string>
     <string name="empty_bl_msg">[Empty blacklist]</string>
     <string name="coded_by_k3">Coded By KeyLo99</string>
-    <string name="github_addr">/gh</string>
-    <string name="bitbucket_addr">/bb</string>
-    <string name="twitter_addr">/tw</string>
-    <string name="youtube_addr">/yt</string>
     <string name="mail_addr">/@</string>
     <string name="k3pwn_url">k3Pwn.me</string>
     <string name="open_source_licence">Open Source Licences</string>
