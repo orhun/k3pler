@@ -27,12 +27,10 @@ public class AboutPageInflater {
             bitbucket_page = "https://bitbucket.org/KeyLo99/",
             email = "keylo99official@gmail.com",
             k3pwn = "http://www.k3pwn.me",
-            turkhackteam_profile = "https://www.turkhackteam.org/members/763537.html",
             recyclerviewLicence = "https://developer.android.com/topic/libraries/support-library/packages",
-            littleproxyProject = "https://github.com/adamfisk/LittleProxy",
-            turkhackteam_link = "https://www.turkhackteam.org";
+            littleproxyProject = "https://github.com/adamfisk/LittleProxy";
     // ** //
-    private TextView txvK3, txvTHT, txvContactGh,
+    private TextView txvK3, txvContactGh,
             txvContactBb, txvContactTw, txvContactYt,
             txvContactMail, txvK3pwn, txvProjectInfo,
             txvOpenSourceLicences, txvLicenceRecycler,
@@ -44,7 +42,6 @@ public class AboutPageInflater {
     }
     public void init(){
         txvK3 = viewGroup.findViewById(R.id.txvK3);
-        txvTHT = viewGroup.findViewById(R.id.txvTHT);
         txvContactGh = viewGroup.findViewById(R.id.txvContactGh);
         txvContactBb = viewGroup.findViewById(R.id.txvContactBb);
         txvContactTw = viewGroup.findViewById(R.id.txvContactTw);
@@ -94,12 +91,6 @@ public class AboutPageInflater {
                 openPage(k3pwn);
             }
         });
-        txvK3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPage(turkhackteam_profile);
-            }
-        });
         txvLicenceRecycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,19 +103,12 @@ public class AboutPageInflater {
                 openPage(littleproxyProject);
             }
         });
-        txvTHT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPage(turkhackteam_link);
-            }
-        });
         txvContactMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 copyToClipBoard(email);
             }
         });
-        setTextWithUnderline(txvTHT, txvTHT.getText().toString());
         setTextWithUnderline(txvK3pwn, txvK3pwn.getText().toString());
         txvJKepler.setOnClickListener(new View.OnClickListener() {
             @Override
