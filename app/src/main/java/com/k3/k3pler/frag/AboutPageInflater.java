@@ -2,15 +2,11 @@ package com.k3.k3pler.frag;
 
 
 import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -79,37 +75,6 @@ public class AboutPageInflater {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
             dismissGuiDialog();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    private void openTwitterIntent(Context context) {
-        try {
-            String id = "4745956696";
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name="+id));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-            dismissGuiDialog();
-        } catch (Exception e) {
-            openPage("https://twitter.com/KeyLo_99");
-        }
-    }
-    private void openYoutubeIntent(Context context) {
-        try {
-            String id = "/channel/UC1Y6oS0iyZkjbHxidx5Oirg";
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + id));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-            dismissGuiDialog();
-        } catch (Exception e) {
-            openPage("https://www.youtube.com/channel/UC1Y6oS0iyZkjbHxidx5Oirg");
-        }
-    }
-    private void copyToClipBoard(String data){
-        try{
-            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText(context.getString(R.string.app_name), data);
-            clipboard.setPrimaryClip(clip);
         }catch (Exception e){
             e.printStackTrace();
         }
