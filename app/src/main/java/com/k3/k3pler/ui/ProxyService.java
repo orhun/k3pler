@@ -1,4 +1,4 @@
-package com.tht.k3pler.ui;
+package com.k3.k3pler.ui;
 
 import android.app.Dialog;
 import android.app.Service;
@@ -20,20 +20,20 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tht.k3pler.frag.AboutPageInflater;
-import com.tht.k3pler.frag.BlacklistPageInflater;
-import com.tht.k3pler.frag.SettingsPageInflater;
-import com.tht.k3pler.handler.LProxy;
-import com.tht.k3pler.handler.RequestDialog;
-import com.tht.k3pler.handler.SqliteDBHelper;
-import com.tht.k3pler.R;
-import com.tht.k3pler.sub.TextViewEFX;
-import com.tht.k3pler.adapter.LayoutPagerAdapter;
-import com.tht.k3pler.adapter.RequestAdapter;
-import com.tht.k3pler.frag.MainPageInflater;
-import com.tht.k3pler.handler.NotificationHandler;
-import com.tht.k3pler.sub.FilteredResponse;
-import com.tht.k3pler.sub.HTTPReq;
+import com.k3.k3pler.frag.AboutPageInflater;
+import com.k3.k3pler.frag.BlacklistPageInflater;
+import com.k3.k3pler.frag.SettingsPageInflater;
+import com.k3.k3pler.handler.LProxy;
+import com.k3.k3pler.handler.RequestDialog;
+import com.k3.k3pler.handler.SqliteDBHelper;
+import com.k3.k3pler.R;
+import com.k3.k3pler.sub.TextViewEFX;
+import com.k3.k3pler.adapter.LayoutPagerAdapter;
+import com.k3.k3pler.adapter.RequestAdapter;
+import com.k3.k3pler.frag.MainPageInflater;
+import com.k3.k3pler.handler.NotificationHandler;
+import com.k3.k3pler.sub.FilteredResponse;
+import com.k3.k3pler.sub.HTTPReq;
 
 import org.littleshoot.proxy.HttpProxyServer;
 

@@ -1,4 +1,4 @@
-package com.tht.k3pler.frag;
+package com.k3.k3pler.frag;
 
 
 import android.app.AlertDialog;
@@ -15,10 +15,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tht.k3pler.R;
-import com.tht.k3pler.handler.RequestDialog;
-import com.tht.k3pler.handler.SqliteDBHelper;
-import com.tht.k3pler.sub.SQLiteSettings;
+import com.k3.k3pler.R;
+import com.k3.k3pler.handler.RequestDialog;
+import com.k3.k3pler.handler.SqliteDBHelper;
+import com.k3.k3pler.sub.SQLiteSettings;
 
 import java.util.ArrayList;
 import java.util.HashMap;

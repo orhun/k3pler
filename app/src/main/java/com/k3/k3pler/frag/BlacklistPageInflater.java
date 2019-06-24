@@ -1,4 +1,4 @@
-package com.tht.k3pler.frag;
+package com.k3.k3pler.frag;
 
 
 import android.app.AlertDialog;
@@ -17,11 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.tht.k3pler.R;
-import com.tht.k3pler.adapter.BlacklistAdapter;
-import com.tht.k3pler.handler.RequestDialog;
-import com.tht.k3pler.handler.SqliteDBHelper;
-import com.tht.k3pler.sub.SQLiteBL;
+import com.k3.k3pler.R;
+import com.k3.k3pler.adapter.BlacklistAdapter;
+import com.k3.k3pler.handler.RequestDialog;
+import com.k3.k3pler.handler.SqliteDBHelper;
+import com.k3.k3pler.sub.SQLiteBL;
 
 import java.util.ArrayList;
 

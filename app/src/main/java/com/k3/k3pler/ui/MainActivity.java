@@ -1,4 +1,4 @@
-package com.tht.k3pler.ui;
+package com.k3.k3pler.ui;
 
 import android.app.Activity;
 
@@ -10,7 +10,7 @@ import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
-import com.tht.k3pler.handler.ServiceController;
+import com.k3.k3pler.handler.ServiceController;
 
 /** Entry point for application **/
 public class MainActivity extends Activity {

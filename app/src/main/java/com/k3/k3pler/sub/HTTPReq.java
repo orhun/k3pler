@@ -1,4 +1,4 @@
-package com.tht.k3pler.sub;
+package com.k3.k3pler.sub;
 
 import io.netty.handler.codec.DecoderResult;
 

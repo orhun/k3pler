@@ -1,4 +1,4 @@
-package com.tht.k3pler.frag;
+package com.k3.k3pler.frag;
 
 
 import android.app.Dialog;
@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tht.k3pler.R;
+import com.k3.k3pler.R;
 
 /** About page **/
 public class AboutPageInflater {

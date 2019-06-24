@@ -1,4 +1,4 @@
-package com.tht.k3pler.handler;
+package com.k3.k3pler.handler;
 
 
 import android.app.Dialog;
@@ -13,9 +13,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tht.k3pler.R;
-import com.tht.k3pler.adapter.RequestAdapter;
-import com.tht.k3pler.sub.HTTPReq;
+import com.k3.k3pler.R;
+import com.k3.k3pler.adapter.RequestAdapter;
+import com.k3.k3pler.sub.HTTPReq;
 
 /** Show detailed info about request **/
 public class RequestDialog {

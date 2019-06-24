@@ -1,4 +1,4 @@
-package com.tht.k3pler.handler;
+package com.k3.k3pler.handler;
 
 
 import android.app.NotificationChannel;
@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
-import com.tht.k3pler.R;
+import com.k3.k3pler.R;
 
 /** Handle notifications **/
 public class NotificationHandler {

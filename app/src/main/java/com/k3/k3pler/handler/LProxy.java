@@ -1,12 +1,12 @@
-package com.tht.k3pler.handler;
+package com.k3.k3pler.handler;
 
 
 import android.content.Context;
 
-import com.tht.k3pler.frag.BlacklistPageInflater;
-import com.tht.k3pler.sub.FilteredResponse;
-import com.tht.k3pler.sub.ProxyNotifier;
-import com.tht.k3pler.ui.ProxyService;
+import com.k3.k3pler.frag.BlacklistPageInflater;
+import com.k3.k3pler.sub.FilteredResponse;
+import com.k3.k3pler.sub.ProxyNotifier;
+import com.k3.k3pler.ui.ProxyService;
 
 import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.HttpFiltersSource;

@@ -1,4 +1,4 @@
-package com.tht.k3pler.adapter;
+package com.k3.k3pler.adapter;
 
 
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.tht.k3pler.R;
+import com.k3.k3pler.R;
 
 import java.util.ArrayList;
 
