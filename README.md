@@ -18,7 +18,7 @@
 
 <img src="https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png" width="270" height="385"/>
 
-### Features
+## Features
 * Show network traffic in a list (HTTP Request/Response)
 
 <img src="https://github.com/KeyLo99/k3pler/blob/master/etc/page1.png" width="341" height="606"/>
@@ -46,6 +46,16 @@
 
 * Shows instructions of configuring proxy (WIFI / Mobile Network)
 
-### Licenses
+## APK
+
+[Download APK](~~)
+
+## Licenses
+
+* [GNU Public License v3](https://www.gnu.org/licenses/gpl.txt)
 * [Android v7 RecyclerView Library](https://developer.android.com/topic/libraries/support-library/packages) `(Apache 2.0)`
 * [LittleProxy 1.1.2](https://github.com/adamfisk/LittleProxy) `(Apache 2.0)`
+
+## Credit
+
+Copyright (C) 2019 by KeyLo99 https://www.github.com/KeyLo99
