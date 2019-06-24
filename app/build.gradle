@@ -4,10 +4,10 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.2"
     defaultConfig {
-        applicationId "com.k3.k3pler"
+        applicationId "com.tht.k3pler"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 3
+        versionCode 4
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
