@@ -23,17 +23,11 @@ public class AboutPageInflater {
     private ViewGroup viewGroup;
     private Dialog guiDialog;
     private static String version = "1.0",
-            github_page = "https://github.com/KeyLo99",
-            bitbucket_page = "https://bitbucket.org/KeyLo99/",
-            email = "keylo99official@gmail.com",
             k3pwn = "http://www.k3pwn.me",
             recyclerviewLicence = "https://developer.android.com/topic/libraries/support-library/packages",
             littleproxyProject = "https://github.com/adamfisk/LittleProxy";
     // ** //
-    private TextView txvK3, txvContactGh,
-            txvContactBb, txvContactTw, txvContactYt,
-            txvContactMail, txvK3pwn, txvProjectInfo,
-            txvOpenSourceLicences, txvLicenceRecycler,
+    private TextView txvK3pwn, txvProjectInfo, txvLicenceRecycler,
             txvLicenceLittleProxy, txvJKepler;
     public AboutPageInflater(Context context, ViewGroup viewGroup, Dialog guiDialog){
         this.context = context;
@@ -41,15 +35,8 @@ public class AboutPageInflater {
         this.guiDialog = guiDialog;
     }
     public void init(){
-        txvK3 = viewGroup.findViewById(R.id.txvK3);
-        txvContactGh = viewGroup.findViewById(R.id.txvContactGh);
-        txvContactBb = viewGroup.findViewById(R.id.txvContactBb);
-        txvContactTw = viewGroup.findViewById(R.id.txvContactTw);
-        txvContactYt = viewGroup.findViewById(R.id.txvContactYt);
-        txvContactMail = viewGroup.findViewById(R.id.txvContactMail);
         txvK3pwn = viewGroup.findViewById(R.id.txvK3pwn);
         txvProjectInfo = viewGroup.findViewById(R.id.txvProjectInfo);
-        txvOpenSourceLicences = viewGroup.findViewById(R.id.txvOpenSourceLicences);
         txvLicenceRecycler = viewGroup.findViewById(R.id.txvLicenceRecycler);
         txvLicenceLittleProxy = viewGroup.findViewById(R.id.txvLicenceLittleProxy);
         txvJKepler = viewGroup.findViewById(R.id.txvJKepler);
@@ -61,30 +48,6 @@ public class AboutPageInflater {
             e.printStackTrace();
         }
         txvProjectInfo.setText(context.getString(R.string.main_page) + " v" + version);
-        txvContactGh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPage(github_page);
-            }
-        });
-        txvContactBb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPage(bitbucket_page);
-            }
-        });
-        txvContactYt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openYoutubeIntent(context);
-            }
-        });
-        txvContactTw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openTwitterIntent(context);
-            }
-        });
         txvK3pwn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,24 +66,12 @@ public class AboutPageInflater {
                 openPage(littleproxyProject);
             }
         });
-        txvContactMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                copyToClipBoard(email);
-            }
-        });
-        setTextWithUnderline(txvK3pwn, txvK3pwn.getText().toString());
         txvJKepler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openPage(context.getString(R.string.jkepler_link));
             }
         });
-    }
-    private void setTextWithUnderline(TextView textView, String text){
-        SpannableString content = new SpannableString(text);
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        textView.setText(content);
     }
     private void openPage(String url){
         try {

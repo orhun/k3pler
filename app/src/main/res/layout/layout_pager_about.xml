@@ -93,60 +93,6 @@
                 android:textStyle="normal|bold"
                 android:background="@color/transparent_more_gray"
                 android:layout_below="@+id/txvLicenceLittleProxy"/>
-            <LinearLayout
-                android:id="@+id/rlK3Contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txvK3"
-                android:orientation="horizontal"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp">
-                <TextView
-                    android:id="@+id/txvContactGh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/github_addr"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="monospace"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/txvContactBb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/bitbucket_addr"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="monospace"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/txvContactTw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/twitter_addr"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="monospace"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/txvContactYt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/youtube_addr"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="monospace"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/txvContactMail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mail_addr"
-                    android:layout_marginEnd="10dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="monospace"
-                    android:textStyle="bold"/>
-            </LinearLayout>
             <TextView
                 android:id="@+id/txvK3pwn"
                 android:layout_width="wrap_content"
@@ -156,7 +102,7 @@
                 android:textColor="@color/lighterGray"
                 android:fontFamily="sans-serif-smallcaps"
                 android:textStyle="bold"
-                android:layout_below="@+id/rlK3Contact"
+                android:layout_below="@+id/txvK3"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"/>
             <TextView
