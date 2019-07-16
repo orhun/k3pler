@@ -1,11 +1,11 @@
-# k3pler proxy <a href="https://github.com/KeyLo99/k3pler/releases"><img src="https://img.shields.io/github/release/KeyLo99/k3pler.svg?style=flat-square"/>
+# k3pler proxy <a href="https://github.com/KeyLo99/k3pler/releases"><img src="https://img.shields.io/github/release/KeyLo99/k3pler.svg"/>
 </a>
 
-<a href="https://github.com/KeyLo99/k3pler/issues"><img src="https://img.shields.io/github/issues/KeyLo99/k3pler.svg?style=flat-square"/></a>
-<a href="https://github.com/KeyLo99/k3pler/pulls"><img src="https://img.shields.io/github/issues-pr/KeyLo99/k3pler.svg?style=flat-square"/></a>
-<a href="https://github.com/KeyLo99/k3pler/stargazers"><img src="https://img.shields.io/github/stars/KeyLo99/k3pler.svg?style=flat-square"/></a>
-<a href="https://github.com/KeyLo99/k3pler/network"><img src="https://img.shields.io/github/forks/KeyLo99/k3pler.svg?style=flat-square"/></a>
-<a href="https://github.com/KeyLo99/k3pler/blob/master/LICENSE"><img src="https://img.shields.io/github/license/KeyLo99/k3pler.svg?style=flat-square"/>
+<a href="https://github.com/KeyLo99/k3pler/issues"><img src="https://img.shields.io/github/issues/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/pulls"><img src="https://img.shields.io/github/issues-pr/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/stargazers"><img src="https://img.shields.io/github/stars/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/network"><img src="https://img.shields.io/github/forks/KeyLo99/k3pler.svg"/></a>
+<a href="https://github.com/KeyLo99/k3pler/blob/master/LICENSE"><img src="https://img.shields.io/github/license/KeyLo99/k3pler.svg"/>
 
 ### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
 
