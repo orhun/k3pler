@@ -58,4 +58,4 @@
 
 ## Credit
 
-Copyright (C) 2019 by KeyLo99 https://www.github.com/KeyLo99
+Copyright (C) 2019 by [keylo99](https://www.github.com/keylo99)
