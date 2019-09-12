@@ -47,6 +47,10 @@
     
 [Download APK](https://github.com/orhun/k3pler/raw/master/app/dist/k3pler_v1-3.apk)
 
+## TODO(s)
+
+* #5
+
 ## Licenses
 
 • [GNU Public License v3](https://www.gnu.org/licenses/gpl.txt)   
