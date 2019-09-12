@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.2"
+    buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.tht.k3pler"
+        applicationId "com.k3.k3pler"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 4
@@ -20,11 +20,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:recyclerview-v7:28.0.0'
-    compile 'org.littleshoot:littleproxy:1.1.2'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'org.littleshoot:littleproxy:1.1.2'
+    testImplementation 'junit:junit:4.12'
 }
