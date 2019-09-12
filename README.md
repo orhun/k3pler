@@ -49,7 +49,7 @@
 
 ## TODO(s)
 
-* #5
+* [#5](https://github.com/orhun/k3pler/issues/5)
 
 ## Licenses
 
