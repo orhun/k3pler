@@ -46,6 +46,10 @@
 
 * Shows instructions of configuring proxy (WIFI / Mobile Network)
 
+## APK
+    
+[Download APK](https://github.com/KeyLo99/k3pler/raw/master/app/dist/k3pler_v1-3.apk)
+
 ## Licenses
 
 • [GNU Public License v3](https://www.gnu.org/licenses/gpl.txt)   
