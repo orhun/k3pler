@@ -50,9 +50,7 @@
     <string name="howto_configure_proxy_mobile">1. Mobile Network Settings\n2. Access Point Names\n3. Tap on used APN\n4. Set proxy/port to k3pler settings\n(e.g: localhost:8090)</string>
     <string name="check_proxy_msg">Waiting for network traffic&#8230;</string>
     <string name="empty_bl_msg">[Empty blacklist]</string>
-    <string name="coded_by_k3">@orhun</string>
-    <string name="mail_addr">/@</string>
-    <string name="k3pwn_url">~</string>
+    <string name="credit_message">github.com/orhun</string>
     <string name="open_source_licence">Open Source Licences</string>
     <string name="recyclerview_lib">Android v7 RecyclerView Library</string>
     <string name="littleproxy_lib">littleproxy 1.1.2</string>

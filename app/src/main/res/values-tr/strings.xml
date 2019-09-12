@@ -50,8 +50,7 @@
     <string name="howto_configure_proxy_mobile">1. Mobil Ağlar\n2. Erişim Noktası Adları\n3. Kullanılan APN\'i seçin\n4. Proxy ayarlarını değiştir\n(örn: localhost:8090)</string>
     <string name="check_proxy_msg">Ağ trafiği bekleniyor&#8230;</string>
     <string name="empty_bl_msg">[Karaliste boş]</string>
-    <string name="coded_by_k3">@orhun</string>
-    <string name="k3pwn_url">~</string>
+    <string name="credit_message">github.com/orhun</string>
     <string name="open_source_licence">Açık Kaynak Lisanslar</string>
     <string name="recyclerview_lib">Android v7 RecyclerView Library</string>
     <string name="littleproxy_lib">littleproxy 1.1.2</string>

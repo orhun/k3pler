@@ -81,11 +81,11 @@
                 android:textSize="13sp"/>
 
             <TextView
-                android:id="@+id/txvK3"
+                android:id="@+id/txvCredit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="@string/coded_by_k3"
+                android:text="@string/credit_message"
                 android:gravity="center"
                 android:layout_marginTop="7dp"
                 android:fontFamily="monospace"
@@ -93,18 +93,6 @@
                 android:textStyle="normal|bold"
                 android:background="@color/transparent_more_gray"
                 android:layout_below="@+id/txvLicenceLittleProxy"/>
-            <TextView
-                android:id="@+id/txvK3pwn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/k3pwn_url"
-                android:layout_marginEnd="10dp"
-                android:textColor="@color/lighterGray"
-                android:fontFamily="sans-serif-smallcaps"
-                android:textStyle="bold"
-                android:layout_below="@+id/txvK3"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"/>
             <TextView
                 android:id="@+id/txvJKepler"
                 android:layout_width="wrap_content"

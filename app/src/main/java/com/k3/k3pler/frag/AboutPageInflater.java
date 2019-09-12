@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.k3.k3pler.R;
 
@@ -19,11 +20,10 @@ public class AboutPageInflater {
     private ViewGroup viewGroup;
     private Dialog guiDialog;
     private static String version = "1.0",
-            k3pwn = "http://www.k3pwn.me",
             recyclerviewLicence = "https://developer.android.com/topic/libraries/support-library/packages",
             littleproxyProject = "https://github.com/adamfisk/LittleProxy";
     // ** //
-    private TextView txvK3pwn, txvProjectInfo, txvLicenceRecycler,
+    private TextView txvProjectInfo, txvLicenceRecycler,
             txvLicenceLittleProxy, txvJKepler;
     public AboutPageInflater(Context context, ViewGroup viewGroup, Dialog guiDialog){
         this.context = context;
@@ -31,7 +31,6 @@ public class AboutPageInflater {
         this.guiDialog = guiDialog;
     }
     public void init(){
-        txvK3pwn = viewGroup.findViewById(R.id.txvK3pwn);
         txvProjectInfo = viewGroup.findViewById(R.id.txvProjectInfo);
         txvLicenceRecycler = viewGroup.findViewById(R.id.txvLicenceRecycler);
         txvLicenceLittleProxy = viewGroup.findViewById(R.id.txvLicenceLittleProxy);
@@ -44,12 +43,6 @@ public class AboutPageInflater {
             e.printStackTrace();
         }
         txvProjectInfo.setText(context.getString(R.string.main_page) + " v" + version);
-        txvK3pwn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPage(k3pwn);
-            }
-        });
         txvLicenceRecycler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
