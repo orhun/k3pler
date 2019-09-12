@@ -1,11 +1,11 @@
-# k3pler proxy <a href="https://github.com/KeyLo99/k3pler/releases"><img src="https://img.shields.io/github/release/KeyLo99/k3pler.svg"/>
+# k3pler proxy <a href="https://github.com/orhun/k3pler/releases"><img src="https://img.shields.io/github/release/orhun/k3pler.svg"/>
 </a>
 
-<a href="https://github.com/KeyLo99/k3pler/issues"><img src="https://img.shields.io/github/issues/KeyLo99/k3pler.svg"/></a>
-<a href="https://github.com/KeyLo99/k3pler/pulls"><img src="https://img.shields.io/github/issues-pr/KeyLo99/k3pler.svg"/></a>
-<a href="https://github.com/KeyLo99/k3pler/stargazers"><img src="https://img.shields.io/github/stars/KeyLo99/k3pler.svg"/></a>
-<a href="https://github.com/KeyLo99/k3pler/network"><img src="https://img.shields.io/github/forks/KeyLo99/k3pler.svg"/></a>
-<a href="https://github.com/KeyLo99/k3pler/blob/master/LICENSE"><img src="https://img.shields.io/github/license/KeyLo99/k3pler.svg"/>
+<a href="https://github.com/orhun/k3pler/issues"><img src="https://img.shields.io/github/issues/orhun/k3pler.svg"/></a>
+<a href="https://github.com/orhun/k3pler/pulls"><img src="https://img.shields.io/github/issues-pr/orhun/k3pler.svg"/></a>
+<a href="https://github.com/orhun/k3pler/stargazers"><img src="https://img.shields.io/github/stars/orhun/k3pler.svg"/></a>
+<a href="https://github.com/orhun/k3pler/network"><img src="https://img.shields.io/github/forks/orhun/k3pler.svg"/></a>
+<a href="https://github.com/orhun/k3pler/blob/master/LICENSE"><img src="https://img.shields.io/github/license/orhun/k3pler.svg"/>
 
 ### Android network connection blocker and packet analyzer built on top of local HTTP proxy.
 
@@ -16,12 +16,12 @@
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/com.tht.k3pler/)
 
-<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/k3plerbg3_splash.png" width="270" height="385"/>
+<img src="https://github.com/orhun/k3pler/blob/master/etc/k3plerbg3_splash.png" width="270" height="385"/>
 
 ## Features
 * Show network traffic in a list (HTTP Request/Response)
 
-<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/page1.png" width="341" height="606"/>
+<img src="https://github.com/orhun/k3pler/blob/master/etc/page1.png" width="341" height="606"/>
 
 * Gives details about requests/responses with abbreviations in list.
 (eg: ```example.com ~ C [H/1.1] _S_ {time}```)
@@ -29,7 +29,7 @@
 * Blacklist connection after getting detailed information
 * Edit/Remove item at blacklist - clear blacklist
 
-<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/page2.png" width="341" height="606"/>
+<img src="https://github.com/orhun/k3pler/blob/master/etc/page2.png" width="341" height="606"/>
 
 * Settings:
     ```
@@ -42,13 +42,9 @@
     Splash Screen: Show splash screen when app starts
     ```
 
-<img src="https://github.com/KeyLo99/k3pler/blob/master/etc/page3.png" width="341" height="606"/>
+<img src="https://github.com/orhun/k3pler/blob/master/etc/page3.png" width="341" height="606"/>
 
 * Shows instructions of configuring proxy (WIFI / Mobile Network)
-
-## APK
-
-[Download APK](https://github.com/KeyLo99/k3pler/raw/master/app/dist/k3pler_v1-2.apk)
 
 ## Licenses
 
@@ -58,4 +54,4 @@
 
 ## Credit
 
-Copyright (C) 2019 by [keylo99](https://www.github.com/keylo99)
+Copyright (C) 2019 by [orhun](https://www.github.com/orhun)
