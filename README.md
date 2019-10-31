@@ -57,6 +57,6 @@
 • [Android v7 RecyclerView Library](https://developer.android.com/topic/libraries/support-library/packages) `(Apache 2.0)`   
 • [LittleProxy 1.1.2](https://github.com/adamfisk/LittleProxy) `(Apache 2.0)`
 
-## Credit
+## Copyright
 
 Copyright (C) 2019 by [orhun](https://www.github.com/orhun)
