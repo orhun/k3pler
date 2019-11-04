@@ -59,4 +59,4 @@
 
 ## Copyright
 
-Copyright (C) 2019 by [orhun](https://www.github.com/orhun)
+Copyright (C) 2019, [orhun](https://www.github.com/orhun)
