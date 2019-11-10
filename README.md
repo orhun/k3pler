@@ -50,6 +50,7 @@
 ## TODO(s)
 
 * [#5](https://github.com/orhun/k3pler/issues/5)
+* [#4](https://github.com/orhun/k3pler/issues/4)
 * Improve UI, support different devices
 
 ## Licenses
