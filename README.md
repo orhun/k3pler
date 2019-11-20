@@ -1,4 +1,4 @@
-# k3pler proxy <a href="https://github.com/orhun/k3pler/releases"><img src="https://img.shields.io/github/release/orhun/k3pler.svg"/>
+# k3pler <a href="https://github.com/orhun/k3pler/releases"><img src="https://img.shields.io/github/release/orhun/k3pler.svg"/>
 </a>
 
 <a href="https://github.com/orhun/k3pler/issues"><img src="https://img.shields.io/github/issues/orhun/k3pler.svg"/></a>
