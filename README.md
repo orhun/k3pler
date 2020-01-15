@@ -55,10 +55,11 @@
 
 ## Licenses
 
+
 • [GNU Public License v3](https://www.gnu.org/licenses/gpl.txt)   
 • [Android v7 RecyclerView Library](https://developer.android.com/topic/libraries/support-library/packages) `(Apache 2.0)`   
 • [LittleProxy 1.1.2](https://github.com/adamfisk/LittleProxy) `(Apache 2.0)`
 
 ## Copyright
 
-Copyright (C) 2019, [orhun](https://www.github.com/orhun)
+Copyright (c) 2018-2020, [orhun](https://www.github.com/orhun)
